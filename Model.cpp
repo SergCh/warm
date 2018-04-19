@@ -17,7 +17,7 @@ void Model::init() {
 	int x = m_wigth / 2, y = m_hieght / 2;
 	m_snake.push_back(Point(x,y));
 	m_snake.push_back(Point(x+1,y));
-	m_way = LEFT;
+	m_way = Way::LEFT;
 	m_length = 0;
 }
 
@@ -46,16 +46,10 @@ Point &Model::getHead(){
 }
 
 bool Model::check() {
-	Point ways[4];
-	ways[UP]    = Point( 0,-1);
-	ways[DOWN]  = Point( 0, 1);
-	ways[LEFT]  = Point(-1, 0);
-	ways[RIGHT] = Point( 1, 0);
+	Point newHead = getHead();
+	newHead += WAYS[m_way];
 
-	Point head = getHead();
-	Point newHead = (ways[m_way] += head);
-
-	if (!newHead.between(Point(-1, -1), Point(m_wigth, m_hieght)))
+	if (!newHead.between(Point(m_wigth, m_hieght)))
 		return false;
 	
 	if (std::find(m_snake.begin(), m_snake.end(), newHead) != m_snake.end())
@@ -70,9 +64,9 @@ bool Model::check() {
 	return true;
 }
 
-
 void Model::addRabbit() {
-	do {
+	// если свободного места не много, возможно задержка
+	do {  
 		Point rabbit(rand()%m_wigth, rand()%m_hieght);
 
 		if (std::find(m_snake.begin(), m_snake.end(), rabbit) != m_snake.end())

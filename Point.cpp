@@ -24,6 +24,9 @@ bool Point::between(Point& _low, Point& _high) {
 	return _low.less(*this) && less(_high);
 }
 
+bool Point::between(Point& _high) {
+	return between(Point(-1,-1), _high);
+}
 
 Point& Point::operator += (const Point& p) {
 	first += p.first;

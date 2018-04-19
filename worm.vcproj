@@ -118,6 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="C:\myp\curses\pdcurs36"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -136,7 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="pdcurses.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="C:\myp\curses\pdcurs36\wincon"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -217,6 +220,18 @@
 						PreprocessorDefinitions="PDC_DLL_BUILD"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="PDC_DLL_BUILD"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Way.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\worm.cpp"
@@ -253,7 +268,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Ways.h"
+				RelativePath=".\Way.h"
 				>
 			</File>
 		</Filter>

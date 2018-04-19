@@ -39,7 +39,12 @@ bool Control::move() {
 
 void Control::restart() {
 	m_model.init();
+	m_view.beforeGame();
 	m_view.paint(m_model.getHead(), m_model.getSnake(), m_model.getRabbits());
+}
+
+void Control::endGame() {
+	m_view.endGame(m_model.getSnake().size());
 }
 
 void Control::init() {

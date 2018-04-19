@@ -2,6 +2,7 @@
 #include "StdAfx.h"
 
 #include <curses.h>
+#include <panel.h>
 #include <stdlib.h>
 
 #include "View.h"
@@ -22,9 +23,11 @@ View::View(void) {
 	m_hieght = getSystemHieght();
 	m_wigth = getSystemWigth();
 	initColors();
+	::curs_set(0);
 }
 
 View::~View(void) {
+	::endwin();
 }
 
 int View::getHieghtField() {
@@ -47,7 +50,7 @@ void View::setControl(Control* _control) {
 	m_control = _control;
 }
 
-void View::paint(Point& head, std::vector<Point>& piton, std::vector<Point>& rabbits) {
+void View::paint(Point& _head, std::vector<Point>& _snake, std::vector<Point>& _rabbits) {
 	Draw * field = 0;
 
 	int hField = getHieghtField();
@@ -56,120 +59,45 @@ void View::paint(Point& head, std::vector<Point>& piton, std::vector<Point>& rab
 	if (hField<=0 || wField<=0)
 		return;
 
-	if (!(field = new Draw[hField*wField]))
-		return;
-
-	for (int i = 0, size = hField*wField; i<size; i++)
-		field[i] = EMPTY;
-
 	Way way = m_control->getWay();
+	
+	::wattrset(::stdscr, COLOR_PAIR(View::Draw::EMPTY) | A_BOLD);
+	::erase();
 
-	Point pFrom, pTo, pInc;
-	switch (way) {
-	case UP:	pFrom = Point(head.getX(), 0);
-				pTo   = Point(head.getX()+1, head.getY());
-				pInc  = Point(0, 1);
-				break;
-	case DOWN:  pFrom = Point(head.getX(), head.getY()+1);
-		        pTo   = Point(head.getX()+1, hField);
-				pInc  = Point(0, 1);
-				break;
-	case LEFT:  pFrom = Point(0, head.getY());
-				pTo   = Point(head.getX(), head.getY()+1);
-				pInc  = Point(1, 0);
-				break;
-	case RIGHT: pFrom = Point(head.getX()+1, head.getY());
-				pTo   = Point(wField, head.getY()+1);
-				pInc  = Point(1, 0);
-				break;
+	::wattrset(::stdscr, COLOR_PAIR(View::Color::FRAME) | A_BOLD);
+	::box(::stdscr, 0, 0);
+	::mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", _snake.size());
+
+	for (Point pFrom = _head; pFrom.between(Point(wField, hField)); pFrom += WAYS[way]) 
+		drawDraw(pFrom, View::Draw::POINT);
+
+	for (std::vector<Point>::iterator iter=_snake.begin(); iter != _snake.end(); iter++) {
+		int i = iter - _snake.begin();
+		drawDraw(*iter, i%5 == 3 ? View::Draw::BODY2 : View::Draw::BODY);
 	}
+		
+	drawDraw(_head, View::Draw::HEAD);
 
-	for (; pFrom.less(pTo) ; pFrom += pInc) 
-		putDraw(field, pFrom, POINT);
+	for (std::vector<Point>::iterator iter=_rabbits.begin(); iter != _rabbits.end(); iter++) 
+		drawDraw(*iter, View::Draw::RABBIT);
 
-	for (std::vector<Point>::iterator iter=piton.begin(); iter != piton.end(); iter++) 
-		putDraw(field, *iter, BODY);
-
-	putDraw(field, head, HEAD);
-
-	for (std::vector<Point>::iterator iter=rabbits.begin(); iter != rabbits.end(); iter++) 
-		putDraw(field, *iter, RUBBIT);
-
-	Draw * iterField = field;
-	for (int y=0; y<hField; y++)
-		for (int x=0; x<wField; x++, iterField++) 
-			drawDraw(x+1, y+1, *iterField);
-
-	delete []field;
-
-	paintFrame(piton.size());
-
-	::move(::LINES - 1, ::COLS - 1);
+	::move(m_hieght-1, m_wigth-1);
 	::refresh();
 }
 
-void View::putDraw(Draw* _field, Point& _point, Draw _draw) {
-	if (!_point.between(Point(-1, -1), Point(getWigthField(), getHieghtField())))
-		return;
-	_field[_point.getY() * getWigthField() + _point.getX()] = _draw;
-}
-
-void View::paintFrame(int _length) {
-	int systemHieght = getSystemHieght();
-	int systemWigth = getSystemWigth();
-
-	for (int x=1; x < systemWigth-1; x++) {
-		drawFrame(x, 0, HORIZONTAL);
-		drawFrame(x, systemHieght-1, HORIZONTAL);
-	}
-
-	for (int y=1; y < systemHieght-1; y++) {
-		drawFrame(0, y, VERTICAL);
-		drawFrame(systemWigth-1, y, VERTICAL);
-	}
-
-	drawFrame(0, 0, LEFTUP);
-	drawFrame(systemWigth-1, 0, RIGTHUP);
-	drawFrame(0, systemHieght-1, LEFTDOWN);
-	drawFrame(systemWigth-1, systemHieght-1, RIGTHDOWN);
-
-	::attrset(COLOR_PAIR(FRAME) | A_BOLD);
-
-	char buf[33];
-	std::string s = " For exit press: 'Q'. Snake's length= "; 
-	s += std::string(::itoa(_length, buf, 10));
-	s += std::string(" ");
-	::mvaddstr(systemHieght-1, 1, s.c_str());
-}
-
-void View::drawDraw(int x, int y, Draw draw) {
+void View::drawDraw(Point & _point, Draw _draw) {
 	char c = ' ';
 	chtype bold = A_NORMAL;
-	switch (draw) {
-		case RUBBIT: c = '@'; bold = A_BOLD; break;
-		case BODY:   c = '*'; bold = A_BOLD; break;
-		case HEAD:   c = '%'; bold = A_BOLD; break;
-		case POINT:  c = '.'; break;
+	switch (_draw) {
+		case View::Draw::RABBIT: c = '&'; bold = A_BOLD; break;
+		case View::Draw::BODY:   c = '*'; bold = A_BOLD; break;
+		case View::Draw::BODY2:  c = '*'; bold = A_BOLD; break;
+		case View::Draw::HEAD:   c = '%'; bold = A_BOLD; break;
+		case View::Draw::POINT:  c = '.'; bold = A_BOLD; break;
 	}
-	::attrset(COLOR_PAIR(draw) | bold);
-	::mvaddch(y, x, c);
+	::attrset(COLOR_PAIR(_draw) | bold);
+	::mvaddch(_point.getY()+1, _point.getX()+1, c);
 }
-
-void View::drawFrame(int x, int y, View::Frame frame) {
-	unsigned long c = ' ';
-	switch (frame) {
-		case VERTICAL:   c = ACS_VLINE; break;
-		case HORIZONTAL: c = ACS_HLINE; break;
-		case LEFTUP:     c = ACS_ULCORNER; break;
-		case RIGTHUP:    c = ACS_URCORNER; break;
-		case LEFTDOWN:   c = ACS_LLCORNER; break;
-		case RIGTHDOWN:  c = ACS_LRCORNER; break;
-	}
-	::attrset(COLOR_PAIR(FRAME) | A_BOLD);
-	::mvaddch(y, x, c);
-}
-
-
 
 int View::getSystemHieght() {
 	return ::LINES;
@@ -185,16 +113,16 @@ void View::getCommands() {
 	if (ch == ERR) return;
 	switch (ch) {
 		case KEY_DOWN:
-			m_control->changeWay(DOWN);
+			m_control->changeWay(Way::DOWN);
 			return;
 		case KEY_UP:
-			m_control->changeWay(UP);
+			m_control->changeWay(Way::UP);
 			return;
 		case KEY_LEFT:
-			m_control->changeWay(LEFT);
+			m_control->changeWay(Way::LEFT);
 			return;
 		case KEY_RIGHT:
-			m_control->changeWay(RIGHT);
+			m_control->changeWay(Way::RIGHT);
 			return;
 		case 'Q':
 		case 'q':
@@ -204,11 +132,52 @@ void View::getCommands() {
 }
 
 void View::initColors() {
-	// frame
-	::init_pair(EMPTY,  COLOR_WHITE, COLOR_BLACK);
-	::init_pair(HEAD,   COLOR_RED,   COLOR_YELLOW);
-	::init_pair(BODY,   COLOR_RED,   COLOR_YELLOW);
-	::init_pair(RUBBIT, COLOR_BLUE,  COLOR_GREEN);
-	::init_pair(POINT,  COLOR_BLUE,  COLOR_BLACK);
-	::init_pair(FRAME,  COLOR_WHITE, COLOR_MAGENTA);
+	::init_pair(View::Draw::EMPTY,  COLOR_WHITE, COLOR_BLACK);
+	::init_pair(View::Draw::HEAD,   COLOR_RED,   COLOR_BLACK);
+	::init_pair(View::Draw::BODY,   COLOR_RED,   COLOR_BLACK);
+	::init_pair(View::Draw::BODY2,  COLOR_YELLOW,COLOR_BLACK);
+	::init_pair(View::Draw::RABBIT, COLOR_WHITE, COLOR_GREEN);
+	::init_pair(View::Draw::POINT,  COLOR_BLUE,  COLOR_BLACK);
+
+	::init_pair(View::Color::FRAME,   COLOR_WHITE, COLOR_MAGENTA);
+	::init_pair(View::Color::DIALOG,  COLOR_WHITE, COLOR_BLUE);
+}
+
+void View::beforeGame() {
+	::nodelay(::stdscr, TRUE);
+	::flushinp();
+}
+
+void View::endGame(int len) {
+	int dx = 40, dy = 5;
+	int x = (m_wigth - dx) / 2, y = (m_hieght - dy) / 2;
+
+	const std::string message("You result = %d");
+
+	WINDOW *win = ::newwin(dy, dx, y, x);
+
+	if (!win) return ;
+
+	::wattrset(win, COLOR_PAIR(View::Color::DIALOG) | A_BOLD);
+	::wbkgd(win, COLOR_PAIR(View::Color::DIALOG) | A_BOLD);
+	::nodelay(win, FALSE);
+
+	::werase(win);
+	::box(win, 0, 0);
+	::mvwprintw(win, dy-1, 1, " 'Q' - exit, space - restart ");
+
+	::mvwprintw(win, (dy-1)/2, (dx - message.length()+1)/2 , message.c_str(), len);
+	::wrefresh(win);
+
+	do {
+		int ch = wgetch(win);
+		switch (ch) {
+			case 'Q':
+			case 'q':
+				m_control->quit();
+			case ' ':
+				::delwin(win);
+				return;
+		}
+	} while (true);
 }
