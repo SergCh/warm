@@ -152,7 +152,7 @@ void View::endGame(int len) {
 	int dx = 40, dy = 5;
 	int x = (m_wigth - dx) / 2, y = (m_hieght - dy) / 2;
 
-	const std::string message("You result = %d");
+	const std::string message("Your score = %d");
 
 	WINDOW *win = ::newwin(dy, dx, y, x);
 
@@ -166,7 +166,7 @@ void View::endGame(int len) {
 	::box(win, 0, 0);
 	::mvwprintw(win, dy-1, 1, " 'Q' - exit, space - restart ");
 
-	::mvwprintw(win, (dy-1)/2, (dx - message.length()+1)/2 , message.c_str(), len);
+	::mvwprintw(win, (dy-1)/2, (dx - message.length())/2 , message.c_str(), len);
 	::wrefresh(win);
 
 	do {
