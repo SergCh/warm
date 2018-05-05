@@ -36,6 +36,8 @@ public:
 	void beforeGame();
 	void endGame(int);
 
+    virtual void paint();
+
 private:
 	typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
 	typedef enum {FRAME = Draw::POINT+1, DIALOG} Color;

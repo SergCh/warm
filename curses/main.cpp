@@ -20,8 +20,6 @@ int main(int argc, char* argv[]) {
 
 	control.init();
 
-	int count =10;
-
 	while (!0) {
 		view.getCommands();
 

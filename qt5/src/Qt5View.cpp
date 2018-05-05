@@ -49,25 +49,3 @@ void Qt5View::beforeGame() {
 
 }
 
-void Qt5View::afterPaintField() {
-//    if (m_board == 0) return;
-//    m_board->update();
-//    emit m_board->scoreChanged(m_snake->size());
-}
-
-void Qt5View::beforePaintField() {
-
-}
-
-void Qt5View::paintRabbit(Rabbit &) {
-
-}
-
-void Qt5View::paintSnake() {
-
-}
-
-void Qt5View::paintWay() {
-
-}
-

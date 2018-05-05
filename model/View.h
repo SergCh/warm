@@ -25,7 +25,7 @@ public:
     void setSnake(std::vector<Point> *);
     void setRabbits(std::vector<Rabbit> *);
 
-	virtual void paint();
+    virtual void paint() = 0;
 	
 	virtual int getHieghtField() = 0;
 	virtual int getWigthField() = 0;
@@ -46,10 +46,4 @@ protected:
     std::vector<Point> * m_snake;
     std::vector<Rabbit> * m_rabbits;
     Way m_way;
-    
-    virtual void beforePaintField() = 0;
-    virtual void afterPaintField() = 0; 
-    virtual void paintWay() = 0;
-    virtual void paintSnake() = 0;
-    virtual void paintRabbit(Rabbit &) = 0;
 };

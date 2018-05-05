@@ -35,13 +35,6 @@ public:
 
     bool isPause();
 
-protected:
-    virtual void afterPaintField();
-    virtual void beforePaintField();
-    virtual void paintRabbit(Rabbit &);
-    virtual void paintSnake();
-    virtual void paintWay();
-
 private:
     enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };
     Qt5Board* m_board;

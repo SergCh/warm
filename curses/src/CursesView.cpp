@@ -18,8 +18,9 @@ CursesView::CursesView() : View() {
 	nodelay(stdscr, TRUE);
 	cbreak();
 	noecho();
-    if (has_colors())
+    if (has_colors()) {
         start_color();
+    }
 	m_hieght = getSystemHieght();
 	m_wigth = getSystemWigth();
 	initColors();
@@ -143,6 +144,27 @@ void CursesView::endGame(int len) {
 				return;
 		}
 	} while (true);
+}
+
+
+void CursesView::paint() {
+    if (getHieghtField()<=0 || getWigthField()<=0)
+        return;
+
+    m_way = m_control->getWay();
+
+    beforePaintField();
+
+    if (m_snake != 0 && m_snake->size() > 0) {
+        paintWay();
+        paintSnake();
+    }
+
+    if (m_rabbits != 0)
+        for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
+            paintRabbit(*iter);
+
+    afterPaintField();
 }
 
 
