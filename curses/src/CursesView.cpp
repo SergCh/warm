@@ -148,6 +148,13 @@ void CursesView::endGame(int len) {
 
 
 void CursesView::paint() {
+    if (m_control->isPause()) {
+        int score = m_snake==0? 0 : m_snake->size();
+        endGame(score);
+        return;
+    }
+
+
     if (getHieghtField()<=0 || getWigthField()<=0)
         return;
 

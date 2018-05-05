@@ -26,12 +26,12 @@ int main(int argc, char* argv[]) {
         if (control.isQuit())
 			break;
 
-        if (control.isPause()) {
-            view.endGame(model.getSnake().size());
-            control.restart();
-        } else {
+//        if (control.isPause()) {
+//            view.endGame(model.getSnake().size());
+//            control.restart();
+//        } else {
             control.nextStep();
-        }
+//        }
 	}
 
 	return 0;
