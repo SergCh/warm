@@ -151,6 +151,7 @@ void CursesView::paint() {
     if (m_control->isPause()) {
         int score = m_snake==0? 0 : m_snake->size();
         endGame(score);
+        m_control->restart();
         return;
     }
 

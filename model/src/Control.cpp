@@ -39,16 +39,15 @@ void Control::restart() {
 }
 
 void Control::nextStep() {
-    if (m_pause)
-        return;
-
-    bool res=move();
-    if (!res) {
-        m_pause = true;
-    } else {
-        if (--s4nr<=0) {
-            s4nr = NEXT_STEP;
-            addRabbit();
+    if (!m_pause)  {
+        bool res=move();
+        if (!res) {
+            m_pause = true;
+        } else {
+            if (--s4nr<=0) {
+                s4nr = NEXT_STEP;
+                addRabbit();
+            }
         }
     }
     m_view.paint();
