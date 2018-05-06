@@ -44,7 +44,6 @@ private:
     QBasicTimer timer;
     int step;
 
-
 public:
 
 #ifdef QT_DEBUG
