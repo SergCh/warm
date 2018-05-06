@@ -33,7 +33,7 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     layout->addWidget(scoreLcd,                 1, 1);
     layout->addWidget(startButton,              2, 1);
     layout->addWidget(quitButton,               3, 1);
-    layout->addWidget(createLabel(version), 4, 1);
+    layout->addWidget(createLabel(version),     4, 1);
     setLayout(layout);
 
     setWindowTitle(tr("Snake"));
