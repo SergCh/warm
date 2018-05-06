@@ -37,9 +37,19 @@ protected:
 
 private:
 
+    void incStep(int & _step) { _step = (_step+1) & 3;}
+    void decStep(int & _step) { _step = (_step+3) & 3;}
+
     Qt5View *m_view;
     QBasicTimer timer;
     int step;
+
+
+public:
+
+#ifdef QT_DEBUG
+    void pause(bool p);
+#endif
 
 };
 

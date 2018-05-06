@@ -28,7 +28,6 @@ SOURCES +=\
     model/src/Control.cpp \
     model/src/Model.cpp \
     model/src/Point.cpp \
-    model/src/ThreadControl.cpp \
     model/src/View.cpp \
     model/src/Way.cpp \
     qt5/src/Qt5Board.cpp \
@@ -42,7 +41,6 @@ HEADERS  += \
     model/Control.h \
     model/Model.h \
     model/Point.h \
-    model/ThreadControl.h \
     model/View.h \
     model/Way.h \
     qt5/Qt5Board.h \
