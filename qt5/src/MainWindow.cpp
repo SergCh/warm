@@ -5,6 +5,7 @@
 #include "MainWindow.h"
 #include "Qt5View.h"
 #include "Qt5Board.h"
+#include "version.h"
 
 MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     board = new Qt5Board(view);
@@ -24,10 +25,11 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(board,                    0, 0, 5, 1, Qt::AlignCenter);
 
-    layout->addWidget(createLabel(tr("SCORE")), 0, 2);
-    layout->addWidget(scoreLcd,                 1, 2);
-    layout->addWidget(startButton,              2, 2);
-    layout->addWidget(quitButton,               3, 2);
+    layout->addWidget(createLabel(tr("SCORE")), 0, 1);
+    layout->addWidget(scoreLcd,                 1, 1);
+    layout->addWidget(startButton,              2, 1);
+    layout->addWidget(quitButton,               3, 1);
+    layout->addWidget(createLabel(tr(VERSION)), 4, 1);
     setLayout(layout);
 
     setWindowTitle(tr("Snake"));
