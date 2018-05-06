@@ -11,6 +11,7 @@
 #include "Control.h"
 #include "Model.h"
 #include "Rabbit.h"
+#include "version.h"
 
 CursesView::CursesView() : View() {
 	initscr();
@@ -55,7 +56,7 @@ void CursesView::drawDraw(Point & _point, Draw _draw) {
         case Draw::RABBIT: c1 = '>'; c2 = '@'; bold = A_BOLD; break;
         case Draw::BODY:   c1 = '('; c2 = ')'; bold = A_BOLD; break;
         case Draw::BODY2:  c1 = '('; c2 = ')'; bold = A_BOLD; break;
-        case Draw::HEAD:   c1 = 'o'; c2 = 'o'; bold = A_BOLD; break;
+        case Draw::HEAD:   c1 = 'o'; c2 = 'O'; bold = A_BOLD; break;
         case Draw::POINT:  c1 = '.'; c2 = ' '; bold = A_BOLD; break;
         case Draw::EMPTY:  break;  //добавил, иначе KDevelop ругается
 	}
@@ -185,9 +186,12 @@ void CursesView::beforePaintField() {
 	wattrset(stdscr, COLOR_PAIR(Color::FRAME) | A_BOLD);
 	box(stdscr, 0, 0);
     
-    int size=m_snake->size();
+    const int score=m_snake->size();
     
-	mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", size);
+    mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", score);
+    const std::string version(VERSION);
+    const int len = version.length();
+    mvprintw(0, m_width - len - 1, version.c_str());
 }
 
 
