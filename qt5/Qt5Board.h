@@ -46,7 +46,11 @@ private:
 
 
 public:
+
+#ifdef QT_DEBUG
     void pause(bool p);
+#endif
+
 };
 
 
