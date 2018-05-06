@@ -187,16 +187,14 @@ void CursesView::beforePaintField() {
     mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", score);
     const std::string versionModel(VERSION_MODEL);
     const std::string versionView(VERSION_CURSES);
-    const int len = versionModel.length() + versionView.length() + 5;
-    mvprintw(0, m_width - len - 1, "v:%s m:%s", versionView.c_str(), versionModel.c_str());
+    const int len = versionModel.length() + versionView.length() + 6;
+    mvprintw(0, m_width - len, "v:%s m:%s", versionView.c_str(), versionModel.c_str());
 }
-
 
 void CursesView::afterPaintField() {
     move(m_hieght-1, m_width-1);
 	refresh();
 }
-
 
 void CursesView::paintWay() {
     Point pEnd = Point(getWigthField(), getHieghtField());
