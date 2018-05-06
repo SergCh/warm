@@ -41,7 +41,7 @@ bool Qt5View::isPause() {
 
 void Qt5View::nextStep() {
     if (m_snake) {
-        int len = m_snake->size();
+        const unsigned int len = m_snake->size();
         m_control->nextStep();
         snakeChanged = len != m_snake->size();
     } else {
