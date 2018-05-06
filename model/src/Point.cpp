@@ -12,14 +12,6 @@ void Point::setXY(int _x, int _y) {
 	second = _y;
 }
 
-//int Point::getX() {
-//	return first;
-//}
-
-//int Point::getY() {
-//	return second;
-//}
-
 bool Point::between(Point& _low, Point& _high) {
 	return _low.less(*this) && less(_high);
 }

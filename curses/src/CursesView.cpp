@@ -120,7 +120,6 @@ void CursesView::endGame(int score) {
     int x = (m_width - dx) / 2, y = (m_hieght - dy) / 2;
 
     const std::string message(score?"Your score = %d":"Game time");
-//    const std::string message0("Game time");
 
 	WINDOW *win = newwin(dy, dx, y, x);
 

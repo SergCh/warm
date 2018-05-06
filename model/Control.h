@@ -40,9 +40,6 @@ public:
     // следующий шаг
     virtual void nextStep();
 
-	// конец игры
-//	void endGame();
-
 	// инициализация 
 	virtual void init();
 
