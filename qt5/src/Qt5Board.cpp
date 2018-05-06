@@ -114,7 +114,7 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
             Point p_pred = p_curr;
 
             Point p_next = (snake->size()>1) ? snake->at(1) : snake->at(0);
-            for (int i=0, s=snake->size(), j=step; i < s; i++, j = (j+1) & 3) {
+            for (int i=0, s=snake->size(), iStep=step; i < s; i++) {
                 QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
                 QRect body(p_curr.getX() * squareSize.width(),
                            p_curr.getY() * squareSize.height(),
@@ -122,10 +122,10 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                            squareSize.height());
                 if (i != 0) {   // !head
                     if (p_next.getY() == p_pred.getY()) {
-                        body.setTop(body.y() + ddy * ((j == 3) ? 1 : j));
+                        body.setTop(body.y() + ddy * ((iStep == 3) ? 1 : iStep));
                         body.setHeight(squareSize.height() - 2*ddy);
                     } else if (p_next.getX() == p_pred.getX()) {
-                        body.setLeft(body.x() + ddx * ((j == 3) ? 1 : j));
+                        body.setLeft(body.x() + ddx * ((iStep == 3) ? 1 : iStep));
                         body.setWidth(squareSize.width() - 2*ddx);
                     } else {
                         const int dx = p_next.getX() + p_pred.getX() - 2 * p_curr.getX();
@@ -143,6 +143,7 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                 p_curr = p_next;    // i+1
                 if (i+2 < s)        // i+2
                     p_next = snake->at(i+2);
+                decStep(iStep);
             }
         }
     }
@@ -165,7 +166,7 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
 void Qt5Board::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         m_view->nextStep();
-        step = (step+1) & 3;
+        incStep(step);
         if (!m_view->isPause()) {
             timer.start(timeoutTime(), this);
         } else {
@@ -188,7 +189,7 @@ void Qt5Board::pause(bool p) {
     if (p) {
         timer.stop();
         m_view->nextStep();
-        step = (step+1) & 3;
+        incStep(step);
     }
     else
         timer.start(timeoutTime(), this);
