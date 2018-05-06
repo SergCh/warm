@@ -22,7 +22,7 @@ CursesView::CursesView() : View() {
         start_color();
     }
 	m_hieght = getSystemHieght();
-	m_wigth = getSystemWigth();
+    m_width = getSystemWigth();
 	initColors();
 	curs_set(0);
 }
@@ -36,7 +36,7 @@ int CursesView::getHieghtField() {
 }
 
 int CursesView::getWigthField() {
-	return m_wigth-2;
+    return (m_width-2) / 2;
 }
 
 void CursesView::setHieght(int _hieght) {
@@ -44,23 +44,25 @@ void CursesView::setHieght(int _hieght) {
 }
 
 void CursesView::setWigth(int _wigth) {
-	m_wigth = _wigth;
+    m_width = _wigth;
 }
 
 void CursesView::drawDraw(Point & _point, Draw _draw) {
-	char c = ' ';
+    char c1 = ' ';
+    char c2 = ' ';
 	chtype bold = A_NORMAL;
 	switch (_draw) {
-        case Draw::RABBIT: c = '&'; bold = A_BOLD; break;
-        case Draw::BODY:   c = '*'; bold = A_BOLD; break;
-        case Draw::BODY2:  c = '*'; bold = A_BOLD; break;
-        case Draw::HEAD:   c = '%'; bold = A_BOLD; break;
-        case Draw::POINT:  c = '.'; bold = A_BOLD; break;
-        case Draw::EMPTY:  c = ' '; break;  //добавил, иначе KDevelop ругается
+        case Draw::RABBIT: c1 = '>'; c2 = '@'; bold = A_BOLD; break;
+        case Draw::BODY:   c1 = '('; c2 = ')'; bold = A_BOLD; break;
+        case Draw::BODY2:  c1 = '('; c2 = ')'; bold = A_BOLD; break;
+        case Draw::HEAD:   c1 = 'o'; c2 = 'o'; bold = A_BOLD; break;
+        case Draw::POINT:  c1 = '.'; c2 = ' '; bold = A_BOLD; break;
+        case Draw::EMPTY:  break;  //добавил, иначе KDevelop ругается
 	}
 	
 	attrset(COLOR_PAIR(_draw) | bold);
-	mvaddch(_point.getY()+1, _point.getX()+1, c);
+    mvaddch(_point.getY()+1, (_point.getX()*2)+1, c1);
+    mvaddch(_point.getY()+1, (_point.getX()*2)+2, c2);
 }
 
 int CursesView::getSystemHieght() {
@@ -114,7 +116,7 @@ void CursesView::beforeGame() {
 
 void CursesView::endGame(int len) {
 	int dx = 40, dy = 5;
-	int x = (m_wigth - dx) / 2, y = (m_hieght - dy) / 2;
+    int x = (m_width - dx) / 2, y = (m_hieght - dy) / 2;
 
 	const std::string message("Your score = %d");
 
@@ -190,7 +192,7 @@ void CursesView::beforePaintField() {
 
 
 void CursesView::afterPaintField() {
-    move(m_hieght-1, m_wigth-1);
+    move(m_hieght-1, m_width-1);
 	refresh();
 }
 
