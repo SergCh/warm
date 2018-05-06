@@ -15,10 +15,7 @@ Qt5Board::Qt5Board(Qt5View * _view, QWidget *parent):QFrame(parent){
     m_view->setBoard(this);
     step = 0;
 
-//    setFrameStyle(QFrame::Panel | QFrame::Sunken);
     setFocusPolicy(Qt::StrongFocus);
-
-//    timer.start(timeoutTime(), this);
 }
 
 

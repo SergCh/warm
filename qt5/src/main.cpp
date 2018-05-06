@@ -14,10 +14,8 @@ int main(int argc, char *argv[])
     Qt5View view;
 
     RabbitFactory rabbits;
-//    View *v = (View *) view;
     Model model(Point(view.getWigthField(), view.getHieghtField()), rabbits);
 
-//    ThreadControl control(view, model);
     Control control(view, model);
 
     control.init();

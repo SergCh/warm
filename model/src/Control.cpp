@@ -17,17 +17,12 @@ void Control::changeWay ( Way way) {
 	m_model.changeWay(way);
 }
 
-//Way Control::getWay(){
-//	return m_model.getWay();
-//}
-
 void Control::quit() {
 	m_quit = true;
 }
 
 bool Control::move() {
 	bool res = m_model.move();
-//	m_view.paint();
 	return res;
 }
 
@@ -53,10 +48,6 @@ void Control::nextStep() {
     m_view.paint();
 }
 
-//void Control::endGame() {
-//	m_view.endGame(m_model.getSnake().size());
-//}
-
 void Control::init() {
     m_view.setControl(this);
     m_view.setSnake(&m_model.getSnake());
@@ -65,5 +56,4 @@ void Control::init() {
 
 void Control::addRabbit() {
 	m_model.addRabbit();
-//	m_view.paint();
 }
