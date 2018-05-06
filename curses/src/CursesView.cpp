@@ -115,11 +115,12 @@ void CursesView::beforeGame() {
 	flushinp();
 }
 
-void CursesView::endGame(int len) {
+void CursesView::endGame(int score) {
 	int dx = 40, dy = 5;
     int x = (m_width - dx) / 2, y = (m_hieght - dy) / 2;
 
-	const std::string message("Your score = %d");
+    const std::string message(score?"Your score = %d":"Game time");
+//    const std::string message0("Game time");
 
 	WINDOW *win = newwin(dy, dx, y, x);
 
@@ -133,7 +134,7 @@ void CursesView::endGame(int len) {
 	box(win, 0, 0);
 	mvwprintw(win, dy-1, 1, " 'Q' - exit, space - restart ");
 
-	mvwprintw(win, (dy-1)/2, (dx - message.length())/2 , message.c_str(), len);
+    mvwprintw(win, (dy-1)/2, (dx - message.length())/2 , message.c_str(), score);
 	wrefresh(win);
 
 	do {
@@ -151,31 +152,26 @@ void CursesView::endGame(int len) {
 
 
 void CursesView::paint() {
+    beforePaintField();
+    if (getHieghtField()>0 && getWigthField()>0) {
+        m_way = m_control->getWay();
+
+        if (m_snake != 0 && m_snake->size() > 0) {
+            paintWay();
+            paintSnake();
+        }
+
+        if (m_rabbits != 0)
+            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
+                paintRabbit(*iter);
+    }
+    afterPaintField();
+
     if (m_control->isPause()) {
-        int score = m_snake==0? 0 : m_snake->size();
+        const int score = m_snake==0? 0 : m_snake->size();
         endGame(score);
         m_control->restart();
-        return;
     }
-
-
-    if (getHieghtField()<=0 || getWigthField()<=0)
-        return;
-
-    m_way = m_control->getWay();
-
-    beforePaintField();
-
-    if (m_snake != 0 && m_snake->size() > 0) {
-        paintWay();
-        paintSnake();
-    }
-
-    if (m_rabbits != 0)
-        for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
-            paintRabbit(*iter);
-
-    afterPaintField();
 }
 
 
