@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "Rabbit.h"
 #include "version.h"
+#include "CursesVersion.h"
 
 CursesView::CursesView() : View() {
 	initscr();
@@ -184,17 +185,16 @@ void CursesView::beforePaintField() {
     const int score=m_snake->size();
     
     mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", score);
-    const std::string version(VERSION);
-    const int len = version.length();
-    mvprintw(0, m_width - len - 1, version.c_str());
+    const std::string versionModel(VERSION_MODEL);
+    const std::string versionView(VERSION_CURSES);
+    const int len = versionModel.length() + versionView.length() + 6;
+    mvprintw(0, m_width - len, "v:%s m:%s", versionView.c_str(), versionModel.c_str());
 }
-
 
 void CursesView::afterPaintField() {
     move(m_hieght-1, m_width-1);
 	refresh();
 }
-
 
 void CursesView::paintWay() {
     Point pEnd = Point(getWigthField(), getHieghtField());

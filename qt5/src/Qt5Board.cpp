@@ -85,7 +85,7 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
     std::vector<Rabbit> * rabbits = m_view->getRabbits();
     Q_CHECK_PTR(rabbits);
 
-    painter.fillRect(0, 0, boardSize.width(), boardSize.height(), Qt::darkGray);
+    painter.fillRect(0, 0, boardSize.width()+1, boardSize.height()+1, Qt::darkGray);
 
     if (snake->size() > 0) {
         // draw way
@@ -114,40 +114,56 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
             const int ddy2 = ddy + ddy;
             const int ddx2 = ddx + ddx;
 
-            Point p_curr = snake->at(0);
+            const int snakeLen = snake->size();
+
+            Point p_curr = snake->at(snakeLen-1);     //*(snake->end()-1);
             Point p_pred = p_curr;
 
-            Point p_next = (snake->size()>1) ? snake->at(1) : snake->at(0);
-            for (int i=0, s=snake->size(), iStep=step; i < s; i++) {
+            Point p_next = (snakeLen>1) ? snake->at(snakeLen-2) : snake->at(0);
+            for (int i=snakeLen, iStep=step; i--; ) {
+
                 const QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
+
                 QRect body(p_curr.getX() * squareSize.width(),
                            p_curr.getY() * squareSize.height(),
                            squareSize.width(),
                            squareSize.height());
+                QRect body1;
+
                 if (i != 0) {   // !head
+
                     if (p_next.getY() == p_pred.getY()) {
-                        body.setTop(body.y() + ddy * (iStep == 3 ? 1 : iStep));
+                        body.moveTop(body.y() + ddy * (iStep == 3 ? 1 : iStep));
                         body.setHeight(squareSize.height() - ddy2);
                     } else if (p_next.getX() == p_pred.getX()) {
-                        body.setLeft(body.x() + ddx * (iStep == 3 ? 1 : iStep));
+                        body.moveLeft(body.x() + ddx * (iStep == 3 ? 1 : iStep));
                         body.setWidth(squareSize.width() - ddx2);
                     } else {
-                        const int dx = p_next.getX() + p_pred.getX() - 2 * p_curr.getX();
-                        const int dy = p_next.getY() + p_pred.getY() - 2 * p_curr.getY();
-                        const int DX = (dx<0) ? 0 : ddx2;
-                        const int DY = (dy<0) ? 0 : ddy2;
-                        body.setTop(body.y() + DY);
-                        body.setLeft(body.x() + DX);
-                        body.setHeight(squareSize.height() - ddy2);
-                        body.setWidth(squareSize.width() - ddx2);
+                        body.setSize(squareSize - QSize(ddx2, ddy2));
+
+                        const bool toLeft = (p_next.getX() + p_pred.getX() - 2 * p_curr.getX()) < 0;
+                        const bool toUp   = (p_next.getY() + p_pred.getY() - 2 * p_curr.getY()) < 0;
+
+                        if ((iStep&1) == 1) {
+                            body1 = body;
+                            body1.moveTopLeft(QPoint(body.x() + (toLeft?0:ddx2), body.y()+ddy));
+                            body.moveTopLeft(QPoint(body.x() + ddx, body.y() + (toUp?0:ddy2)));
+                        } else {
+                            body.moveTop(body.y() + (toUp ? 0 : ddy2));
+                            body.moveLeft(body.x() + (toLeft ? 0 : ddx2));
+                        }
                     }
                 }
+
                 painter.fillRect(body, color);
+                if (!body1.isNull())
+                    painter.fillRect(body1, color);
+
                 p_pred = p_curr;    // i
-                p_curr = p_next;    // i+1
-                if (i+2 < s)        // i+2
-                    p_next = snake->at(i+2);
-                decStep(iStep);
+                p_curr = p_next;    // i-1
+                if (1 < i)   // i-2
+                    p_next = snake->at(i-2);
+                incStep(iStep);
             }
         }
     }
@@ -158,7 +174,6 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                          Qt::green);
     }
 
-
     if (m_view->isPause()) {
         const QRect rect = contentsRect();
         painter.setPen(QPen(Qt::white, 2, Qt::DotLine));
@@ -166,11 +181,11 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
     }
 }
 
-
 void Qt5Board::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         m_view->nextStep();
-        incStep(step);
+        if (!m_view->snakeWasChanged())
+            incStep(step);
         if (!m_view->isPause()) {
             timer.start(timeoutTime(), this);
         } else {
@@ -194,7 +209,8 @@ void Qt5Board::pause(bool p) {
     if (p) {
         timer.stop();
         m_view->nextStep();
-        incStep(step);
+        if (!m_view->snakeWasChanged())
+            incStep(step);
     }
     else
         timer.start(timeoutTime(), this);

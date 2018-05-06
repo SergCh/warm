@@ -1,11 +1,13 @@
 
 
 #include <QtWidgets>
+#include <QString>
 
 #include "MainWindow.h"
 #include "Qt5View.h"
 #include "Qt5Board.h"
 #include "version.h"
+#include "Qt5Version.h"
 
 MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     board = new Qt5Board(view);
@@ -18,6 +20,8 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     quitButton = new QPushButton(tr("&Quit"));
     quitButton->setFocusPolicy(Qt::NoFocus);
 
+    QString version = QString("version:") + QString(VERSION_QT5) + QString("<br>model:") + QString(VERSION_MODEL);
+
     connect(quitButton , SIGNAL(clicked()), qApp, SLOT(quit()));
     connect(startButton, SIGNAL(clicked()), board, SLOT(restart()));
     connect(board, SIGNAL(scoreChanged(int)), scoreLcd, SLOT(display(int)));
@@ -29,7 +33,7 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     layout->addWidget(scoreLcd,                 1, 1);
     layout->addWidget(startButton,              2, 1);
     layout->addWidget(quitButton,               3, 1);
-    layout->addWidget(createLabel(tr(VERSION)), 4, 1);
+    layout->addWidget(createLabel(version),     4, 1);
     setLayout(layout);
 
     setWindowTitle(tr("Snake"));

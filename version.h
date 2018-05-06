@@ -1,6 +1,6 @@
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
 
-#define VERSION "0.0.2"
+#define VERSION "0.0.3"
+#define VERSION_MODEL "0.1"
 
-#endif // VERSION_H
+
