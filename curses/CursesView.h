@@ -47,7 +47,7 @@ private:
 	void initColors();
 
 	int m_hieght;
-	int m_wigth;
+    int m_width;
 
 protected:
     void beforePaintField();

@@ -34,4 +34,5 @@ HEADERS  += \
     model/Way.h \
     model/RabbitFactory.h \
     model/Rabbit.h \
-    curses/CursesView.h
+    curses/CursesView.h \
+    version.h
