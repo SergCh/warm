@@ -47,4 +47,5 @@ HEADERS  += \
     model/RabbitFactory.h \
     model/Rabbit.h \
     qt5/Qt5View.h \
-    qt5/MainWindow.h
+    qt5/MainWindow.h \
+    version.h
