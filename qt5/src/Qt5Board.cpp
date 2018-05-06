@@ -128,6 +128,7 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                            p_curr.getY() * squareSize.height(),
                            squareSize.width(),
                            squareSize.height());
+                QRect body1;
 
                 if (i != 0) {   // !head
 
@@ -138,21 +139,15 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                         body.moveLeft(body.x() + ddx * (iStep == 3 ? 1 : iStep));
                         body.setWidth(squareSize.width() - ddx2);
                     } else {
-                        iStep = 0;
-
                         body.setSize(squareSize - QSize(ddx2, ddy2));
 
                         const bool toLeft = (p_next.getX() + p_pred.getX() - 2 * p_curr.getX()) < 0;
                         const bool toUp   = (p_next.getY() + p_pred.getY() - 2 * p_curr.getY()) < 0;
 
                         if ((iStep&1) == 1) {
-                            QRect body1(body);
+                            body1 = body;
                             body1.moveTopLeft(QPoint(body.x() + (toLeft?0:ddx2), body.y()+ddy));
-
-                            painter.fillRect(body1, color);
-
                             body.moveTopLeft(QPoint(body.x() + ddx, body.y() + (toUp?0:ddy2)));
-
                         } else {
                             body.moveTop(body.y() + (toUp ? 0 : ddy2));
                             body.moveLeft(body.x() + (toLeft ? 0 : ddx2));
@@ -161,6 +156,8 @@ void Qt5Board::paintEvent(QPaintEvent *event) {
                 }
 
                 painter.fillRect(body, color);
+                if (!body1.isNull())
+                    painter.fillRect(body1, color);
 
                 p_pred = p_curr;    // i
                 p_curr = p_next;    // i-1
