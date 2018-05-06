@@ -49,6 +49,14 @@ void Qt5Board::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_Space:
         restart();
         break;
+
+    case Qt::Key_P:
+        pause(true);
+        break;
+    case Qt::Key_C:
+        pause(false);
+        break;
+
     default:
         QFrame::keyPressEvent(event);
     }
@@ -174,3 +182,14 @@ void Qt5Board::restart() {
     timer.start(timeoutTime(), this);
 }
 
+void Qt5Board::pause(bool p) {
+    if (m_view->isPause())
+        return;
+    if (p) {
+        timer.stop();
+        m_view->nextStep();
+        step = (step+1) & 3;
+    }
+    else
+        timer.start(timeoutTime(), this);
+}

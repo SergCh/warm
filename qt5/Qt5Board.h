@@ -41,6 +41,9 @@ private:
     QBasicTimer timer;
     int step;
 
+
+public:
+    void pause(bool p);
 };
 
 
