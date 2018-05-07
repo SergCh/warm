@@ -25,7 +25,7 @@ public:
     Qt5View(QWidget *parent = 0);
 
     virtual int getHieghtField();
-    virtual int getWigthField();
+    virtual int getWidthField();
 
     virtual void beforeGame();
     virtual void paint();
