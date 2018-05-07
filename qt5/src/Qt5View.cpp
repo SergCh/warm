@@ -17,8 +17,6 @@ Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
 
 void Qt5View::paint() {
     update();
-    if (snakeChanged)
-        emit scoreChanged(m_snake->size());
 }
 
 int Qt5View::getHieghtField() {
@@ -29,57 +27,42 @@ int Qt5View::getWigthField() {
     return BOARD_WIDTH;
 }
 
-void Qt5View::command(Way _way) {
-    if (m_control)
-        m_control->changeWay(_way);
-}
-
-bool Qt5View::isPause() {
-    if (!m_control)
-        return true;
-    return m_control->isPause();
-}
-
+//TODO: Убрать генерацию сигнала об изменение длины червя в модель
 void Qt5View::nextStep() {
-    if (m_snake) {
-        const unsigned int len = m_snake->size();
-        m_control->nextStep();
-        snakeChanged = len != m_snake->size();
-    } else {
-        snakeChanged = false;
-    }
+    Q_CHECK_PTR(m_snake);
+
+    const unsigned int len = m_snake->size();
+    m_control->nextStep();
+    snakeChanged = len != m_snake->size();
+
+    if (snakeChanged)
+        emit scoreChanged(m_snake->size());
 }
 
 void Qt5View::beforeGame() {}
-
 
 QSize Qt5View::sizeHint() const {
     return QSize(BOARD_HEIGHT * 20 + frameWidth() * 2,
                  BOARD_WIDTH + frameWidth() * 2);
 }
 
-
 QSize Qt5View::minimumSizeHint() const {
     return QSize(BOARD_HEIGHT * 10 + frameWidth() * 2,
                  BOARD_WIDTH * 10 + frameWidth() * 2);
 }
 
-
 void Qt5View::keyPressEvent(QKeyEvent *event) {
+    if (!m_control) {
+        QFrame::keyPressEvent(event);
+        return;
+    }
 
     switch (event->key()) {
-    case Qt::Key_Left:
-        command(Way::LEFT);
-        break;
-    case Qt::Key_Right:
-        command(Way::RIGHT);
-        break;
-    case Qt::Key_Down:
-        command(Way::DOWN);
-        break;
-    case Qt::Key_Up:
-        command(Way::UP);
-        break;
+    case Qt::Key_Left:         m_control->changeWay(Way::LEFT);        break;
+    case Qt::Key_Right:        m_control->changeWay(Way::RIGHT);       break;
+    case Qt::Key_Down:         m_control->changeWay(Way::DOWN);        break;
+    case Qt::Key_Up:           m_control->changeWay(Way::UP);          break;
+
     case Qt::Key_Space:
         restart();
         break;
@@ -99,37 +82,35 @@ void Qt5View::keyPressEvent(QKeyEvent *event) {
 }
 
 QSize Qt5View::getSquareSize() {
-    return QSize(contentsRect().width() / getWigthField(),
-                 contentsRect().height() / getHieghtField());
+    return QSize(contentsRect().width() / BOARD_WIDTH,
+                 contentsRect().height() / BOARD_HEIGHT);
 }
 
 void Qt5View::paintEvent(QPaintEvent *event) {
     QFrame::paintEvent(event);
 
+    Q_CHECK_PTR(m_snake);
+    Q_CHECK_PTR(m_rabbits);
+    Q_CHECK_PTR(m_control);
+
     QPainter painter(this);
 
-    const int height = getHieghtField();
-    const int width = getWigthField();
+    const int height = BOARD_HEIGHT;
+    const int width = BOARD_WIDTH;
     const QSize squareSize = getSquareSize();
     const QSize boardSize(squareSize.width()*width-1, squareSize.height()*height-1);
 
-    std::vector<Point> * snake = m_snake;
-    Q_CHECK_PTR(snake);
-
-    std::vector<Rabbit> * rabbits = m_rabbits;
-    Q_CHECK_PTR(rabbits);
-
     painter.fillRect(0, 0, boardSize.width()+1, boardSize.height()+1, Qt::darkGray);
 
-    if (snake->size() > 0) {
+    if (m_snake->size() > 0) {
         // draw way
         {
-            const Point head = snake->at(0);
+            const Point head = m_snake->at(0);
             QPoint pHead(head.getX() * squareSize.width() + squareSize.width() / 2,
                          head.getY() * squareSize.height() + squareSize.height() / 2);
             QPoint pBorder(pHead);
 
-            switch (getWay()) {
+            switch (m_control->getWay()) {
                 case Way::LEFT:  pBorder.setX(0);                  break;
                 case Way::RIGHT: pBorder.setX(boardSize.width());  break;
                 case Way::UP:    pBorder.setY(0);                  break;
@@ -148,12 +129,13 @@ void Qt5View::paintEvent(QPaintEvent *event) {
             const int ddy2 = ddy + ddy;
             const int ddx2 = ddx + ddx;
 
-            const int snakeLen = snake->size();
+            const int snakeLen = m_snake->size();
 
-            Point p_curr = snake->at(snakeLen-1);     //*(snake->end()-1);
+            // TODO: Надо переделать на итераторы
+            Point p_curr = m_snake->at(snakeLen-1);     //*(snake->end()-1);
             Point p_pred = p_curr;
 
-            Point p_next = (snakeLen>1) ? snake->at(snakeLen-2) : snake->at(0);
+            Point p_next = (snakeLen>1) ? m_snake->at(snakeLen-2) : m_snake->at(0);
             for (int i=snakeLen, iStep=step; i--; ) {
 
                 const QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
@@ -196,19 +178,19 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                 p_pred = p_curr;    // i
                 p_curr = p_next;    // i-1
                 if (1 < i)   // i-2
-                    p_next = snake->at(i-2);
+                    p_next = m_snake->at(i-2);
                 incStep(iStep);
             }
         }
     }
 
-    for (auto p=rabbits->begin(); p != rabbits->end(); p++) {
+    for (auto p=m_rabbits->begin(); p != m_rabbits->end(); p++) {
         painter.fillRect(p->getX() * squareSize.width() + 1, p->getY() * squareSize.height() + 1,
                          squareSize.width() - 2, squareSize.height() - 2,
                          Qt::green);
     }
 
-    if (isPause()) {
+    if (m_control->isPause()) {
         const QRect rect = contentsRect();
         painter.setPen(QPen(Qt::white, 2, Qt::DotLine));
         painter.drawText(rect, Qt::AlignCenter, tr("Pause"));
@@ -218,9 +200,9 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 void Qt5View::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         nextStep();
-        if (!snakeWasChanged())
+        if (!snakeChanged)
             incStep(step);
-        if (!isPause()) {
+        if (!m_control->isPause()) {
             timer.start(timeoutTime(), this);
         } else {
             timer.stop();
@@ -231,21 +213,23 @@ void Qt5View::timerEvent(QTimerEvent *event) {
 }
 
 void Qt5View::restart() {
-    if (!m_control) return;
+    Q_CHECK_PTR(m_control);
 
     step = 0;
     m_control->restart();
+    emit scoreChanged(m_snake->size());
     timer.start(timeoutTime(), this);
 }
 
 #ifdef QT_DEBUG
 void Qt5View::pause(bool p) {
-    if (isPause())
+    Q_CHECK_PTR(m_control);
+    if (m_control->isPause())
         return;
     if (p) {
         timer.stop();
         nextStep();
-        if (!snakeWasChanged())
+        if (!snakeChanged)
             incStep(step);
     }
     else

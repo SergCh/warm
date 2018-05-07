@@ -28,28 +28,9 @@ public:
     virtual int getWigthField();
 
     virtual void beforeGame();
-
-    Way getWay() const {return m_control->getWay();}
-    bool snakeWasChanged() const {return snakeChanged;}
-
-    void command(Way);
-
     virtual void paint();
 
     void nextStep();
-
-    bool isPause();
-
-private:
-    enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };
-    bool snakeChanged;
-
-
-    QSize sizeHint() const Q_DECL_OVERRIDE;
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
-
-    QSize getSquareSize();
-    int timeoutTime() { return 100; }
 
 public slots:
     void restart();
@@ -63,10 +44,19 @@ protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };
 
-    void incStep(int & _step) { _step = (_step+1) & 3;}
-    void decStep(int & _step) { _step = (_step+3) & 3;}
+    QSize sizeHint() const Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
 
+    QSize getSquareSize();
+    int timeoutTime() { return 100; }
+
+    void incStep(int & _step) const { _step = (_step+1) & 3;}
+//    void decStep(int & _step) { _step = (_step+3) & 3;}
+
+
+    bool snakeChanged;
     QBasicTimer timer;
     int step;
 

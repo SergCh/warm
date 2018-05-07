@@ -5,7 +5,6 @@
 
 #include "MainWindow.h"
 #include "Qt5View.h"
-#include "Qt5Board.h"
 #include "version.h"
 #include "Qt5Version.h"
 
@@ -41,7 +40,7 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
 }
 
 MainWindow::~MainWindow() {
-    board->setParent(0);
+    board->setParent(0);    //объект создан в стеке, а не в куче, удалять нельзя
 }
 
 QLabel *MainWindow::createLabel(const QString &text) {
