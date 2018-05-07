@@ -11,7 +11,6 @@ class QPushButton;
 QT_END_NAMESPACE
 
 class Qt5View;
-class Qt5Board;
 
 class MainWindow : public QWidget {
     Q_OBJECT
@@ -23,7 +22,7 @@ public:
 private:
     QLabel *createLabel(const QString &text);
 
-    Qt5Board *board;
+    Qt5View *board;
     QLCDNumber *scoreLcd;
     QPushButton *quitButton;
     QPushButton *startButton;
