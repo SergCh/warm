@@ -27,8 +27,8 @@ public:
 
     virtual void paint() = 0;
 	
-	virtual int getHieghtField() = 0;
-	virtual int getWigthField() = 0;
+    virtual int getHieghtField() = 0;
+    virtual int getWigthField() = 0;
 
 	void setHieght(int);
 	void setWigth(int);
