@@ -23,7 +23,7 @@ public:
     ~CursesView();
 
 	int getHieghtField();
-	int getWigthField();
+	int getWidthField();
 
 	void setHieght(int);
 	void setWigth(int);

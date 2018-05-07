@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     Qt5View view;
 
     RabbitFactory rabbits;
-    Model model(Point(view.getWigthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
 
     Control control(view, model);
 

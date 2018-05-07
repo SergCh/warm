@@ -37,7 +37,7 @@ int CursesView::getHieghtField() {
 	return m_hieght-2;
 }
 
-int CursesView::getWigthField() {
+int CursesView::getWidthField() {
     return (m_width-2) / 2;
 }
 
@@ -153,7 +153,7 @@ void CursesView::endGame(int score) {
 
 void CursesView::paint() {
     beforePaintField();
-    if (getHieghtField()>0 && getWigthField()>0) {
+    if (getHieghtField()>0 && getWidthField()>0) {
         m_way = m_control->getWay();
 
         if (m_snake != 0 && m_snake->size() > 0) {
@@ -197,7 +197,7 @@ void CursesView::afterPaintField() {
 }
 
 void CursesView::paintWay() {
-    Point pEnd = Point(getWigthField(), getHieghtField());
+    Point pEnd = Point(getWidthField(), getHieghtField());
     Point pFrom = m_snake->at(0);
     for (; pFrom.between(pEnd); pFrom += WAYS[m_way]) 
 		drawDraw(pFrom, Draw::POINT);

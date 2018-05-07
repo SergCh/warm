@@ -23,7 +23,7 @@ int Qt5View::getHieghtField() {
     return BOARD_HEIGHT;
 }
 
-int Qt5View::getWigthField() {
+int Qt5View::getWidthField() {
     return BOARD_WIDTH;
 }
 
