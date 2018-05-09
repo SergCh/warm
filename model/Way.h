@@ -1,14 +1,25 @@
 #pragma once
 
-//#include "Point.h"
+/**
+ *      @file
+ *      @brief Пути (напрвления) движения червя
+ *      @author Чугайнов С.В.
+ *      @date 09.05.2018
+ *      @todo Может в класс переделать, не знаю еще
+ *
+ */
+
 class Point;
 
+/// Направления движения
+typedef enum {
+    UP,         ///< Вверх
+    DOWN,       ///< Вниз
+    LEFT,       ///< Влево
+    RIGHT,      ///< Вправо
+    COUNT_WAYS  ///< Количество направлений
+} Way;
 
-// TODO: может в класс переделать, не знаю еще
-
-// Направления движения
-typedef enum {UP, DOWN, LEFT, RIGHT, COUNT_WAYS} Way;
-
-// 
+/// Константы для инкрементных операций при движении в направлении на еденицу
 extern const Point WAYS[COUNT_WAYS];
 
