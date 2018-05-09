@@ -32,11 +32,13 @@ SOURCES +=\
     model/src/Way.cpp \
     model/src/RabbitFactory.cpp \
     model/src/Rabbit.cpp \
+#    model/src/RabbitSimple.cpp \
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
     qt5/src/main.cpp
 
 HEADERS  += \
+    version.h \
     model/Control.h \
     model/Model.h \
     model/Point.h \
@@ -44,7 +46,7 @@ HEADERS  += \
     model/Way.h \
     model/RabbitFactory.h \
     model/Rabbit.h \
+    #model/RabbitSimple.h \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
-    version.h \
     qt5/Qt5Version.h

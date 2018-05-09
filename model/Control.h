@@ -43,8 +43,6 @@ public:
 	// инициализация 
 	virtual void init();
 
-	virtual void addRabbit();
-
 private:
 	
     const int BEGIN_STEP = 20;

@@ -22,8 +22,12 @@ void Control::quit() {
 }
 
 bool Control::move() {
-	bool res = m_model.move();
-	return res;
+
+    Model::State state = m_model.move();
+    if (state == Model::GOOD_CHANGED)
+        m_view.changeScore(m_model.getSnake().size());
+
+    return state != Model::DEAD;
 }
 
 void Control::restart() {
@@ -31,6 +35,7 @@ void Control::restart() {
 	m_view.beforeGame();
     m_pause = false;
     s4nr = BEGIN_STEP;
+    m_view.changeScore(m_model.getSnake().size());
 }
 
 void Control::nextStep() {
@@ -41,7 +46,7 @@ void Control::nextStep() {
         } else {
             if (--s4nr<=0) {
                 s4nr = NEXT_STEP;
-                addRabbit();
+                m_model.addRabbit();
             }
         }
     }
@@ -52,8 +57,4 @@ void Control::init() {
     m_view.setControl(this);
     m_view.setSnake(&m_model.getSnake());
     m_view.setRabbits(&m_model.getRabbits());
-}
-
-void Control::addRabbit() {
-	m_model.addRabbit();
 }

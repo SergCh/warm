@@ -29,6 +29,7 @@ public:
 
     virtual void beforeGame();
     virtual void paint();
+    virtual void changeScore(int _score);
 
     void nextStep();
 

@@ -21,10 +21,12 @@ SOURCES +=\
     model/src/Way.cpp \
     model/src/RabbitFactory.cpp \
     model/src/Rabbit.cpp \
+#    model/src/RabbitSimple.cpp \
     curses/src/CursesView.cpp \
     curses/main.cpp
 
 HEADERS  += \
+    version.h \
     model/Control.h \
     model/Model.h \
     model/Point.h \
@@ -32,6 +34,6 @@ HEADERS  += \
     model/Way.h \
     model/RabbitFactory.h \
     model/Rabbit.h \
+#    model/src/RabbitSimple.h \
     curses/CursesView.h \
-    version.h \
     curses/CursesVersion.h

@@ -12,12 +12,19 @@ Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
     step = 0;
 
     setFocusPolicy(Qt::StrongFocus);
-    snakeChanged = true;    //set 0
+//    snakeChanged = true;    //set 0
+    emit scoreChanged(0);
+
 }
 
 void Qt5View::paint() {
     update();
 }
+
+void Qt5View::changeScore(int _score) {
+    emit scoreChanged(_score);
+}
+
 
 int Qt5View::getHieghtField() {
     return BOARD_HEIGHT;
@@ -31,12 +38,12 @@ int Qt5View::getWidthField() {
 void Qt5View::nextStep() {
     Q_CHECK_PTR(m_snake);
 
-    const unsigned int len = m_snake->size();
+//    const unsigned int len = m_snake->size();
     m_control->nextStep();
-    snakeChanged = len != m_snake->size();
+//    snakeChanged = len != m_snake->size();
 
-    if (snakeChanged)
-        emit scoreChanged(m_snake->size());
+//    if (snakeChanged)
+//        emit scoreChanged(m_snake->size());
 }
 
 void Qt5View::beforeGame() {}

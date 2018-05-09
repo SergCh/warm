@@ -11,22 +11,6 @@ void RabbitFactory::clear() {
     m_rabbits.clear();
 }
 
-void RabbitFactory::step() {
-
-    for (std::vector<Rabbit>::iterator iter=m_rabbits.begin(); iter != m_rabbits.end(); iter++)
-        iter->step();
-
-    bool finded;
-    do {
-        finded = false;
-        std::vector<Rabbit>::iterator iter;
-        if ((iter=std::find_if(m_rabbits.begin(), m_rabbits.end(), Rabbit::checkDead())) != m_rabbits.end()) {
-            m_rabbits.erase(iter);
-            finded = true;
-        }
-    } while (finded);
-}
-
 std::vector<Rabbit> & RabbitFactory::getData() {
     return m_rabbits;
 }
@@ -58,13 +42,20 @@ void RabbitFactory::newRabbit(Point & size, std::vector<Point> & occuped) {
 }
 
 
-int RabbitFactory::eat(Point & _point) {
+int RabbitFactory::eat(Point & _head) {
     int weight=0;
 
-    std::vector<Rabbit>::iterator iter;
-    if ((iter=std::find_if(m_rabbits.begin(), m_rabbits.end(), Rabbit::checkPoint(_point))) != m_rabbits.end()) {
+    for (std::vector<Rabbit>::iterator iter = m_rabbits.begin(); iter != m_rabbits.end(); iter++) {
+        iter->eat(_head);
+    }
+
+    while (true) {
+        std::vector<Rabbit>::iterator iter;
+        if ((iter=std::find_if(m_rabbits.begin(), m_rabbits.end(), Rabbit::checkDead())) == m_rabbits.end())
+            break;
         weight = iter->getWeight();
         m_rabbits.erase(iter);
     }
+
     return weight;
 }

@@ -60,6 +60,12 @@ public:
     virtual void paint() = 0;
 	
     /**
+     * @brief changeScore Изменение результата
+     * @param _score результат
+     */
+    virtual void changeScore(int _score) = 0;
+
+    /**
      * @brief getHieghtField Возвращает высоту игроого поля
      * @return Высоту игрового поля
      */
