@@ -1,9 +1,19 @@
 #include "Rabbit.h"
 
-bool Rabbit::step() {
-    if (m_live < 0)
-        return true;
-    if (m_live > 0)
-        m_live--;
-    return m_live != 0;
+
+void Rabbit::eat(const Point & _head) {
+    if (m_live == 0) //уже мертвый
+        return;
+
+    if (check(_head)) { //съели
+        m_live = 0;
+        return;
+    }
+
+    if (m_live < 0)  // сам не умерает
+        return;
+    if (--m_live == 0) { // сам умер
+        m_weight = -1;
+    }
 }
+

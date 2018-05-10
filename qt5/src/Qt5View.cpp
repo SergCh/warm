@@ -1,22 +1,30 @@
 #include <QtWidgets>
 
 #include <vector>
+#include <algorithm>
+
 #include "Qt5View.h"
 
 #include "Control.h"
 #include "Point.h"
 #include "Rabbit.h"
+#include "RabbitFactory.h"
 #include "Way.h"
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
     step = 0;
+    steps.clear();
 
     setFocusPolicy(Qt::StrongFocus);
-    snakeChanged = true;    //set 0
+    emit scoreChanged(0);
 }
 
 void Qt5View::paint() {
     update();
+}
+
+void Qt5View::changeScore(int _score) {
+    emit scoreChanged(_score);
 }
 
 int Qt5View::getHieghtField() {
@@ -29,21 +37,16 @@ int Qt5View::getWidthField() {
 
 //TODO: Убрать генерацию сигнала об изменение длины червя в модель
 void Qt5View::nextStep() {
-    Q_CHECK_PTR(m_snake);
+    Q_CHECK_PTR(m_control);
 
-    const unsigned int len = m_snake->size();
     m_control->nextStep();
-    snakeChanged = len != m_snake->size();
-
-    if (snakeChanged)
-        emit scoreChanged(m_snake->size());
 }
 
 void Qt5View::beforeGame() {}
 
 QSize Qt5View::sizeHint() const {
     return QSize(BOARD_HEIGHT * 20 + frameWidth() * 2,
-                 BOARD_WIDTH + frameWidth() * 2);
+                 BOARD_WIDTH * 20+ frameWidth() * 2);
 }
 
 QSize Qt5View::minimumSizeHint() const {
@@ -89,8 +92,6 @@ QSize Qt5View::getSquareSize() {
 void Qt5View::paintEvent(QPaintEvent *event) {
     QFrame::paintEvent(event);
 
-    Q_CHECK_PTR(m_snake);
-    Q_CHECK_PTR(m_rabbits);
     Q_CHECK_PTR(m_control);
 
     QPainter painter(this);
@@ -99,6 +100,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
     const int width = BOARD_WIDTH;
     const QSize squareSize = getSquareSize();
     const QSize boardSize(squareSize.width()*width-1, squareSize.height()*height-1);
+    const Way way=m_control->getWay();
 
     painter.fillRect(0, 0, boardSize.width()+1, boardSize.height()+1, Qt::darkGray);
 
@@ -110,7 +112,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                          head.getY() * squareSize.height() + squareSize.height() / 2);
             QPoint pBorder(pHead);
 
-            switch (m_control->getWay()) {
+            switch (way.getWay()) {
                 case Way::LEFT:  pBorder.setX(0);                  break;
                 case Way::RIGHT: pBorder.setX(boardSize.width());  break;
                 case Way::UP:    pBorder.setY(0);                  break;
@@ -118,7 +120,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                 default: break;
             }
 
-            painter.setPen(QPen(Qt::blue, 1, Qt::DotLine));
+            painter.setPen(QPen(Qt::cyan, 1, Qt::DotLine));
             painter.drawLine(pHead, pBorder);
         }
 
@@ -129,45 +131,56 @@ void Qt5View::paintEvent(QPaintEvent *event) {
             const int ddy2 = ddy + ddy;
             const int ddx2 = ddx + ddx;
 
-            const int snakeLen = m_snake->size();
+            auto curr = m_snake->begin();
+            auto pred = curr;
+            auto next = curr+1;
+            auto iterStep = steps.begin();
 
-            // TODO: Надо переделать на итераторы
-            Point p_curr = m_snake->at(snakeLen-1);     //*(snake->end()-1);
-            Point p_pred = p_curr;
-
-            Point p_next = (snakeLen>1) ? m_snake->at(snakeLen-2) : m_snake->at(0);
-            for (int i=snakeLen, iStep=step; i--; ) {
+            for(int i=0, iStep=step; curr != m_snake->end(); next++, curr++, i++){
+                if (next == m_snake->end())
+                    next = curr;
 
                 const QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
 
-                QRect body(p_curr.getX() * squareSize.width(),
-                           p_curr.getY() * squareSize.height(),
+                QRect body(curr->getX() * squareSize.width(),
+                           curr->getY() * squareSize.height(),
                            squareSize.width(),
                            squareSize.height());
                 QRect body1;
 
                 if (i != 0) {   // !head
 
-                    if (p_next.getY() == p_pred.getY()) {
-                        body.moveTop(body.y() + ddy * (iStep == 3 ? 1 : iStep));
+                    if (next->getY() == pred->getY()) {
+                        body.translate(0, ddy * (iStep == 3 ? 1 : iStep));
                         body.setHeight(squareSize.height() - ddy2);
-                    } else if (p_next.getX() == p_pred.getX()) {
-                        body.moveLeft(body.x() + ddx * (iStep == 3 ? 1 : iStep));
+                    } else if (next->getX() == pred->getX()) {
+                        body.translate(ddx * (iStep == 3 ? 1 : iStep), 0);
                         body.setWidth(squareSize.width() - ddx2);
                     } else {
                         body.setSize(squareSize - QSize(ddx2, ddy2));
 
-                        const bool toLeft = (p_next.getX() + p_pred.getX() - 2 * p_curr.getX()) < 0;
-                        const bool toUp   = (p_next.getY() + p_pred.getY() - 2 * p_curr.getY()) < 0;
+                        const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;
+                        const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;
 
                         if ((iStep&1) == 1) {
-                            body1 = body;
-                            body1.moveTopLeft(QPoint(body.x() + (toLeft?0:ddx2), body.y()+ddy));
-                            body.moveTopLeft(QPoint(body.x() + ddx, body.y() + (toUp?0:ddy2)));
+                            body1 = body.translated(toLeft?0:ddx2, ddy);
+                            body.translate(ddx, toUp?0:ddy2);
+
+                            if (i == 1 && !m_control->isPause()) {
+                                steps.insert(steps.begin(), iStep);         //Сохраняем положение тела на угловых точках
+                                iterStep = steps.begin();
+
+                                if (way.isHorisontal()) step = toUp? 2:0;    //Определяем положение головы
+                                else                    step = toLeft? 2:0;
+                            }
+
+                            if (iterStep != steps.end())                    //Восстанавливаем положение тела
+                                iStep = *iterStep++;
+
                         } else {
-                            body.moveTop(body.y() + (toUp ? 0 : ddy2));
-                            body.moveLeft(body.x() + (toLeft ? 0 : ddx2));
+                            body.translate(toLeft ? 0 : ddx2, toUp ? 0 : ddy2);
                         }
+
                     }
                 }
 
@@ -175,17 +188,15 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                 if (!body1.isNull())
                     painter.fillRect(body1, color);
 
-                p_pred = p_curr;    // i
-                p_curr = p_next;    // i-1
-                if (1 < i)   // i-2
-                    p_next = m_snake->at(i-2);
+                pred = curr;
                 incStep(iStep);
-            }
+            } //for
+            steps.erase(iterStep, steps.end());
         }
     }
 
-    for (auto p=m_rabbits->begin(); p != m_rabbits->end(); p++) {
-        painter.fillRect(p->getX() * squareSize.width() + 1, p->getY() * squareSize.height() + 1,
+    for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {
+        painter.fillRect(iter->getX() * squareSize.width() + 1, iter->getY() * squareSize.height() + 1,
                          squareSize.width() - 2, squareSize.height() - 2,
                          Qt::green);
     }
@@ -200,9 +211,8 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 void Qt5View::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         nextStep();
-        if (!snakeChanged)
-            incStep(step);
         if (!m_control->isPause()) {
+            decStep(step);
             timer.start(timeoutTime(), this);
         } else {
             timer.stop();
@@ -229,8 +239,7 @@ void Qt5View::pause(bool p) {
     if (p) {
         timer.stop();
         nextStep();
-        if (!snakeChanged)
-            incStep(step);
+        decStep(step);
     }
     else
         timer.start(timeoutTime(), this);

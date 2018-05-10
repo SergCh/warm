@@ -29,6 +29,7 @@ public:
 
     virtual void beforeGame();
     virtual void paint();
+    virtual void changeScore(int _score);
 
     void nextStep();
 
@@ -50,15 +51,16 @@ private:
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
 
     QSize getSquareSize();
-    int timeoutTime() { return 100; }
+    inline int timeoutTime() const { return 100; }
 
-    void incStep(int & _step) const { _step = (_step+1) & 3;}
-//    void decStep(int & _step) { _step = (_step+3) & 3;}
+    inline void incStep(int & _step) const { _step = (_step+1) & 3;}
+    inline void decStep(int & _step) const { _step = (_step+3) & 3;}
 
 
-    bool snakeChanged;
     QBasicTimer timer;
+
     int step;
+    std::vector<int> steps;
 
 public:
 

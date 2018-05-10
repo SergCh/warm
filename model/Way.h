@@ -2,24 +2,47 @@
 
 /**
  *      @file
- *      @brief Пути (напрвления) движения червя
+ *      @brief Класс пути (напрвления) движения червя
  *      @author Чугайнов С.В.
- *      @date 09.05.2018
- *      @todo Может в класс переделать, не знаю еще
+ *      @date 10.05.2018
  *
  */
 
-class Point;
+#include "Point.h"
 
-/// Направления движения
-typedef enum {
-    UP,         ///< Вверх
-    DOWN,       ///< Вниз
-    LEFT,       ///< Влево
-    RIGHT,      ///< Вправо
-    COUNT_WAYS  ///< Количество направлений
-} Way;
+class Way {
+public:
 
-/// Константы для инкрементных операций при движении в направлении на еденицу
-extern const Point WAYS[COUNT_WAYS];
+    /// Направления движения
+    typedef enum {
+        UP,         ///< Вверх
+        DOWN,       ///< Вниз
+        LEFT,       ///< Влево
+        RIGHT,      ///< Вправо
+        COUNT_WAYS  ///< Количество направлений
+    } EWay;
 
+    Way(EWay _way=LEFT):m_way(_way) {}
+
+    inline bool isHorisontal() const {
+        return m_way == LEFT || m_way == RIGHT;
+    }
+
+    /// Константы для инкрементных операций при движении в направлении на еденицу
+    static Point POINTS_WAY[COUNT_WAYS];
+
+    inline EWay getWay() const {return m_way;}
+    inline void setWay(EWay _way) {m_way = _way;}
+
+//    static const Point & getPoint(Way & _way) {
+//        return Way::POINTS_WAY[_way.getWay()];
+//    }
+
+    const Point & getPoint() {
+        return Way::POINTS_WAY[m_way];
+    }
+
+
+private:
+    EWay m_way;
+};

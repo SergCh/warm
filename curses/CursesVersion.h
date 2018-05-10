@@ -1,4 +1,5 @@
 #pragma once
 
-#define VERSION_CURSES "0.1"
+#include "version.h"
+#define VERSION_CURSES "0.2"
 

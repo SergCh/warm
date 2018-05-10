@@ -22,14 +22,23 @@ public:
     Model(Point _size, RabbitFactory &_rabbits);
 	~Model(void);
 	
+    // состояние змея
+    typedef enum {
+        DEAD,           ///< Двигаться дальше не может
+        GOOD,           ///< Может двигаться, длина не изменилась
+        GOOD_CHANGED    ///< Может двигаться, длина изменилась
+    } State;
+
 	// начало игры
 	void init();
 
 	// получить змея для передачи его на прорисовку
-	std::vector<Point> & getSnake();
+    std::vector<Point> & getSnake() {
+        return m_snake;
+    }
 
 	// сменить путь направления змея
-	void changeWay(Way);
+    void changeWay(Way _way);
 
 	// чисто для любопытства, а куда сейчас двигается змей :)
 	Way getWay();
@@ -40,8 +49,15 @@ public:
 	// получить кроликов для прорисовки
     std::vector<Rabbit> & getRabbits();
 
-	// сделать шаг (если ложь, то игра закончена)
-	bool move();
+    inline RabbitFactory * getRabbitFactory(){
+        return & m_rabbits;
+    }
+
+    // сделать шаг (Выдача состояние модели)
+    Model::State move();
+
+    // надо ли этот метод
+    inline Model::State getState() const {return m_state;}
 
 private:
     // размеры поля
@@ -61,4 +77,5 @@ private:
 	// добавляемая длина при поедании кролика
 	int m_length;
 
+    Model::State m_state;
 };

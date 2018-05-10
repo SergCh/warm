@@ -47,10 +47,14 @@ public:
     const Point &getPoint() const {return m_point;}
 
     /**
-     * @brief step Делаем ход, уменьшаем жизнь на еденицу и возвращаем жив ли кролик
-     * @return Жив ли кролик после хода
+     * @brief eat Проверка на съедение кролика
+     * @param _head Координаты головы червя
+     *
+     * Проверяем координаты если съел, устанавливаем флаг, что кролик мертвый _live=0
+     * Уменьшаем жизнь на еденицу. Если кролик умер сам, то вес обнуляем (_weight=0)
+     * Незабываем пройтись по массиву кроликов и подчистить те у которых _live==0
      */
-    bool step();
+    void eat(const Point & _head);
 
     /**
      * @brief check Проверка на совпадение координат
@@ -81,34 +85,6 @@ private:
 
     /// Вес кролика
     int m_weight;
-
-public:
-
-    /**
-     * @brief The checkPoint struct is Функтор для std::find_if
-     */
-    struct checkPoint
-    {
-      checkPoint( Point p ) : m_p(p) {}
-      bool operator()( const Rabbit & rabbit ) const
-      {
-        return rabbit.check(m_p);
-      }
-    private:
-      Point m_p;
-    };
-
-    /**
-     * @brief The checkDead struct is Функтор для std::find_if
-     */
-    struct checkDead
-    {
-      checkDead(){}
-      bool operator()( const Rabbit & rabbit ) const
-      {
-        return rabbit.isDead();
-      }
-    };
 
 };
 

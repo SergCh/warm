@@ -37,6 +37,7 @@ public:
 	void endGame(int);
 
     virtual void paint();
+    virtual void changeScore(int _score);
 
 private:
 	typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
@@ -48,6 +49,7 @@ private:
 
 	int m_hieght;
     int m_width;
+    int m_score;
 
 protected:
     void beforePaintField();

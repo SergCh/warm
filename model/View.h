@@ -18,6 +18,7 @@
 
 class Control;
 class Rabbit;
+class RabbitFactory;
 
 class View
 {
@@ -29,29 +30,36 @@ public:
 	View(void);
 
     /**
-     * @brief ~View Деструктор
-     */
-	virtual ~View(void);
-
-    /**
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
-     * @todo переделать в inline
      */
-    void setControl(Control*);
+    void setControl(Control* _control) {
+        m_control = _control;
+    }
 
     /**
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
-     * @todo переделать в inline
      */
-    void setSnake(std::vector<Point> * _snake);
+    void setSnake(std::vector<Point> * _snake) {
+        m_snake = _snake;
+    }
+
+//    /**
+//     * @brief setRabbits Установка уазателя на вескор кроликов
+//     * @param _rabbits[in] Указатель на вектор кроликов
+//     */
+//    void setRabbits(std::vector<Rabbit> * _rabbits) {
+//        m_rabbits = _rabbits;
+//    }
 
     /**
-     * @brief setRabbits Установка уазателя на вескор кроликов
+     * @brief setRabbitFactory Установка уазателя на вескор кроликов
      * @param _rabbits[in] Указатель на вектор кроликов
      */
-    void setRabbits(std::vector<Rabbit> * _rabbits);
+    void setRabbitFactory(RabbitFactory * _rabbitFabrica) {
+        m_rf = _rabbitFabrica;
+    }
 
     /**
      * @brief paint Вызывается контроллером при изменении в модели
@@ -59,6 +67,12 @@ public:
      */
     virtual void paint() = 0;
 	
+    /**
+     * @brief changeScore Изменение результата
+     * @param _score результат
+     */
+    virtual void changeScore(int _score) = 0;
+
     /**
      * @brief getHieghtField Возвращает высоту игроого поля
      * @return Высоту игрового поля
@@ -85,6 +99,9 @@ public:
 
     /**
      * @brief beforeGame Метод вызывается контроллером перед началом игры
+     *
+     * Метод вызывается контроллером перед началом игры.
+     * Возможно необходимо сделать иницыализирующие дествия перед началом игры.
      */
     virtual void beforeGame() = 0;
     
@@ -97,6 +114,6 @@ protected:
 
     Control *m_control;
     std::vector<Point> * m_snake;
-    std::vector<Rabbit> * m_rabbits;
+    RabbitFactory * m_rf;
     Way m_way;
 };

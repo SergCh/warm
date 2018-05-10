@@ -5,8 +5,6 @@ Point::Point(int _x, int _y):pair<int,int>(_x, _y){}
 
 Point::Point():pair<int,int>(0, 0){}
 
-Point::~Point(void){}
-
 void Point::setXY(int _x, int _y) {
 	first = _x;
 	second = _y;
