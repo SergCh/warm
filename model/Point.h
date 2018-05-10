@@ -30,12 +30,6 @@ public:
 	Point();
 
     /**
-      * @brief Диструктор
-      * @todo избавиться
-      */
-	~Point();
-
-    /**
      * @brief setXY Установка координат
      * @param _x Координата X
      * @param _y Координата Y
@@ -46,13 +40,13 @@ public:
      * @brief getX Получить координату X
      * @return  Координату X
      */
-    int getX() const {return first;}
+    inline int getX() const {return first;}
 
     /**
      * @brief getY Получить координату Y
      * @return Координту Y
      */
-    int getY() const {return second;}
+    inline int getY() const {return second;}
 	
     /**
      * @brief between Проверяет находится ли точна между точками (НЕ ВКЛЮЧИТЕЛЬНО)

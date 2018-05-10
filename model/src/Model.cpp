@@ -29,9 +29,9 @@ void Model::changeWay(Way _way) {
 	m_way = _way;
 }
 
-std::vector<Point> & Model::getSnake() {
-	return m_snake;
-}
+//std::vector<Point> & Model::getSnake() {
+//	return m_snake;
+//}
 
 Model::State Model::move() {
 

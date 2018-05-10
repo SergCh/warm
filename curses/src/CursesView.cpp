@@ -27,6 +27,7 @@ CursesView::CursesView() : View() {
     m_width = getSystemWigth();
 	initColors();
 	curs_set(0);
+    m_score=0;
 }
 
 CursesView::~CursesView() {
@@ -175,6 +176,10 @@ void CursesView::paint() {
 }
 
 
+void CursesView::changeScore(int _score) { //вся прорисовка произходит в paint()
+    m_score = _score;
+}
+
 void CursesView::beforePaintField() {
 	wattrset(stdscr, COLOR_PAIR(Draw::EMPTY) | A_BOLD);
 	erase();
@@ -182,9 +187,7 @@ void CursesView::beforePaintField() {
 	wattrset(stdscr, COLOR_PAIR(Color::FRAME) | A_BOLD);
 	box(stdscr, 0, 0);
     
-    const int score=m_snake->size();
-    
-    mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", score);
+    mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", m_score);
     const std::string versionModel(VERSION_MODEL);
     const std::string versionView(VERSION_CURSES);
     const int len = versionModel.length() + versionView.length() + 6;

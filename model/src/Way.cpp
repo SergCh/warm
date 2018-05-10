@@ -1,5 +1,4 @@
 
-//#include "stdafx.h"
 #include "Way.h"
 #include "Point.h"
 

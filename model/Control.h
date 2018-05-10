@@ -15,24 +15,21 @@ public:
 	Control(View&, Model&);
 	virtual ~Control(void);
 
-    Model & getModel() const {return m_model;}
+    inline Model & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);
 
 	// получить текущее направление
-    Way getWay() const {return m_model.getWay();}
+    inline Way getWay() const {return m_model.getWay();}
 
-    bool isPause() const {return m_pause;}
+    inline bool isPause() const {return m_pause;}
 
 	// метод для View, срабатывает, когда клиент хочет выйти.
-	void quit();
+    inline void quit() {m_quit = true;}
 
 	// геттер для m_quit
-    bool isQuit() const {return m_quit;}
-
-	// делаем один шаг
-	virtual bool move();
+    inline bool isQuit() const {return m_quit;}
 
 	// перезапуск игры
 	virtual void restart();
@@ -42,6 +39,13 @@ public:
 
 	// инициализация 
 	virtual void init();
+
+    unsigned int getCountRubbits();
+
+    Rabbit * getRabbit(unsigned int i);
+
+    std::vector<Rabbit>::iterator beginRabbit();
+    std::vector<Rabbit>::iterator endRabbit();
 
 private:
 	

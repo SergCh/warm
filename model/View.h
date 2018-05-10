@@ -18,6 +18,7 @@
 
 class Control;
 class Rabbit;
+class RabbitFactory;
 
 class View
 {
@@ -31,27 +32,40 @@ public:
     /**
      * @brief ~View Деструктор
      */
-	virtual ~View(void);
+//	virtual ~View(void);
 
     /**
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
-     * @todo переделать в inline
      */
-    void setControl(Control*);
+    void setControl(Control* _control) {
+        m_control = _control;
+    }
 
     /**
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
-     * @todo переделать в inline
      */
-    void setSnake(std::vector<Point> * _snake);
+    void setSnake(std::vector<Point> * _snake) {
+        m_snake = _snake;
+    }
 
     /**
      * @brief setRabbits Установка уазателя на вескор кроликов
      * @param _rabbits[in] Указатель на вектор кроликов
      */
-    void setRabbits(std::vector<Rabbit> * _rabbits);
+    void setRabbits(std::vector<Rabbit> * _rabbits) {
+        m_rabbits = _rabbits;
+    }
+
+    /**
+     * @brief setRabbitFactory Установка уазателя на вескор кроликов
+     * @param _rabbits[in] Указатель на вектор кроликов
+     */
+    void setRabbitFactory(RabbitFactory * _rf) {
+        m_rf = _rf;
+    }
+
 
     /**
      * @brief paint Вызывается контроллером при изменении в модели
@@ -91,6 +105,9 @@ public:
 
     /**
      * @brief beforeGame Метод вызывается контроллером перед началом игры
+     *
+     * Метод вызывается контроллером перед началом игры.
+     * Возможно необходимо сделать иницыализирующие дествия перед началом игры.
      */
     virtual void beforeGame() = 0;
     
@@ -104,5 +121,6 @@ protected:
     Control *m_control;
     std::vector<Point> * m_snake;
     std::vector<Rabbit> * m_rabbits;
+    RabbitFactory * m_rf;
     Way m_way;
 };

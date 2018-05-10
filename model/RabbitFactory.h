@@ -22,6 +22,11 @@ public:
     RabbitFactory();
 
     /**
+     * @brief ~RabbitFactory Деструктор
+     */
+    ~RabbitFactory();
+
+    /**
      * @brief clear Удалить всех кроликов (перед началом игры)
      */
     void clear();
@@ -57,6 +62,18 @@ public:
      * @return Вектор кроликов
      */
     std::vector<Rabbit> & getData();
+
+
+    Rabbit* at(int i);
+
+
+    std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
+    std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
+
+
+    unsigned int size() const {
+        return m_rabbits.size();
+    }
 
 private:
     /// Вектор кроликов

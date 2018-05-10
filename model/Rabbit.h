@@ -86,33 +86,5 @@ private:
     /// Вес кролика
     int m_weight;
 
-public:
-
-    /**
-     * @brief The checkPoint struct is Функтор для std::find_if
-     */
-    struct checkPoint
-    {
-      checkPoint( Point p ) : m_p(p) {}
-      bool operator()( const Rabbit & rabbit ) const
-      {
-        return rabbit.check(m_p);
-      }
-    private:
-      Point m_p;
-    };
-
-    /**
-     * @brief The checkDead struct is Функтор для std::find_if
-     */
-    struct checkDead
-    {
-      checkDead(){}
-      bool operator()( const Rabbit & rabbit ) const
-      {
-        return rabbit.isDead();
-      }
-    };
-
 };
 

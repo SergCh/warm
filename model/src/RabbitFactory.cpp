@@ -3,8 +3,37 @@
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
-RabbitFactory::RabbitFactory() {
 
+/**
+ * @brief The checkPoint struct is Функтор для std::find_if
+ */
+struct checkPoint
+{
+  checkPoint( Point p ) : m_p(p) {}
+  bool operator()( const Rabbit & rabbit ) const {
+    return rabbit.check(m_p);
+  }
+  Point m_p;
+};
+
+/**
+ * @brief The checkDead struct is Функтор для std::find_if
+ */
+struct checkDead
+{
+//  checkDead(){}
+  bool operator()( const Rabbit & rabbit ) const {
+    return rabbit.isDead();
+  }
+};
+
+
+RabbitFactory::RabbitFactory() {
+    m_rabbits.reserve(10);
+}
+
+RabbitFactory::~RabbitFactory() {
+    clear();
 }
 
 void RabbitFactory::clear() {
@@ -21,7 +50,7 @@ void RabbitFactory::newRabbit(Point & size, std::vector<Point> & occuped) {
     do {
 
         if (std::find(occuped.begin(), occuped.end(), point) == occuped.end() &&
-            std::find_if(m_rabbits.begin(), m_rabbits.end(), Rabbit::checkPoint(point)) == m_rabbits.end()) {
+            std::find_if(m_rabbits.begin(), m_rabbits.end(), checkPoint(point)) == m_rabbits.end()) {
                 Rabbit rabbit(point, getLive(), getWeight());
                 m_rabbits.push_back(rabbit);
                 break;
@@ -47,15 +76,16 @@ int RabbitFactory::eat(Point & _head) {
 
     for (std::vector<Rabbit>::iterator iter = m_rabbits.begin(); iter != m_rabbits.end(); iter++) {
         iter->eat(_head);
+        if (iter->isDead())
+            weight += iter->getWeight();
     }
 
-    while (true) {
-        std::vector<Rabbit>::iterator iter;
-        if ((iter=std::find_if(m_rabbits.begin(), m_rabbits.end(), Rabbit::checkDead())) == m_rabbits.end())
-            break;
-        weight = iter->getWeight();
-        m_rabbits.erase(iter);
-    }
+    m_rabbits.erase(std::remove_if(m_rabbits.begin(), m_rabbits.end(), checkDead()), m_rabbits.end());
 
     return weight;
 }
+
+Rabbit * RabbitFactory::at(int i) {
+    return &m_rabbits.at(i);
+}
+

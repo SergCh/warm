@@ -34,7 +34,9 @@ public:
 	void init();
 
 	// получить змея для передачи его на прорисовку
-	std::vector<Point> & getSnake();
+    std::vector<Point> & getSnake() {
+        return m_snake;
+    }
 
 	// сменить путь направления змея
 	void changeWay(Way);
@@ -48,11 +50,15 @@ public:
 	// получить кроликов для прорисовки
     std::vector<Rabbit> & getRabbits();
 
+    inline RabbitFactory * getRabbitFactory(){
+        return & m_rabbits;
+    }
+
     // сделать шаг (Выдача состояние модели)
     Model::State move();
 
     // надо ли этот метод
-    Model::State getState() const {return m_state;}
+    inline Model::State getState() const {return m_state;}
 
 private:
     // размеры поля

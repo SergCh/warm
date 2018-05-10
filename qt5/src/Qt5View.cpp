@@ -6,13 +6,14 @@
 #include "Control.h"
 #include "Point.h"
 #include "Rabbit.h"
+#include "RabbitFactory.h"
 #include "Way.h"
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
     step = 0;
 
     setFocusPolicy(Qt::StrongFocus);
-//    snakeChanged = true;    //set 0
+    snakeChanged = true;    //set 0
     emit scoreChanged(0);
 
 }
@@ -22,6 +23,7 @@ void Qt5View::paint() {
 }
 
 void Qt5View::changeScore(int _score) {
+    snakeChanged = true;
     emit scoreChanged(_score);
 }
 
@@ -36,14 +38,9 @@ int Qt5View::getWidthField() {
 
 //TODO: Убрать генерацию сигнала об изменение длины червя в модель
 void Qt5View::nextStep() {
-    Q_CHECK_PTR(m_snake);
+    Q_CHECK_PTR(m_control);
 
-//    const unsigned int len = m_snake->size();
     m_control->nextStep();
-//    snakeChanged = len != m_snake->size();
-
-//    if (snakeChanged)
-//        emit scoreChanged(m_snake->size());
 }
 
 void Qt5View::beforeGame() {}
@@ -96,9 +93,10 @@ QSize Qt5View::getSquareSize() {
 void Qt5View::paintEvent(QPaintEvent *event) {
     QFrame::paintEvent(event);
 
-    Q_CHECK_PTR(m_snake);
-    Q_CHECK_PTR(m_rabbits);
     Q_CHECK_PTR(m_control);
+
+//    Q_CHECK_PTR(m_snake);
+//    Q_CHECK_PTR(m_rabbits);
 
     QPainter painter(this);
 
@@ -156,10 +154,10 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                 if (i != 0) {   // !head
 
                     if (p_next.getY() == p_pred.getY()) {
-                        body.moveTop(body.y() + ddy * (iStep == 3 ? 1 : iStep));
+                        body.translate(0, ddy * (iStep == 3 ? 1 : iStep));
                         body.setHeight(squareSize.height() - ddy2);
                     } else if (p_next.getX() == p_pred.getX()) {
-                        body.moveLeft(body.x() + ddx * (iStep == 3 ? 1 : iStep));
+                        body.translate(ddx * (iStep == 3 ? 1 : iStep), 0);
                         body.setWidth(squareSize.width() - ddx2);
                     } else {
                         body.setSize(squareSize - QSize(ddx2, ddy2));
@@ -169,11 +167,14 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 
                         if ((iStep&1) == 1) {
                             body1 = body;
-                            body1.moveTopLeft(QPoint(body.x() + (toLeft?0:ddx2), body.y()+ddy));
-                            body.moveTopLeft(QPoint(body.x() + ddx, body.y() + (toUp?0:ddy2)));
+                            body1.translate(toLeft?0:ddx2, ddy);
+                            body.translate(ddx, toUp?0:ddy2);
+//                            body1.moveTopLeft(QPoint(body.x() + (toLeft?0:ddx2), body.y()+ddy));
+//                            body.moveTopLeft(QPoint(body.x() + ddx, body.y() + (toUp?0:ddy2)));
                         } else {
-                            body.moveTop(body.y() + (toUp ? 0 : ddy2));
-                            body.moveLeft(body.x() + (toLeft ? 0 : ddx2));
+                            body.translate(toLeft ? 0 : ddx2, toUp ? 0 : ddy2);
+//                            body.moveTop(body.y() + (toUp ? 0 : ddy2));
+//                            body.moveLeft(body.x() + (toLeft ? 0 : ddx2));
                         }
                     }
                 }
@@ -191,8 +192,8 @@ void Qt5View::paintEvent(QPaintEvent *event) {
         }
     }
 
-    for (auto p=m_rabbits->begin(); p != m_rabbits->end(); p++) {
-        painter.fillRect(p->getX() * squareSize.width() + 1, p->getY() * squareSize.height() + 1,
+    for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {
+        painter.fillRect(iter->getX() * squareSize.width() + 1, iter->getY() * squareSize.height() + 1,
                          squareSize.width() - 2, squareSize.height() - 2,
                          Qt::green);
     }
@@ -209,6 +210,7 @@ void Qt5View::timerEvent(QTimerEvent *event) {
         nextStep();
         if (!snakeChanged)
             incStep(step);
+        snakeChanged = false;
         if (!m_control->isPause()) {
             timer.start(timeoutTime(), this);
         } else {
@@ -238,6 +240,7 @@ void Qt5View::pause(bool p) {
         nextStep();
         if (!snakeChanged)
             incStep(step);
+        snakeChanged = false;
     }
     else
         timer.start(timeoutTime(), this);

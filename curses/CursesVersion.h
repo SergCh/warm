@@ -1,4 +1,4 @@
 #pragma once
 
-#define VERSION_CURSES "0.1"
+#define VERSION_CURSES "0.2"
 
