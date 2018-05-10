@@ -29,7 +29,6 @@ public:
         GOOD_CHANGED    ///< Может двигаться, длина изменилась
     } State;
 
-
 	// начало игры
 	void init();
 
@@ -39,7 +38,7 @@ public:
     }
 
 	// сменить путь направления змея
-	void changeWay(Way);
+    void changeWay(Way _way);
 
 	// чисто для любопытства, а куда сейчас двигается змей :)
 	Way getWay();

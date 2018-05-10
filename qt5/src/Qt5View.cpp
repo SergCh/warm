@@ -17,7 +17,6 @@ Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
 
     setFocusPolicy(Qt::StrongFocus);
     emit scoreChanged(0);
-
 }
 
 void Qt5View::paint() {
@@ -167,7 +166,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                             body1 = body.translated(toLeft?0:ddx2, ddy);
                             body.translate(ddx, toUp?0:ddy2);
 
-                            if (i == 1) {
+                            if (i == 1 && !m_control->isPause()) {
                                 steps.insert(steps.begin(), iStep);         //Сохраняем положение тела на угловых точках
                                 iterStep = steps.begin();
 
