@@ -20,7 +20,7 @@ void Model::init() {
 	int x = m_size.getX() / 2, y = m_size.getY() / 2;
 	m_snake.push_back(Point(x, y));		// голова
 	m_snake.push_back(Point(x+1, y));	// хвост
-	m_way = Way::LEFT;
+    m_way.setWay(Way::LEFT);
 	m_length = 0;
     m_state = Model::GOOD_CHANGED;
 }
@@ -40,7 +40,7 @@ Model::State Model::move() {
 
     const unsigned int len = m_snake.size();
 	Point newHead = m_snake[0];	// голова змея
-	newHead += WAYS[m_way];		// реализован только оператор добавления
+    newHead += Way::getPoint(m_way);
 
 	if (!newHead.between(m_size))
         return Model::DEAD;
@@ -54,6 +54,7 @@ Model::State Model::move() {
 
     if (m_length < 0) {                         // длина змея уменьшилась
 		m_snake.pop_back();
+        m_snake.pop_back();
         m_length++;
     } else if (m_length == 0)                   // не изменилась длина
         m_snake.pop_back();

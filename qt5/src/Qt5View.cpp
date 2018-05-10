@@ -113,7 +113,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                          head.getY() * squareSize.height() + squareSize.height() / 2);
             QPoint pBorder(pHead);
 
-            switch (way) {
+            switch (way.getWay()) {
                 case Way::LEFT:  pBorder.setX(0);                  break;
                 case Way::RIGHT: pBorder.setX(boardSize.width());  break;
                 case Way::UP:    pBorder.setY(0);                  break;
@@ -121,7 +121,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                 default: break;
             }
 
-            painter.setPen(QPen(Qt::blue, 1, Qt::DotLine));
+            painter.setPen(QPen(Qt::cyan, 1, Qt::DotLine));
             painter.drawLine(pHead, pBorder);
         }
 
@@ -168,18 +168,15 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                             body.translate(ddx, toUp?0:ddy2);
 
                             if (i == 1) {
-                                steps.insert(steps.begin(), iStep);
+                                steps.insert(steps.begin(), iStep);         //Сохраняем положение тела на угловых точках
                                 iterStep = steps.begin();
 
-                                if (isHorisontal(way)) step = toUp? 2:0;
-                                if (isVertical(way)) step = toLeft? 2:0;
+                                if (way.isHorisontal()) step = toUp? 2:0;    //Определяем положение головы
+                                else                    step = toLeft? 2:0;
                             }
 
-                            if (iterStep != steps.end()) {
-                                iStep = *iterStep;
-                                iterStep++;
-                            }
-
+                            if (iterStep != steps.end())                    //Восстанавливаем положение тела
+                                iStep = *iterStep++;
 
                         } else {
                             body.translate(toLeft ? 0 : ddx2, toUp ? 0 : ddy2);
@@ -215,8 +212,8 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 void Qt5View::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         nextStep();
-        decStep(step);
         if (!m_control->isPause()) {
+            decStep(step);
             timer.start(timeoutTime(), this);
         } else {
             timer.stop();
