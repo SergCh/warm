@@ -23,3 +23,5 @@ typedef enum {
 /// Константы для инкрементных операций при движении в направлении на еденицу
 extern const Point WAYS[COUNT_WAYS];
 
+#define isHorisontal(W) ((W) == Way::LEFT || (W) == Way::RIGHT)
+#define isVertical(W)   ((W) == Way::UP || (W) == Way::DOWN)
