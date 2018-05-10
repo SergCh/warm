@@ -36,7 +36,7 @@ Model::State Model::move() {
 
     const unsigned int len = m_snake.size();
 	Point newHead = m_snake[0];	// голова змея
-    newHead += Way::getPoint(m_way);
+    newHead += m_way.getPoint();
 
 	if (!newHead.between(m_size))
         return Model::DEAD;

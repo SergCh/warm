@@ -34,9 +34,14 @@ public:
     inline EWay getWay() const {return m_way;}
     inline void setWay(EWay _way) {m_way = _way;}
 
-    static const Point & getPoint(Way & _way) {
-        return Way::POINTS_WAY[_way.getWay()];
+//    static const Point & getPoint(Way & _way) {
+//        return Way::POINTS_WAY[_way.getWay()];
+//    }
+
+    const Point & getPoint() {
+        return Way::POINTS_WAY[m_way];
     }
+
 
 private:
     EWay m_way;

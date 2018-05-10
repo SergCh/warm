@@ -63,9 +63,7 @@ public:
      */
     std::vector<Rabbit> & getData();
 
-
     Rabbit* at(int i);
-
 
     std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
     std::vector<Rabbit>::iterator end() {return m_rabbits.end();}

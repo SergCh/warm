@@ -30,11 +30,6 @@ public:
 	View(void);
 
     /**
-     * @brief ~View Деструктор
-     */
-//	virtual ~View(void);
-
-    /**
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
      */
@@ -50,22 +45,21 @@ public:
         m_snake = _snake;
     }
 
-    /**
-     * @brief setRabbits Установка уазателя на вескор кроликов
-     * @param _rabbits[in] Указатель на вектор кроликов
-     */
-    void setRabbits(std::vector<Rabbit> * _rabbits) {
-        m_rabbits = _rabbits;
-    }
+//    /**
+//     * @brief setRabbits Установка уазателя на вескор кроликов
+//     * @param _rabbits[in] Указатель на вектор кроликов
+//     */
+//    void setRabbits(std::vector<Rabbit> * _rabbits) {
+//        m_rabbits = _rabbits;
+//    }
 
     /**
      * @brief setRabbitFactory Установка уазателя на вескор кроликов
      * @param _rabbits[in] Указатель на вектор кроликов
      */
-    void setRabbitFactory(RabbitFactory * _rf) {
-        m_rf = _rf;
+    void setRabbitFactory(RabbitFactory * _rabbitFabrica) {
+        m_rf = _rabbitFabrica;
     }
-
 
     /**
      * @brief paint Вызывается контроллером при изменении в модели
@@ -120,7 +114,6 @@ protected:
 
     Control *m_control;
     std::vector<Point> * m_snake;
-    std::vector<Rabbit> * m_rabbits;
     RabbitFactory * m_rf;
     Way m_way;
 };

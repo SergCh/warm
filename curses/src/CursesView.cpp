@@ -6,13 +6,14 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include "CursesVersion.h"
+
 #include "CursesView.h"
 #include "Point.h"
 #include "Control.h"
 #include "Model.h"
 #include "Rabbit.h"
-#include "version.h"
-#include "CursesVersion.h"
+#include "RabbitFactory.h"
 
 CursesView::CursesView() : View() {
 	initscr();
@@ -154,6 +155,8 @@ void CursesView::endGame(int score) {
 
 void CursesView::paint() {
     beforePaintField();
+    if (m_control == 0)
+        return;
     if (getHieghtField()>0 && getWidthField()>0) {
         m_way = m_control->getWay();
 
@@ -162,9 +165,10 @@ void CursesView::paint() {
             paintSnake();
         }
 
-        if (m_rabbits != 0)
-            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
-                paintRabbit(*iter);
+//        if (m_rabbits != 0)
+//            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
+        for (std::vector<Rabbit>::iterator iter=m_rf->begin(); iter != m_rf->end(); iter++)
+            paintRabbit(*iter);
     }
     afterPaintField();
 
@@ -202,7 +206,7 @@ void CursesView::afterPaintField() {
 void CursesView::paintWay() {
     Point pEnd = Point(getWidthField(), getHieghtField());
     Point pFrom = m_snake->at(0);
-    for (; pFrom.between(pEnd); pFrom += WAYS[m_way]) 
+    for (; pFrom.between(pEnd); pFrom += m_way.getPoint())
 		drawDraw(pFrom, Draw::POINT);
 }
 
@@ -215,6 +219,6 @@ void CursesView::paintSnake() {
 }
 
 void CursesView::paintRabbit(Rabbit & rabbit) {
-    Point point(rabbit.getX(), rabbit.getY());
+    Point point = rabbit.getPoint();
     drawDraw(point, Draw::RABBIT);
 }
