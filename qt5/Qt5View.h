@@ -4,16 +4,12 @@
 #include <QFrame>
 #include <QBasicTimer>
 
-QT_BEGIN_NAMESPACE
-//class QSize;
-QT_END_NAMESPACE
-
 #include <vector>
 
 #include "View.h"
 #include "Way.h"
 #include "Point.h"
-#include "Control.h"
+#include "GraphicPoint.h"
 
 class Qt5View : public QFrame, public View
 {
@@ -29,7 +25,7 @@ public:
 
     virtual void beforeGame();
     virtual void paint();
-    virtual void changeScore(int _score);
+    virtual void changeScore(int _score, int =0);
 
     void nextStep();
 
@@ -37,7 +33,7 @@ public slots:
     void restart();
 
 signals:
-    void scoreChanged(int score);
+    void scoreChanged(int score, int =0);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
@@ -53,16 +49,9 @@ private:
     QSize getSquareSize();
     inline int timeoutTime() const { return 100; }
 
-    inline void incStep(int & _step) const { _step = (_step+1) & 3;}
-    inline void decStep(int & _step) const { _step = (_step+3) & 3;}
-
-
     QBasicTimer timer;
 
-    int step;
-    std::vector<int> steps;
-
-public:
+    std::vector<GraphicPoint> gSnake;
 
 #ifdef QT_DEBUG
     void pause(bool p);

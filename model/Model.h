@@ -6,6 +6,7 @@
 
 
 #include <queue>
+#include <utility>
 
 #include "Point.h"
 #include "Way.h"
@@ -25,9 +26,19 @@ public:
     // состояние змея
     typedef enum {
         DEAD,           ///< Двигаться дальше не может
-        GOOD,           ///< Может двигаться, длина не изменилась
-        GOOD_CHANGED    ///< Может двигаться, длина изменилась
-    } State;
+        GOOD            ///< Может двигаться, длина не изменилась
+//        GOOD_CHANGED    ///< Может двигаться, длина изменилась
+    } StateGame;
+
+    // изменение змея, надо будкт создать класс змея и убрать в него
+    typedef enum {
+        NOT_CHANGED,    ///< Не измениля
+        ADDED,          ///< Добавился один элемент спереди
+        MOVED,          ///< Добавился один элемент спереди и ублася один элемент сзади
+        MOVED_SHOTER,   ///< Добавился один элемент спереди и убралось 2 элемента сзади
+        STARTED         ///< Начальный короткий змей
+    } StateSnake;
+
 
 	// начало игры
 	void init();
@@ -54,10 +65,10 @@ public:
     }
 
     // сделать шаг (Выдача состояние модели)
-    Model::State move();
+    std::pair<Model::StateGame, Model::StateSnake> move();
 
     // надо ли этот метод
-    inline Model::State getState() const {return m_state;}
+    inline Model::StateGame getStateGame() const {return m_stateGame;}
 
 private:
     // размеры поля
@@ -77,5 +88,5 @@ private:
 	// добавляемая длина при поедании кролика
 	int m_length;
 
-    Model::State m_state;
+    Model::StateGame m_stateGame;
 };

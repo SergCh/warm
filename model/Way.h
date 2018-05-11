@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file Way.h
  *      @brief Класс пути (напрвления) движения червя
  *      @author Чугайнов С.В.
  *      @date 10.05.2018
@@ -29,14 +29,12 @@ public:
     }
 
     /// Константы для инкрементных операций при движении в направлении на еденицу
-    static Point POINTS_WAY[COUNT_WAYS];
+    static const Point POINTS_WAY[COUNT_WAYS];
 
     inline EWay getWay() const {return m_way;}
     inline void setWay(EWay _way) {m_way = _way;}
 
-//    static const Point & getPoint(Way & _way) {
-//        return Way::POINTS_WAY[_way.getWay()];
-//    }
+    inline operator int () const {return (int) m_way;}
 
     const Point & getPoint() {
         return Way::POINTS_WAY[m_way];

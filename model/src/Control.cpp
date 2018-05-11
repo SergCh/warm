@@ -15,13 +15,10 @@ Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
 
 Control::~Control(void){}
 
-void Control::changeWay ( Way way) {
-	m_model.changeWay(way);
+void Control::changeWay (Way way) {
+    if (!m_pause)
+        m_model.changeWay(way);
 }
-
-//void Control::quit() {
-//	m_quit = true;
-//}
 
 unsigned int Control::getCountRubbits() {
     return m_model.getRabbitFactory()->size();
@@ -44,14 +41,14 @@ void Control::restart() {
 	m_view.beforeGame();
     m_pause = false;
     s4nr = BEGIN_STEP;
-    m_view.changeScore(m_model.getSnake().size());
+    m_view.changeScore(m_model.getSnake().size(), Model::STARTED);
 }
 
 void Control::nextStep() {
-    Model::State state = Model::GOOD;
+    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
-        if (state == Model::DEAD) {
+        if (state.first == Model::DEAD) {
             m_pause = true;
         } else {
             if (--s4nr<=0) {
@@ -60,14 +57,13 @@ void Control::nextStep() {
             }
         }
     }
-    if (state == Model::GOOD_CHANGED)
-        m_view.changeScore(m_model.getSnake().size());
+    if (state.second != Model::NOT_CHANGED)
+        m_view.changeScore(m_model.getSnake().size(), state.second);
     m_view.paint();
 }
 
 void Control::init() {
     m_view.setControl(this);
     m_view.setSnake(&m_model.getSnake());
-//    m_view.setRabbits(&m_model.getRabbits());
     m_view.setRabbitFactory((RabbitFactory*)m_model.getRabbitFactory());
 }

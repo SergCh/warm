@@ -180,7 +180,7 @@ void CursesView::paint() {
 }
 
 
-void CursesView::changeScore(int _score) { //вся прорисовка произходит в paint()
+void CursesView::changeScore(int _score, int) { //вся прорисовка произходит в paint()
     m_score = _score;
 }
 
