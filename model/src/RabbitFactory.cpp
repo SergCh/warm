@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "RabbitFactory.h"
 #include "Rabbit.h"
-
+#include "Snake.h"
 
 /**
  * @brief The checkPoint struct is Функтор для std::find_if
@@ -36,20 +36,17 @@ RabbitFactory::~RabbitFactory() {
     clear();
 }
 
-void RabbitFactory::clear() {
-    m_rabbits.clear();
-}
-
-std::vector<Rabbit> & RabbitFactory::getData() {
+std::vector<Rabbit> & RabbitFactory::data() {
     return m_rabbits;
 }
 
-void RabbitFactory::newRabbit(Point & size, std::vector<Point> & occuped) {
+void RabbitFactory::newRabbit(Point & size, Snake & snake) {
     int times=100;
     Point point(std::rand() % size.getX(), std::rand() % size.getY());
     do {
 
-        if (std::find(occuped.begin(), occuped.end(), point) == occuped.end() &&
+//        if (std::find(occuped.begin(), occuped.end(), point) == occuped.end() &&
+        if (snake.checkPoint(point) &&
             std::find_if(m_rabbits.begin(), m_rabbits.end(), checkPoint(point)) == m_rabbits.end()) {
                 Rabbit rabbit(point, getLive(), getWeight());
                 m_rabbits.push_back(rabbit);

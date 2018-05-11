@@ -83,7 +83,7 @@ void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Wa
 
     GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.size() == 0 ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
 
-    if (gSnake.size() != 0) {
+    if (!gSnake.empty()) {
         GraphicPoint * pred = &newHead;
         std::vector<GraphicPoint>::iterator curr = gSnake.begin();
         std::vector<GraphicPoint>::iterator next = curr + 1;
@@ -110,6 +110,6 @@ void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Wa
     }
 
     gSnake.insert(gSnake.begin(), newHead);
-    while (gSnake.size() > 0 && _removed-- > 0)
+    while (_removed-- > 0 && !gSnake.empty())
         gSnake.pop_back();
 }

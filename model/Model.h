@@ -10,6 +10,8 @@
 
 #include "Point.h"
 #include "Way.h"
+#include "Snake.h"
+
 
 //#include "RabbitFactory.h"
 
@@ -27,7 +29,6 @@ public:
     typedef enum {
         DEAD,           ///< Двигаться дальше не может
         GOOD            ///< Может двигаться, длина не изменилась
-//        GOOD_CHANGED    ///< Может двигаться, длина изменилась
     } StateGame;
 
     // изменение змея, надо будкт создать класс змея и убрать в него
@@ -45,7 +46,7 @@ public:
 
 	// получить змея для передачи его на прорисовку
     std::vector<Point> & getSnake() {
-        return m_snake;
+        return m_snake.data();
     }
 
 	// сменить путь направления змея
@@ -75,7 +76,9 @@ private:
     Point m_size;
 
 	// сам змей, может выделить змея в отдельный класс
-	std::vector<Point> m_snake;
+//	std::vector<Point> m_snake;
+    Snake m_snake;
+
 	// кролики, может выделить кролика в отдельный класс
     //	std::vector<Point> m_rabbits;
 

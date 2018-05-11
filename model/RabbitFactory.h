@@ -10,8 +10,11 @@
  */
 
 #include <vector>
+class Snake;
+
 #include "Rabbit.h"
 #include "Point.h"
+
 
 class RabbitFactory
 {
@@ -29,14 +32,14 @@ public:
     /**
      * @brief clear Удалить всех кроликов (перед началом игры)
      */
-    void clear();
+    inline void clear() {m_rabbits.clear();}
 
     /**
      * @brief newRabbit Сгенерировать случайным образом нового кролика
      * @param size Размер поля
-     * @param occuped Занятые точки змеем
+     * @param snake Змей
      */
-    void newRabbit(Point & size, std::vector<Point> & occuped);
+    void newRabbit(Point & size, Snake & snake);
 
     /**
      * @brief eat Кушаем кпроликов
@@ -61,7 +64,7 @@ public:
      * @brief getData Возвращаем вектор кпроликов
      * @return Вектор кроликов
      */
-    std::vector<Rabbit> & getData();
+    std::vector<Rabbit> & data();
 
     Rabbit* at(int i);
 
