@@ -14,7 +14,7 @@ QT_END_NAMESPACE
 #include "Way.h"
 #include "Point.h"
 #include "Control.h"
-#include "GraphicalWorm.h"
+#include "GraphicPoint.h"
 
 class Qt5View : public QFrame, public View
 {
@@ -63,7 +63,7 @@ private:
 //    int step;
 //    std::vector<int> steps;
 
-    std::vector<ElementSnake> gSnake;
+    std::vector<GraphicPoint> gSnake;
 
 #ifdef QT_DEBUG
     void pause(bool p);

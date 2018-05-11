@@ -36,7 +36,7 @@ SOURCES +=\
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
     qt5/src/main.cpp \
-    qt5/src/GraphicalWorm.cpp
+    qt5/src/GraphicPoint.cpp
 
 HEADERS  += \
     version.h \
@@ -51,4 +51,4 @@ HEADERS  += \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
     qt5/Qt5Version.h \
-    qt5/GraphicalWorm.h
+    qt5/GraphicPoint.h

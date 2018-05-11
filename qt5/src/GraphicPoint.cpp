@@ -4,35 +4,35 @@
 #include <QRect>
 #include <QSize>
 
-#include "GraphicalWorm.h"
+#include "GraphicPoint.h"
 
 #include "Point.h"
 #include "Way.h"
 
-ElementSnake ElementSnake::getHead(Point & _point, int _step, Way _way) {
-    ElementSnake e(HEAD, _point, _step);
+GraphicPoint GraphicPoint::getHead(Point & _point, int _step, Way _way) {
+    GraphicPoint e(HEAD, _point, _step);
     e.setPosition(_way);
     return e;
 }
 
-void ElementSnake::changeToHorisontal() {
+void GraphicPoint::changeToHorisontal() {
     m_type = HORISONTAL;
     setPosition(m_step == 3 ? 1 : m_step);
 }
 
-void ElementSnake::changeToVertical() {
+void GraphicPoint::changeToVertical() {
     m_type = VERTICAL;
     setPosition(m_step == 3 ? 1 : m_step);
 }
 
-void ElementSnake::changeToCorner(bool _toLeft, bool _toUp) {
+void GraphicPoint::changeToCorner(bool _toLeft, bool _toUp) {
     m_type = CORNER;
     setPosition(m_step & 1);
     m_toLeft =_toLeft;
     m_toUp = _toUp;
 }
 
-std::pair<QRect, QRect> ElementSnake::getRects(const QSize & squareSize) {
+std::pair<QRect, QRect> GraphicPoint::getRects(const QSize & squareSize) {
     QRect body1(m_point.getX() * squareSize.width(), m_point.getY() * squareSize.height(),
                 squareSize.width(), squareSize.height());
     QRect body2;
@@ -68,14 +68,14 @@ std::pair<QRect, QRect> ElementSnake::getRects(const QSize & squareSize) {
 }
 
 
-void ElementSnake::addHead(std::vector<ElementSnake> & gSnake, Point & _head, Way _way, int _removed){
+void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed){
 
-    ElementSnake newHead = ElementSnake::getHead(_head, gSnake.size() == 0 ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
+    GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.size() == 0 ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
 
     if (gSnake.size() != 0) {
-        ElementSnake * pred = &newHead;
-        std::vector<ElementSnake>::iterator curr = gSnake.begin();
-        std::vector<ElementSnake>::iterator next = curr + 1;
+        GraphicPoint * pred = &newHead;
+        std::vector<GraphicPoint>::iterator curr = gSnake.begin();
+        std::vector<GraphicPoint>::iterator next = curr + 1;
         if (next == gSnake.end())
             next = curr;
 

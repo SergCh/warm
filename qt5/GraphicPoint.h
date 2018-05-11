@@ -15,7 +15,7 @@ class QSize;
 QT_END_NAMESPACE
 
 
-class ElementSnake {
+class GraphicPoint {
 
 public:
     typedef enum {
@@ -25,7 +25,7 @@ public:
         CORNER
     } Type;
 
-    ElementSnake(Type _type, Point & _point, int _step) {
+    GraphicPoint(Type _type, Point & _point, int _step) {
         m_type = _type, m_point = _point; m_step= _step;
     }
 
@@ -69,7 +69,7 @@ private:
     bool m_toUp;
 
 public:
-    static ElementSnake getHead(Point & _point, int _step, Way _way);
+    static GraphicPoint getHead(Point & _point, int _step, Way _way);
 
     void changeToHorisontal();
 
@@ -77,6 +77,6 @@ public:
 
     void changeToCorner(bool _toLeft, bool _toUp);
 
-    static void addHead(std::vector<ElementSnake> & gSnake, Point & _head, Way _way, int _removed);
+    static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
 };
 

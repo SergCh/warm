@@ -11,7 +11,7 @@
 #include "RabbitFactory.h"
 #include "Way.h"
 
-#include "GraphicalWorm.h"
+#include "GraphicPoint.h"
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
 //    step = 0;
@@ -48,10 +48,10 @@ void Qt5View::changeScore(int _score, int _stateSnake) {
     if (Model::STARTED == _stateSnake) {
         gSnake.clear();
         for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
-            ElementSnake::addHead(gSnake, *iter, m_control->getWay(), 0);
+            GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
 
     } else {
-        ElementSnake::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
+        GraphicPoint::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
     }
 }
 
