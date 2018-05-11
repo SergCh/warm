@@ -4,16 +4,11 @@
 #include <QFrame>
 #include <QBasicTimer>
 
-QT_BEGIN_NAMESPACE
-//class QSize;
-QT_END_NAMESPACE
-
 #include <vector>
 
 #include "View.h"
 #include "Way.h"
 #include "Point.h"
-#include "Control.h"
 #include "GraphicPoint.h"
 
 class Qt5View : public QFrame, public View

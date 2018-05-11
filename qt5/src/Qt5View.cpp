@@ -14,8 +14,6 @@
 #include "GraphicPoint.h"
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
-//    step = 0;
-//    steps.clear();
 
     setFocusPolicy(Qt::StrongFocus);
     emit scoreChanged(0);
@@ -32,7 +30,7 @@ void Qt5View::changeScore(int _score, int _stateSnake) {
 
     int remove = 0;
     switch ((Model::StateSnake)_stateSnake) {
-    case Model::ADDED:
+    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
         remove = 0;
         break;
     case Model::MOVED:
@@ -173,12 +171,11 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 void Qt5View::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         nextStep();
-        if (!m_control->isPause()) {
-//            decStep(step);
+        if (!m_control->isPause())
             timer.start(timeoutTime(), this);
-        } else {
+        else
             timer.stop();
-        }
+
     } else {
         QFrame::timerEvent(event);
     }
@@ -187,7 +184,6 @@ void Qt5View::timerEvent(QTimerEvent *event) {
 void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
-//    step = 0;
     m_control->restart();
     emit scoreChanged(m_snake->size(), Model::STARTED);
     timer.start(timeoutTime(), this);
@@ -196,12 +192,12 @@ void Qt5View::restart() {
 #ifdef QT_DEBUG
 void Qt5View::pause(bool p) {
     Q_CHECK_PTR(m_control);
+
     if (m_control->isPause())
         return;
     if (p) {
         timer.stop();
         nextStep();
-//        decStep(step);
     }
     else
         timer.start(timeoutTime(), this);

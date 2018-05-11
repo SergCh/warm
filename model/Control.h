@@ -2,7 +2,6 @@
 
 #include "Way.h"
 
-//class Model;
 class View;
 
 #include "Model.h"
@@ -25,7 +24,7 @@ public:
 
     inline bool isPause() const {return m_pause;}
 
-	// метод для View, срабатывает, когда клиент хочет выйти.
+    // метод для View, вызывается, когда клиент хочет выйти.
     inline void quit() {m_quit = true;}
 
 	// геттер для m_quit

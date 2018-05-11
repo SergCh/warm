@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file Way.h
  *      @brief Класс пути (напрвления) движения червя
  *      @author Чугайнов С.В.
  *      @date 10.05.2018

@@ -79,44 +79,6 @@ void GraphicPoint::draw(const QSize & _squareSize, QPainter * _painter, int _ind
     }
 }
 
-
-
-std::pair<QRect, QRect> GraphicPoint::getRects(const QSize & squareSize) {
-    QRect body1(m_point.getX() * squareSize.width(), m_point.getY() * squareSize.height(),
-                squareSize.width(), squareSize.height());
-    QRect body2;
-    int ddx = squareSize.width() / 5, ddx2 = ddx + ddx;
-    int ddy = squareSize.height() / 5, ddy2 = ddy + ddy;
-
-    switch (m_type) {
-    case HEAD:
-        break;
-
-    case HORISONTAL:
-        body1.translate(0, ddy * m_position);
-        body1.setHeight(squareSize.width() - ddy2);
-        break;
-
-    case VERTICAL:
-        body1.translate(ddx * m_position, 0);
-        body1.setWidth(squareSize.height() - ddx2);
-        break;
-
-    case CORNER:
-        body1.setSize(squareSize - QSize(ddx2, ddy2));
-        if (m_position) {
-            body2 = body1.translated(m_toLeft ? 0:ddx2, ddy);
-            body1.translate(ddx, m_toUp ? 0:ddy2);
-            break;
-        }
-        body1.translate(m_toLeft ? 0 : ddx2, m_toUp ? 0 : ddy2);
-        break;
-    }
-
-    return std::make_pair(body1, body2);
-}
-
-
 void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed){
 
     GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.size() == 0 ? 0 : (gSnake.front().getStep()+1) & 3 , _way);

@@ -15,7 +15,7 @@ Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
 
 Control::~Control(void){}
 
-void Control::changeWay ( Way way) {
+void Control::changeWay (Way way) {
     if (!m_pause)
         m_model.changeWay(way);
 }

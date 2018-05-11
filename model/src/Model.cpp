@@ -20,7 +20,7 @@ void Model::init() {
 	int x = m_size.getX() / 2, y = m_size.getY() / 2;
 	m_snake.push_back(Point(x, y));		// голова
 	m_snake.push_back(Point(x+1, y));	// хвост
-    m_way.setWay(Way::LEFT);
+    m_way = Way::LEFT;
 	m_length = 0;
     m_stateGame = Model::GOOD;
 }
@@ -54,9 +54,9 @@ std::pair<Model::StateGame, Model::StateSnake> Model::move() {
         m_snake.pop_back();
         m_length++;
         stateSnake = Model::MOVED_SHOTER;
-    } else if (m_length == 0)                   // не изменилась длина
+    } else if (m_length == 0) {                 // не изменилась длина
         m_snake.pop_back();
-    else {                                      // длина змея увеличилась
+    } else {                                    // длина змея увеличилась
         m_length--;
         stateSnake = Model::ADDED;
     }
