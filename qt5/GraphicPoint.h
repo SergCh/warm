@@ -60,15 +60,6 @@ public:
 
     std::pair<QRect, QRect> getRects(const QSize & squareSize);
 
-private:
-    Point m_point;
-    int m_step;
-    Type m_type;
-    int m_position;
-    bool m_toLeft;
-    bool m_toUp;
-
-public:
     static GraphicPoint getHead(Point & _point, int _step, Way _way);
 
     void changeToHorisontal();
@@ -78,5 +69,13 @@ public:
     void changeToCorner(bool _toLeft, bool _toUp);
 
     static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
+
+private:
+    Point m_point;
+    int m_step;
+    Type m_type;
+    int m_position;
+    bool m_toLeft;
+    bool m_toUp;
 };
 
