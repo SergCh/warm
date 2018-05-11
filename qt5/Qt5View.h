@@ -14,6 +14,7 @@ QT_END_NAMESPACE
 #include "Way.h"
 #include "Point.h"
 #include "Control.h"
+#include "GraphicalWorm.h"
 
 class Qt5View : public QFrame, public View
 {
@@ -29,7 +30,7 @@ public:
 
     virtual void beforeGame();
     virtual void paint();
-    virtual void changeScore(int _score);
+    virtual void changeScore(int _score, int =0);
 
     void nextStep();
 
@@ -37,7 +38,7 @@ public slots:
     void restart();
 
 signals:
-    void scoreChanged(int score);
+    void scoreChanged(int score, int =0);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
@@ -59,10 +60,10 @@ private:
 
     QBasicTimer timer;
 
-    int step;
-    std::vector<int> steps;
+//    int step;
+//    std::vector<int> steps;
 
-public:
+    std::vector<ElementSnake> gSnake;
 
 #ifdef QT_DEBUG
     void pause(bool p);

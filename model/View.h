@@ -71,7 +71,7 @@ public:
      * @brief changeScore Изменение результата
      * @param _score результат
      */
-    virtual void changeScore(int _score) = 0;
+    virtual void changeScore(int _score, int = 0) = 0;
 
     /**
      * @brief getHieghtField Возвращает высоту игроого поля

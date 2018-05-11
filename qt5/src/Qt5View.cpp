@@ -11,9 +11,11 @@
 #include "RabbitFactory.h"
 #include "Way.h"
 
+#include "GraphicalWorm.h"
+
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
-    step = 0;
-    steps.clear();
+//    step = 0;
+//    steps.clear();
 
     setFocusPolicy(Qt::StrongFocus);
     emit scoreChanged(0);
@@ -23,8 +25,34 @@ void Qt5View::paint() {
     update();
 }
 
-void Qt5View::changeScore(int _score) {
+void Qt5View::changeScore(int _score, int _stateSnake) {
     emit scoreChanged(_score);
+    if (Model::NOT_CHANGED == _stateSnake)
+        return;
+
+    int remove = 0;
+    switch ((Model::StateSnake)_stateSnake) {
+    case Model::ADDED:
+        remove = 0;
+        break;
+    case Model::MOVED:
+        remove = 1;
+        break;
+    case Model::MOVED_SHOTER:
+        remove = 2;
+        break;
+    default:
+        break;
+    }
+
+    if (Model::STARTED == _stateSnake) {
+        gSnake.clear();
+        for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
+            ElementSnake::addHead(gSnake, *iter, m_control->getWay(), 0);
+
+    } else {
+        ElementSnake::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
+    }
 }
 
 int Qt5View::getHieghtField() {
@@ -126,72 +154,82 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 
         // draw snake
         {
-            const int ddy = squareSize.height()/5;
-            const int ddx = squareSize.width()/5;
-            const int ddy2 = ddy + ddy;
-            const int ddx2 = ddx + ddx;
+            for (auto iter = gSnake.begin(); iter != gSnake.end(); ++iter) {
+                auto body=iter->getRects(squareSize);
+                const QColor color = (iter - gSnake.begin()) % 5 == 3 ? Qt::yellow: Qt::red;
 
-            auto curr = m_snake->begin();
-            auto pred = curr;
-            auto next = curr+1;
-            auto iterStep = steps.begin();
+                painter.fillRect(body.first, color);
+                if (!body.second.isNull())
+                    painter.fillRect(body.second, color);
 
-            for(int i=0, iStep=step; curr != m_snake->end(); next++, curr++, i++){
-                if (next == m_snake->end())
-                    next = curr;
+            }
 
-                const QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
+//            const int ddy = squareSize.height()/5;
+//            const int ddx = squareSize.width()/5;
+//            const int ddy2 = ddy + ddy;
+//            const int ddx2 = ddx + ddx;
 
-                QRect body(curr->getX() * squareSize.width(),
-                           curr->getY() * squareSize.height(),
-                           squareSize.width(),
-                           squareSize.height());
-                QRect body1;
+//            auto curr = m_snake->begin();
+//            auto pred = curr;
+//            auto next = curr+1;
+//            auto iterStep = steps.begin();
 
-                if (i != 0) {   // !head
+//            for(int i=0, iStep=step; curr != m_snake->end(); next++, curr++, i++){
+//                if (next == m_snake->end())
+//                    next = curr;
 
-                    if (next->getY() == pred->getY()) {
-                        body.translate(0, ddy * (iStep == 3 ? 1 : iStep));
-                        body.setHeight(squareSize.height() - ddy2);
-                    } else if (next->getX() == pred->getX()) {
-                        body.translate(ddx * (iStep == 3 ? 1 : iStep), 0);
-                        body.setWidth(squareSize.width() - ddx2);
-                    } else {
-                        body.setSize(squareSize - QSize(ddx2, ddy2));
+//                const QColor color = i % 5 == 3 ? Qt::yellow: Qt::red;
 
-                        const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;
-                        const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;
+//                QRect body(curr->getX() * squareSize.width(),
+//                           curr->getY() * squareSize.height(),
+//                           squareSize.width(),
+//                           squareSize.height());
+//                QRect body1;
 
-                        if ((iStep&1) == 1) {
-                            body1 = body.translated(toLeft?0:ddx2, ddy);
-                            body.translate(ddx, toUp?0:ddy2);
+//                if (i != 0) {   // !head                                        // голова прорисована поумолчанию
+//                                                                                // возможны 4 напрвления
+//                    if (next->getY() == pred->getY()) {                         // горизонтальный э-т 3 вида
+//                        body.translate(0, ddy * (iStep == 3 ? 1 : iStep));      // 0-ввеху, 1-посередине, 2-внизу
+//                        body.setHeight(squareSize.height() - ddy2);             // элемент на всю ширину клетки
+//                    } else if (next->getX() == pred->getX()) {                  // вертикальный э-т 3 вида
+//                        body.translate(ddx * (iStep == 3 ? 1 : iStep), 0);      // 0-слева, 1-песередине, 2-справа
+//                        body.setWidth(squareSize.width() - ddx2);               // элемент на всю ширину
+//                    } else {                                                    // угловые элементы 2 вида, 4 направления
+//                        body.setSize(squareSize - QSize(ddx2, ddy2));           // ширина и высота без 2-х пятых
+//                                                                                // напрвления угловые из двух направлений
+//                        const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;   //направление по горизонтали
+//                        const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;   //направление по вертикали
 
-                            if (i == 1 && !m_control->isPause()) {
-                                steps.insert(steps.begin(), iStep);         //Сохраняем положение тела на угловых точках
-                                iterStep = steps.begin();
+//                        if ((iStep&1) == 1) {                                   // средний э-т прорисован 2-мя квадратами
+//                            body1 = body.translated(toLeft?0:ddx2, ddy);
+//                            body.translate(ddx, toUp?0:ddy2);
 
-                                if (way.isHorisontal()) step = toUp? 2:0;    //Определяем положение головы
-                                else                    step = toLeft? 2:0;
-                            }
+//                            if (i == 1 && !m_control->isPause()) {
+//                                steps.insert(steps.begin(), iStep);         //Сохраняем положение тела на угловых точках
+//                                iterStep = steps.begin();
 
-                            if (iterStep != steps.end())                    //Восстанавливаем положение тела
-                                iStep = *iterStep++;
+//                                if (way.isHorisontal()) step = toUp? 2:0;   //Определяем положение головы
+//                                else                    step = toLeft? 2:0;
+//                            }
 
-                        } else {
-                            body.translate(toLeft ? 0 : ddx2, toUp ? 0 : ddy2);
-                        }
+//                            if (iterStep != steps.end())                    //Восстанавливаем положение тела
+//                                iStep = *iterStep++;
 
-                    }
-                }
+//                        } else {                                                // э-т прижатый к углу
+//                            body.translate(toLeft ? 0 : ddx2, toUp ? 0 : ddy2);
+//                        }
 
-                painter.fillRect(body, color);
-                if (!body1.isNull())
-                    painter.fillRect(body1, color);
+//                    }
+//                }
 
-                pred = curr;
-                incStep(iStep);
-            } //for
-            steps.erase(iterStep, steps.end());
+//                painter.fillRect(body, color);
+//                if (!body1.isNull())
+//                    painter.fillRect(body1, color);
+
+//                pred = curr;
+//                incStep(iStep);
+//            } //for
+//            steps.erase(iterStep, steps.end());
         }
     }
 
@@ -212,7 +250,7 @@ void Qt5View::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timer.timerId()) {
         nextStep();
         if (!m_control->isPause()) {
-            decStep(step);
+//            decStep(step);
             timer.start(timeoutTime(), this);
         } else {
             timer.stop();
@@ -225,9 +263,9 @@ void Qt5View::timerEvent(QTimerEvent *event) {
 void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
-    step = 0;
+//    step = 0;
     m_control->restart();
-    emit scoreChanged(m_snake->size());
+    emit scoreChanged(m_snake->size(), Model::STARTED);
     timer.start(timeoutTime(), this);
 }
 
@@ -239,7 +277,7 @@ void Qt5View::pause(bool p) {
     if (p) {
         timer.stop();
         nextStep();
-        decStep(step);
+//        decStep(step);
     }
     else
         timer.start(timeoutTime(), this);

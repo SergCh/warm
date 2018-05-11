@@ -34,6 +34,8 @@ public:
     inline EWay getWay() const {return m_way;}
     inline void setWay(EWay _way) {m_way = _way;}
 
+    inline operator int () {return (int) m_way;}
+
 //    static const Point & getPoint(Way & _way) {
 //        return Way::POINTS_WAY[_way.getWay()];
 //    }
