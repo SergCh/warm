@@ -6,13 +6,14 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include "CursesVersion.h"
+
 #include "CursesView.h"
 #include "Point.h"
 #include "Control.h"
 #include "Model.h"
 #include "Rabbit.h"
-#include "version.h"
-#include "CursesVersion.h"
+#include "RabbitFactory.h"
 
 CursesView::CursesView() : View() {
 	initscr();
@@ -27,6 +28,7 @@ CursesView::CursesView() : View() {
     m_width = getSystemWigth();
 	initColors();
 	curs_set(0);
+    m_score=0;
 }
 
 CursesView::~CursesView() {
@@ -37,7 +39,7 @@ int CursesView::getHieghtField() {
 	return m_hieght-2;
 }
 
-int CursesView::getWigthField() {
+int CursesView::getWidthField() {
     return (m_width-2) / 2;
 }
 
@@ -153,7 +155,9 @@ void CursesView::endGame(int score) {
 
 void CursesView::paint() {
     beforePaintField();
-    if (getHieghtField()>0 && getWigthField()>0) {
+    if (m_control == 0)
+        return;
+    if (getHieghtField()>0 && getWidthField()>0) {
         m_way = m_control->getWay();
 
         if (m_snake != 0 && m_snake->size() > 0) {
@@ -161,9 +165,10 @@ void CursesView::paint() {
             paintSnake();
         }
 
-        if (m_rabbits != 0)
-            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
-                paintRabbit(*iter);
+//        if (m_rabbits != 0)
+//            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
+        for (std::vector<Rabbit>::iterator iter=m_rf->begin(); iter != m_rf->end(); iter++)
+            paintRabbit(*iter);
     }
     afterPaintField();
 
@@ -175,6 +180,10 @@ void CursesView::paint() {
 }
 
 
+void CursesView::changeScore(int _score, int) { //вся прорисовка произходит в paint()
+    m_score = _score;
+}
+
 void CursesView::beforePaintField() {
 	wattrset(stdscr, COLOR_PAIR(Draw::EMPTY) | A_BOLD);
 	erase();
@@ -182,9 +191,7 @@ void CursesView::beforePaintField() {
 	wattrset(stdscr, COLOR_PAIR(Color::FRAME) | A_BOLD);
 	box(stdscr, 0, 0);
     
-    const int score=m_snake->size();
-    
-    mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", score);
+    mvprintw(m_hieght-1, 1, " For exit press: 'Q'. Snake's length=%d ", m_score);
     const std::string versionModel(VERSION_MODEL);
     const std::string versionView(VERSION_CURSES);
     const int len = versionModel.length() + versionView.length() + 6;
@@ -197,9 +204,9 @@ void CursesView::afterPaintField() {
 }
 
 void CursesView::paintWay() {
-    Point pEnd = Point(getWigthField(), getHieghtField());
+    Point pEnd = Point(getWidthField(), getHieghtField());
     Point pFrom = m_snake->at(0);
-    for (; pFrom.between(pEnd); pFrom += WAYS[m_way]) 
+    for (; pFrom.between(pEnd); pFrom += m_way.getPoint())
 		drawDraw(pFrom, Draw::POINT);
 }
 
@@ -212,6 +219,6 @@ void CursesView::paintSnake() {
 }
 
 void CursesView::paintRabbit(Rabbit & rabbit) {
-    Point point(rabbit.getX(), rabbit.getY());
+    Point point = rabbit.getPoint();
     drawDraw(point, Draw::RABBIT);
 }

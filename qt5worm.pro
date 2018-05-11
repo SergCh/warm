@@ -30,23 +30,25 @@ SOURCES +=\
     model/src/Point.cpp \
     model/src/View.cpp \
     model/src/Way.cpp \
-    qt5/src/Qt5Board.cpp \
     model/src/RabbitFactory.cpp \
     model/src/Rabbit.cpp \
+#    model/src/RabbitSimple.cpp \
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
-    qt5/src/main.cpp
+    qt5/src/main.cpp \
+    qt5/src/GraphicPoint.cpp
 
 HEADERS  += \
+    version.h \
     model/Control.h \
     model/Model.h \
     model/Point.h \
     model/View.h \
     model/Way.h \
-    qt5/Qt5Board.h \
     model/RabbitFactory.h \
     model/Rabbit.h \
+    #model/RabbitSimple.h \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
-    version.h \
-    qt5/Qt5Version.h
+    qt5/Qt5Version.h \
+    qt5/GraphicPoint.h

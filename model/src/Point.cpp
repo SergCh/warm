@@ -1,11 +1,9 @@
 //#include "StdAfx.h"
 #include "Point.h"
 
-Point::Point(int x, int y):pair<int,int>(x,y){}
+Point::Point(int _x, int _y):pair<int,int>(_x, _y){}
 
-Point::Point():pair<int,int>(0,0){}
-
-Point::~Point(void){}
+Point::Point():pair<int,int>(0, 0){}
 
 void Point::setXY(int _x, int _y) {
 	first = _x;
@@ -21,13 +19,13 @@ bool Point::between(Point& _high) {
 	return between(low, _high);
 }
 
-Point& Point::operator += (const Point& p) {
-	first += p.first;
-	second += p.second;
+Point& Point::operator += (const Point& _point) {
+    first += _point.first;
+    second += _point.second;
 	return *this;
 }
 
-bool Point::less (const Point& p) {
-	return first<p.first && second<p.second;
+bool Point::less (const Point& _point) {
+    return first<_point.first && second<_point.second;
 }
 

@@ -1,3 +1,3 @@
 #pragma once
 
-#define VERSION_QT5 "0.1"
+#define VERSION_QT5 "0.2"

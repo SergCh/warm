@@ -6,6 +6,7 @@
 
 
 #include <queue>
+#include <utility>
 
 #include "Point.h"
 #include "Way.h"
@@ -22,14 +23,33 @@ public:
     Model(Point _size, RabbitFactory &_rabbits);
 	~Model(void);
 	
+    // состояние змея
+    typedef enum {
+        DEAD,           ///< Двигаться дальше не может
+        GOOD            ///< Может двигаться, длина не изменилась
+//        GOOD_CHANGED    ///< Может двигаться, длина изменилась
+    } StateGame;
+
+    // изменение змея, надо будкт создать класс змея и убрать в него
+    typedef enum {
+        NOT_CHANGED,    ///< Не измениля
+        ADDED,          ///< Добавился один элемент спереди
+        MOVED,          ///< Добавился один элемент спереди и ублася один элемент сзади
+        MOVED_SHOTER,   ///< Добавился один элемент спереди и убралось 2 элемента сзади
+        STARTED         ///< Начальный короткий змей
+    } StateSnake;
+
+
 	// начало игры
 	void init();
 
 	// получить змея для передачи его на прорисовку
-	std::vector<Point> & getSnake();
+    std::vector<Point> & getSnake() {
+        return m_snake;
+    }
 
 	// сменить путь направления змея
-	void changeWay(Way);
+    void changeWay(Way _way);
 
 	// чисто для любопытства, а куда сейчас двигается змей :)
 	Way getWay();
@@ -40,8 +60,15 @@ public:
 	// получить кроликов для прорисовки
     std::vector<Rabbit> & getRabbits();
 
-	// сделать шаг (если ложь, то игра закончена)
-	bool move();
+    inline RabbitFactory * getRabbitFactory(){
+        return & m_rabbits;
+    }
+
+    // сделать шаг (Выдача состояние модели)
+    std::pair<Model::StateGame, Model::StateSnake> move();
+
+    // надо ли этот метод
+    inline Model::StateGame getStateGame() const {return m_stateGame;}
 
 private:
     // размеры поля
@@ -61,4 +88,5 @@ private:
 	// добавляемая длина при поедании кролика
 	int m_length;
 
+    Model::StateGame m_stateGame;
 };

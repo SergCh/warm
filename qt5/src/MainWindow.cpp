@@ -5,12 +5,11 @@
 
 #include "MainWindow.h"
 #include "Qt5View.h"
-#include "Qt5Board.h"
 #include "version.h"
 #include "Qt5Version.h"
 
 MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
-    board = new Qt5Board(view);
+    board = view;
     scoreLcd = new QLCDNumber(5);
     scoreLcd->setSegmentStyle(QLCDNumber::Filled);
 
@@ -40,7 +39,9 @@ MainWindow::MainWindow(Qt5View *view, QWidget *parent) : QWidget(parent) {
     resize(550, 370);
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() {
+    board->setParent(0);    //объект создан в стеке, а не в куче, удалять нельзя
+}
 
 QLabel *MainWindow::createLabel(const QString &text) {
     QLabel *lbl = new QLabel(text);

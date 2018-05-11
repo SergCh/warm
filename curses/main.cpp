@@ -9,29 +9,24 @@
 #include "Point.h"
 #include "RabbitFactory.h"
 
-int main(int argc, char* argv[]) {
+int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {
 
 	CursesView view;
     RabbitFactory rabbits;
-    Model model(Point(view.getWigthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
 
 	Control control(view, model);
 
 	control.init();
 
-	while (!0) {
+    while (true) {
 		view.getCommands();
 
         if (control.isQuit())
 			break;
 
-//        if (control.isPause()) {
-//            view.endGame(model.getSnake().size());
-//            control.restart();
-//        } else {
-            control.nextStep();
-//        }
+        control.nextStep();
 	}
 
 	return 0;
