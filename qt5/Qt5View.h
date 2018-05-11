@@ -54,14 +54,7 @@ private:
     QSize getSquareSize();
     inline int timeoutTime() const { return 100; }
 
-    inline void incStep(int & _step) const { _step = (_step+1) & 3;}
-    inline void decStep(int & _step) const { _step = (_step+3) & 3;}
-
-
     QBasicTimer timer;
-
-//    int step;
-//    std::vector<int> steps;
 
     std::vector<GraphicPoint> gSnake;
 

@@ -29,16 +29,12 @@ public:
     }
 
     /// Константы для инкрементных операций при движении в направлении на еденицу
-    static Point POINTS_WAY[COUNT_WAYS];
+    static const Point POINTS_WAY[COUNT_WAYS];
 
     inline EWay getWay() const {return m_way;}
     inline void setWay(EWay _way) {m_way = _way;}
 
-    inline operator int () {return (int) m_way;}
-
-//    static const Point & getPoint(Way & _way) {
-//        return Way::POINTS_WAY[_way.getWay()];
-//    }
+    inline operator int () const {return (int) m_way;}
 
     const Point & getPoint() {
         return Way::POINTS_WAY[m_way];

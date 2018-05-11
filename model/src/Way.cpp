@@ -2,7 +2,7 @@
 #include "Way.h"
 #include "Point.h"
 
-Point Way::POINTS_WAY[Way::COUNT_WAYS] = {
+const Point Way::POINTS_WAY[Way::COUNT_WAYS] = {
     /*UP*/    Point( 0, -1),                /// UP
     /*DOWN*/  Point( 0,  1),                /// DOWN
     /*LEFT*/  Point(-1,  0),                /// LEFT

@@ -12,6 +12,7 @@
 QT_BEGIN_NAMESPACE
 class QRect;
 class QSize;
+class QPainter;
 QT_END_NAMESPACE
 
 
@@ -59,6 +60,8 @@ public:
 
 
     std::pair<QRect, QRect> getRects(const QSize & squareSize);
+
+    void draw(const QSize & _squareSize, QPainter * _painter, int _index);
 
     static GraphicPoint getHead(Point & _point, int _step, Way _way);
 
