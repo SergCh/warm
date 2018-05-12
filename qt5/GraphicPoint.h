@@ -26,9 +26,9 @@ public:
         CORNER
     } Type;
 
-    GraphicPoint(Type _type, Point _point, int _step) :Point(_point.getX(), _point.getY()){
+    GraphicPoint(int _x, int _y, Type _type=HEAD, int _step=0) : Point(_x, _y){
         m_type = _type;
-        m_step= _step;
+        m_step = _step;
     }
 
     inline void setPosition(int _position) {

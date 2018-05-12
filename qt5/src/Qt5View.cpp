@@ -152,8 +152,10 @@ void Qt5View::paintEvent(QPaintEvent *event) {
         }
 
         // draw snake
-        for (auto iter = gSnake.begin(); iter != gSnake.end(); ++iter)
-            iter->draw(squareSize, &painter, iter - gSnake.begin());
+//        for (auto iter = gSnake.begin(); iter != gSnake.end(); ++iter)
+//            iter->draw(squareSize, &painter, iter - gSnake.begin());
+        for (auto iter = m_snake->begin(); iter != m_snake->end(); ++iter)
+            iter->draw(squareSize, &painter, iter - m_snake->begin());
     }
 
     for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {

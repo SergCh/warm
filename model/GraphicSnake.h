@@ -17,7 +17,7 @@ class GraphicSnake : public TSnake<GraphicPoint>
 public:
     GraphicSnake(): TSnake<GraphicPoint>() {}
 
-    virtual void addNewHead(Point _newHead) {
+    virtual void addNewHead(GraphicPoint _newHead) {
 
         GraphicPoint newHead = GraphicPoint::getHead(_newHead, empty() ? 0 : (front().getStep()+1) & 3, m_way);
 

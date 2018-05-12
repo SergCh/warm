@@ -27,15 +27,17 @@ public:
     }
 
     virtual bool generateNewHead(Point _sizeField) {
-        TPoint newHead = m_snake.front();
-        newHead += m_way.getPoint();
+        TPoint newHead = TPoint(_sizeField.getX() / 2, _sizeField.getY() / 2);
+        if (!m_snake.empty()) {
+            newHead = m_snake.front();
+            newHead += m_way.getPoint();
 
-        if (!newHead.between(_sizeField))
-            return false;
+            if (!newHead.between(_sizeField))
+                return false;
 
-        if (!checkPoint(newHead))
-            return false;
-
+            if (!checkPoint(newHead))
+                return false;
+        }
         addNewHead(newHead);
         return true;
     }
@@ -52,6 +54,14 @@ public:
         while (_count-- > 0 && !m_snake.empty())
             m_snake.pop_back();
     }
+
+    virtual void start(Point _sizeField) {
+        clear();
+        setWay(Way::LEFT);
+        generateNewHead(_sizeField);
+        generateNewHead(_sizeField);
+    }
+
 
     virtual unsigned int size() const {return m_snake.size();}
     virtual bool empty() const {return m_snake.empty();}

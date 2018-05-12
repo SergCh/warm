@@ -12,7 +12,7 @@
 #include "Way.h"
 
 GraphicPoint GraphicPoint::getHead(Point & _point, int _step, Way _way) {
-    GraphicPoint head(HEAD, _point, _step);
+    GraphicPoint head(_point.getX(), _point.getY(), HEAD, _step);
     head.setPosition(_way);
     return head;
 }
