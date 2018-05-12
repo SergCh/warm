@@ -27,8 +27,8 @@ public:
     }
 
     virtual bool generateNewHead(Point _sizeField) {
-        TPoint newHead = front();
-        newHead += getWay().getPoint();
+        TPoint newHead = m_snake.front();
+        newHead += m_way.getPoint();
 
         if (!newHead.between(_sizeField))
             return false;
@@ -57,7 +57,7 @@ public:
     virtual bool empty() const {return m_snake.empty();}
     virtual void clear() {m_snake.clear();}
 
-    const Point & front() const {return m_snake.front();}
+    inline const Point & front() const {return m_snake.front();}
 
     inline typename std::vector<TPoint>::reverse_iterator rbegin() {return m_snake.rbegin();}
     inline typename std::vector<TPoint>::reverse_iterator rend() {return m_snake.rend();}
