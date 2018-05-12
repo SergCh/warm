@@ -8,6 +8,7 @@
 #include "Control.h"
 #include "Model.h"
 #include "RabbitFactory.h"
+#include "Config.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
     Qt5View view;
 
     RabbitFactory rabbits;
-    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
+    ModelSnake model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
 
     Control control(view, model);
     std::srand(unsigned(std::time(0)));

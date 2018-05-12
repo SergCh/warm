@@ -53,4 +53,5 @@ HEADERS  += \
     qt5/Qt5Version.h \
     qt5/GraphicPoint.h \
     model/Snake.h \
-    model/GraphicSnake.h
+    model/GraphicSnake.h \
+    qt5/Config.h

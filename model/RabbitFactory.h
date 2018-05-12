@@ -11,9 +11,9 @@
 
 #include <vector>
 //class Snake<Point>;
-#include "Snake.h"
+
 #include "Rabbit.h"
-#include "Point.h"
+#include "Config.h"
 
 
 class RabbitFactory
@@ -39,7 +39,7 @@ public:
      * @param size Размер поля
      * @param snake Змей
      */
-    void newRabbit(Point & size, Snake<Point> & snake);
+    void newRabbit(Point & size, SnakePoint & snake);
 
     /**
      * @brief eat Кушаем кпроликов

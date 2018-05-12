@@ -8,7 +8,4 @@
  */
 #include "GraphicSnake.h"
 
-GraphicSnake::GraphicSnake()
-{
 
-}

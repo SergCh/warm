@@ -10,6 +10,7 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 #include "Way.h"
+#include "Config.h"
 
 #include "GraphicPoint.h"
 
@@ -25,25 +26,25 @@ void Qt5View::paint() {
 
 void Qt5View::changeScore(int _score, int _stateSnake) {
     emit scoreChanged(_score);
-    if (Model::NOT_CHANGED == _stateSnake)
+    if (ModelSnake::NOT_CHANGED == _stateSnake)
         return;
 
     int remove = 0;
-    switch ((Model::StateSnake)_stateSnake) {
-    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
+    switch ((ModelSnake::StateSnake)_stateSnake) {
+    case ModelSnake::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
         remove = 0;
         break;
-    case Model::MOVED:
+    case ModelSnake::MOVED:
         remove = 1;
         break;
-    case Model::MOVED_SHOTER:
+    case ModelSnake::MOVED_SHOTER:
         remove = 2;
         break;
     default:
         break;
     }
 
-    if (Model::STARTED == _stateSnake) {
+    if (ModelSnake::STARTED == _stateSnake) {
         gSnake.clear();
         for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
             GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
@@ -133,7 +134,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
     if (m_snake->size() > 0) {
         // draw way
         {
-            const Point head = m_snake->at(0);
+            const Point head = m_snake->front();
             QPoint pHead(head.getX() * squareSize.width() + squareSize.width() / 2,
                          head.getY() * squareSize.height() + squareSize.height() / 2);
             QPoint pBorder(pHead);
@@ -185,7 +186,7 @@ void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
     m_control->restart();
-    emit scoreChanged(m_snake->size(), Model::STARTED);
+    emit scoreChanged(m_snake->size(), ModelSnake::STARTED);
     timer.start(timeoutTime(), this);
 }
 

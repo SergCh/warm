@@ -5,16 +5,17 @@
 class View;
 
 #include "Model.h"
+#include "Config.h"
 
 // контроллер между View и Model
 
 class Control
 {
 public:
-	Control(View&, Model&);
+    Control(View&, ModelSnake&);
 	virtual ~Control(void);
 
-    inline Model & getModel() const {return m_model;}
+    inline ModelSnake & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);
@@ -51,7 +52,7 @@ private:
     const int BEGIN_STEP = 20;
     const int NEXT_STEP = 50;
 
-	Model &m_model;
+    ModelSnake &m_model;
 	View &m_view;
 
 	// флаг выхода 

@@ -7,7 +7,7 @@
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
-Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
+Control::Control(View& _view, ModelSnake& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
     s4nr = BEGIN_STEP;
@@ -41,14 +41,14 @@ void Control::restart() {
 	m_view.beforeGame();
     m_pause = false;
     s4nr = BEGIN_STEP;
-    m_view.changeScore(m_model.getSnake().size(), Model::STARTED);
+    m_view.changeScore(m_model.getSnake().size(), ModelSnake::STARTED);
 }
 
 void Control::nextStep() {
-    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
+    std::pair<ModelSnake::StateGame, ModelSnake::StateSnake> state(ModelSnake::GOOD, ModelSnake::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
-        if (state.first == Model::DEAD) {
+        if (state.first == ModelSnake::DEAD) {
             m_pause = true;
         } else {
             if (--s4nr<=0) {
@@ -57,7 +57,7 @@ void Control::nextStep() {
             }
         }
     }
-    if (state.second != Model::NOT_CHANGED)
+    if (state.second != ModelSnake::NOT_CHANGED)
         m_view.changeScore(m_model.getSnake().size(), state.second);
     m_view.paint();
 }

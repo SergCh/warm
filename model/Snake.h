@@ -18,6 +18,7 @@ template <class TPoint>
 class Snake
 {
 public:
+
     Snake() {}
 
     virtual ~Snake() {
@@ -44,7 +45,15 @@ public:
 
     const Point & front() const {return m_snake.front();}
 
-private:
+    inline typename std::vector<TPoint>::reverse_iterator rbegin() {return m_snake.rbegin();}
+    inline typename std::vector<TPoint>::reverse_iterator rend() {return m_snake.rend();}
+
+    inline typename std::vector<TPoint>::iterator begin() {return m_snake.begin();}
+    inline typename std::vector<TPoint>::iterator end() {return m_snake.end();}
+
+    inline TPoint & front() {return m_snake.front();}
+
+protected:
     std::vector<TPoint> m_snake;
 };
 

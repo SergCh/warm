@@ -18,13 +18,13 @@
 //class RabbitFactory;
 //class Rabbit;
 
+template <class TSnake>
 class Model {
 
 public:
     // передача параметров ширины и высоты поля и фабрики кроликов а надо?
     Model(Point _size, RabbitFactory &_rabbits)
     : m_size(_size), m_rabbits(_rabbits) {}
-//    ~Model(void) {}
 	
     // состояние змея
     typedef enum {
@@ -56,7 +56,8 @@ public:
     }
 
 	// получить змея для передачи его на прорисовку
-    std::vector<Point> & getSnake() {return m_snake.data();}
+//    std::vector<Point> & getSnake() {return m_snake.date();}
+    TSnake & getSnake() {return m_snake;}
 
 	// сменить путь направления змея
     inline void changeWay(Way _way) {m_way = _way;}
@@ -77,7 +78,41 @@ public:
     }
 
     // сделать шаг (Выдача состояние модели)
-    std::pair<Model::StateGame, Model::StateSnake> move();
+    std::pair<Model::StateGame, Model::StateSnake> move() {
+
+        if (m_stateGame == Model::DEAD)
+            return std::make_pair(Model::DEAD, Model::NOT_CHANGED);
+
+        Point newHead = m_snake.front();                 // голова змея
+        newHead += m_way.getPoint();
+
+        if (!newHead.between(m_size))
+            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+
+        if (!m_snake.checkPoint(newHead))
+            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+
+        m_length += m_rabbits.eat(newHead);
+
+        m_snake.addNewHead(newHead);                // двигаем червя
+
+        Model::StateSnake stateSnake = Model::MOVED;
+        if (m_length < 0) {                         // длина змея уменьшилась
+            m_snake.removeTail(2);
+            m_length++;
+            stateSnake = Model::MOVED_SHOTER;
+        } else if (m_length == 0) {                 // не изменилась длина
+            m_snake.removeTail(1);
+        } else {                                    // длина змея увеличилась
+            m_length--;
+            stateSnake = Model::ADDED;
+        }
+
+        if (m_snake.size() < 2)                     // если осталась одна голова, то змей тоже умер
+            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+
+        return std::make_pair(Model::GOOD, stateSnake);
+    }
 
     // надо ли этот метод
     inline Model::StateGame getStateGame() const {return m_stateGame;}
@@ -87,11 +122,7 @@ private:
     Point m_size;
 
 	// сам змей, может выделить змея в отдельный класс
-//	std::vector<Point> m_snake;
-    Snake<Point> m_snake;
-
-	// кролики, может выделить кролика в отдельный класс
-    //	std::vector<Point> m_rabbits;
+    TSnake m_snake;
 
     // целая фабрика для кроликов
     RabbitFactory &m_rabbits;
@@ -102,5 +133,5 @@ private:
 	// добавляемая длина при поедании кролика
 	int m_length;
 
-    Model::StateGame m_stateGame;
+    StateGame m_stateGame;
 };
