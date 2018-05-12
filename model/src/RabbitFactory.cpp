@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "RabbitFactory.h"
 #include "Rabbit.h"
-#include "TSnake.h"
+#include "Config.h"
 
 /**
  * @brief The checkPoint struct is Функтор для std::find_if

@@ -126,8 +126,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 
         // draw snake
         for (auto iter = m_snake->begin(); iter != m_snake->end(); ++iter)
-            draw(&*iter, squareSize, &painter, iter - m_snake->begin());
-//        iter->draw(squareSize, &painter, iter - m_snake->begin());
+            drawSnake(&*iter, squareSize, &painter, iter - m_snake->begin());
     }
 
     for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {
@@ -165,7 +164,7 @@ void Qt5View::restart() {
 }
 
 
-void Qt5View::draw(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index) {
+void Qt5View::drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index) {
     QRect body1(_point->getX() * _squareSize.width(), _point->getY() * _squareSize.height(),
                 _squareSize.width(), _squareSize.height());
 

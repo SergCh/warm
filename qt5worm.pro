@@ -31,11 +31,11 @@ SOURCES +=\
     model/src/Way.cpp \
     model/src/RabbitFactory.cpp \
     model/src/Rabbit.cpp \
+    model/src/GraphicSnake.cpp \
+    model/src/GraphicPoint.cpp \
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
-    qt5/src/main.cpp \
-    qt5/src/GraphicPoint.cpp \
-    model/src/GraphicSnake.cpp
+    qt5/src/main.cpp
 
 HEADERS  += \
     version.h \
@@ -43,13 +43,14 @@ HEADERS  += \
     model/Point.h \
     model/View.h \
     model/Way.h \
-    model/RabbitFactory.h \
+    model/TModel.h \
+    model/TSnake.h \
     model/Rabbit.h \
+    model/RabbitFactory.h \
+    model/GraphicPoint.h \
+    model/GraphicSnake.h \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
     qt5/Qt5Version.h \
-    qt5/GraphicPoint.h \
-    model/GraphicSnake.h \
-    qt5/Config.h \
-    model/TModel.h \
-    model/TSnake.h
+    qt5/Config.h
+

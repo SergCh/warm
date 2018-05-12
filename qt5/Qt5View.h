@@ -42,7 +42,7 @@ protected:
 
 private:
 
-    void draw(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index);
+    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index);
 
 
     enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };

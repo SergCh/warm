@@ -20,9 +20,6 @@ public:
 	// поменять направление
 	virtual void changeWay(Way);
 
-	// получить текущее направление
-    inline Way getWay() const {return m_model.getWay();}
-
     inline bool isPause() const {return m_pause;}
 
     // метод для View, вызывается, когда клиент хочет выйти.

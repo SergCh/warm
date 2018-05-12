@@ -46,25 +46,16 @@ public:
     void init() {
 
         m_rabbits.clear();
-//        m_snake.clear();
-//        int x = m_size.getX() / 2, y = m_size.getY() / 2;
-//        m_snake.addNewHead(Point(x+1, y));
-//        m_snake.addNewHead(Point(x, y));
-//        changeWay(Way::LEFT);
         m_snake.start(m_size);
         m_length = 0;
         m_stateGame = TModel::GOOD;
     }
 
 	// получить змея для передачи его на прорисовку
-//    std::vector<Point> & getSnake() {return m_snake.date();}
     TSnake & getSnake() {return m_snake;}
 
 	// сменить путь направления змея
-    inline void changeWay(Way _way) {m_snake.setWay(_way);}
-
-	// чисто для любопытства, а куда сейчас двигается змей :)
-    inline const Way getWay() const {return m_snake.getWay();}
+    inline void changeWay(Way _way) {m_snake.m_way = _way;}
 
 	// добавить кролика (на поле может быть несколько кроликов)
     inline void addRabbit() {m_rabbits.newRabbit(m_size, m_snake);}

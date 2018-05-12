@@ -15,9 +15,13 @@
 #include "Point.h"
 #include "Way.h"
 
+
+template <class TSnake> class TModel;
+
 template <class TPoint>
 class TSnake
 {
+    template <class TSnake> friend class TModel;
 public:
 
     TSnake() {}
@@ -57,7 +61,7 @@ public:
 
     virtual void start(Point _sizeField) {
         clear();
-        setWay(Way::LEFT);
+        m_way = Way::LEFT;
         generateNewHead(_sizeField);
         generateNewHead(_sizeField);
     }
@@ -77,7 +81,6 @@ public:
 
     inline TPoint & front() {return m_snake.front();}
 
-    inline void setWay(Way _way) {m_way = _way;}
     inline Way getWay() const {return m_way;}
 
 protected:

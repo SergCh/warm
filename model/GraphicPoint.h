@@ -3,18 +3,8 @@
 #include <vector>
 #include <algorithm>
 
-#include <QRect>
-#include <QSize>
-
 #include "Point.h"
 #include "Way.h"
-
-QT_BEGIN_NAMESPACE
-class QRect;
-class QSize;
-class QPainter;
-QT_END_NAMESPACE
-
 
 class GraphicPoint : public Point{
 
@@ -45,20 +35,13 @@ public:
     inline bool getToLeft() const {return m_toLeft;}
     inline bool getToUp() const {return m_toUp;}
 
-    void draw(const QSize & _squareSize, QPainter * _painter, int _index);
-
-    static GraphicPoint getHead(Point & _point, int _step, Way _way);
-
     void changeToHorisontal();
 
     void changeToVertical();
 
     void changeToCorner(bool _toLeft, bool _toUp);
 
-//    static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
-
 private:
-//    Point m_point;
     int m_step;
     Type m_type;
     int m_position;

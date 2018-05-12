@@ -19,10 +19,14 @@ public:
 
     virtual void addNewHead(GraphicPoint _newHead) {
 
-        GraphicPoint newHead = GraphicPoint::getHead(_newHead, empty() ? 0 : (front().getStep()+1) & 3, m_way);
+        int step = 0;
+//        GraphicPoint newHead(_newHead.getX(), _newHead.getY());
+
+        _newHead.setPosition(m_way);
 
         if (!empty()) {
-            GraphicPoint * pred = &newHead;
+            step = (front().getStep() + 1) & 3;
+            GraphicPoint * pred = &_newHead;
             std::vector<GraphicPoint>::iterator curr = begin();
             std::vector<GraphicPoint>::iterator next = curr + 1;
             if (next == end())
@@ -41,13 +45,14 @@ public:
                 curr->changeToCorner(toLeft, toUp);
 
                 if (curr->getPosition() == 1) {
-                        if (m_way.isHorisontal()) newHead.setStep(toUp? 2:0);   //Определяем новое положение головы
-                        else                     newHead.setStep(toLeft? 2:0);
+                    if (m_way.isHorisontal()) step = toUp ? 2 : 0;   //Определяем новое положение головы
+                    else                      step = toLeft ? 2 : 0;
                 }
             }
         }
 
-        TSnake::addNewHead(newHead);
+        _newHead.setStep(step);
+        TSnake::addNewHead(_newHead);
     }
 };
 
