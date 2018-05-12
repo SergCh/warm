@@ -15,13 +15,15 @@
 class GraphicSnake : public TSnake<GraphicPoint>
 {
 public:
-    GraphicSnake(): TSnake<GraphicPoint>() {}
+    enum {MAX_PATH = 20};
+
+    GraphicSnake(): TSnake<GraphicPoint>() {
+        m_path.reserve(MAX_PATH+3);
+    }
 
     virtual void addNewHead(GraphicPoint _newHead) {
 
         int step = 0;
-//        GraphicPoint newHead(_newHead.getX(), _newHead.getY());
-
         _newHead.setPosition(m_way);
 
         if (!empty()) {
@@ -54,5 +56,32 @@ public:
         _newHead.setStep(step);
         TSnake::addNewHead(_newHead);
     }
+
+    virtual void removeTail(int _count) {
+        while (_count-- > 0 && !m_snake.empty()) {
+            GraphicPoint point = m_snake.back();
+            m_path.insert(m_path.begin(), point);
+            m_snake.pop_back();
+        }
+
+        while (m_path.size() > MAX_PATH) {
+            m_path.pop_back();
+        }
+    }
+
+    inline std::vector<GraphicPoint>::iterator beginPath() {return m_path.begin();}
+    inline std::vector<GraphicPoint>::iterator endPath() {return m_path.end();}
+    inline std::vector<GraphicPoint>::reverse_iterator rbeginPath() {return m_path.rbegin();}
+    inline std::vector<GraphicPoint>::reverse_iterator rendPath() {return m_path.rend();}
+    inline int sizePath() const {return m_path.size();}
+
+    virtual void start(Point _sizeField) {
+        m_path.clear();
+        TSnake<GraphicPoint>::start(_sizeField);
+    }
+
+private:
+    std::vector<GraphicPoint> m_path;
+
 };
 

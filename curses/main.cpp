@@ -15,8 +15,7 @@ int main(int /*argc*/, char* /*argv*/[]) {
 
     std::srand(unsigned(std::time(0)));
 	CursesView view;
-    RabbitFactory rabbits;
-    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()));
 
 	Control control(view, model);
 

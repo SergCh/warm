@@ -40,7 +40,7 @@ void Control::restart() {
 	m_view.beforeGame();
     m_pause = false;
     s4nr = BEGIN_STEP;
-    m_view.changeScore(m_model.getSnake().size(), Model::STARTED);
+    m_view.changeScore(m_model.getSnake().size());
 }
 
 void Control::nextStep() {
@@ -57,7 +57,7 @@ void Control::nextStep() {
         }
     }
     if (state.second != Model::NOT_CHANGED)
-        m_view.changeScore(m_model.getSnake().size(), state.second);
+        m_view.changeScore(m_model.getSnake().size());
     m_view.paint();
 }
 

@@ -25,7 +25,7 @@ public:
 
     virtual void beforeGame();
     virtual void paint();
-    virtual void changeScore(int _score, int =0);
+    virtual void changeScore(int _score);
 
     void nextStep();
 
@@ -42,7 +42,7 @@ protected:
 
 private:
 
-    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index);
+    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, QColor _color);
 
 
     enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };

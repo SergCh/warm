@@ -37,7 +37,7 @@ public:
 	void endGame(int);
 
     virtual void paint();
-    virtual void changeScore(int _score, int = 0);
+    virtual void changeScore(int _score);
 
 private:
 	typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw

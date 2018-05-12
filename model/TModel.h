@@ -14,17 +14,13 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
-
-//class RabbitFactory;
-//class Rabbit;
-
 template <class TSnake>
 class TModel {
 
 public:
-    // передача параметров ширины и высоты поля и фабрики кроликов а надо?
-    TModel(Point _size, RabbitFactory &_rabbits)
-    : m_size(_size), m_rabbits(_rabbits) {}
+    // передача параметров ширины и высоты поля
+    TModel(Point _size)
+    : m_size(_size) {}
 	
     // состояние змея
     typedef enum {
@@ -75,23 +71,10 @@ public:
         if (m_stateGame == TModel::DEAD)
             return std::make_pair(TModel::DEAD, TModel::NOT_CHANGED);
 
-//        Point newHead = m_snake.front();                 // голова змея
-//        newHead += getWay().getPoint();
-
-//        if (!newHead.between(m_size))
-//            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
-
-//        if (!m_snake.checkPoint(newHead))
-//            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
-
         if (!m_snake.generateNewHead(m_size))
             return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
 
         m_length += m_rabbits.eat(m_snake.front());
-
-//        m_length += m_rabbits.eat(newHead);
-
-//        m_snake.addNewHead(newHead);                // двигаем червя
 
         TModel::StateSnake stateSnake = TModel::MOVED;
         if (m_length < 0) {                         // длина змея уменьшилась
@@ -122,7 +105,7 @@ private:
     TSnake m_snake;
 
     // целая фабрика для кроликов
-    RabbitFactory &m_rabbits;
+    RabbitFactory m_rabbits;
 
 	// добавляемая длина при поедании кролика
 	int m_length;

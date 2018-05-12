@@ -19,15 +19,12 @@ int main(int argc, char *argv[])
 
     Qt5View view;
 
-    RabbitFactory rabbits;
-    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()));
 
     Control control(view, model);
     std::srand(unsigned(std::time(0)));
 
-
     control.init();
-
 
     MainWindow w(&view);
     w.show();
