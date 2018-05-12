@@ -24,34 +24,34 @@ void Qt5View::paint() {
     update();
 }
 
-void Qt5View::changeScore(int _score, int _stateSnake) {
+void Qt5View::changeScore(int _score, int /*_stateSnake*/) {
     emit scoreChanged(_score);
-    if (Model::NOT_CHANGED == _stateSnake)
-        return;
+//    if (Model::NOT_CHANGED == _stateSnake)
+//        return;
 
-    int remove = 0;
-    switch ((Model::StateSnake)_stateSnake) {
-    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
-        remove = 0;
-        break;
-    case Model::MOVED:
-        remove = 1;
-        break;
-    case Model::MOVED_SHOTER:
-        remove = 2;
-        break;
-    default:
-        break;
-    }
+//    int remove = 0;
+//    switch ((Model::StateSnake)_stateSnake) {
+//    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
+//        remove = 0;
+//        break;
+//    case Model::MOVED:
+//        remove = 1;
+//        break;
+//    case Model::MOVED_SHOTER:
+//        remove = 2;
+//        break;
+//    default:
+//        break;
+//    }
 
-    if (Model::STARTED == _stateSnake) {
-        gSnake.clear();
-        for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
-            GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
+//    if (Model::STARTED == _stateSnake) {
+//        gSnake.clear();
+//        for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
+//            GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
 
-    } else {
-        GraphicPoint::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
-    }
+//    } else {
+//        GraphicPoint::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
+//    }
 }
 
 int Qt5View::getHieghtField() {

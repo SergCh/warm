@@ -61,7 +61,7 @@ public:
 
     void changeToCorner(bool _toLeft, bool _toUp);
 
-    static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
+//    static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
 
 private:
 //    Point m_point;

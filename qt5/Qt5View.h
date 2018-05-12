@@ -51,7 +51,7 @@ private:
 
     QBasicTimer timer;
 
-    std::vector<GraphicPoint> gSnake;
+//    std::vector<GraphicPoint> gSnake;
 
 #ifdef QT_DEBUG
     void pause(bool p);

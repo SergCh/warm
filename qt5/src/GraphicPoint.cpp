@@ -79,37 +79,37 @@ void GraphicPoint::draw(const QSize & _squareSize, QPainter * _painter, int _ind
     }
 }
 
-void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed){
+//void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed){
 
-    GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.empty() ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
+//    GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.empty() ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
 
-    if (!gSnake.empty()) {
-        GraphicPoint * pred = &newHead;
-        std::vector<GraphicPoint>::iterator curr = gSnake.begin();
-        std::vector<GraphicPoint>::iterator next = curr + 1;
-        if (next == gSnake.end())
-            next = curr;
+//    if (!gSnake.empty()) {
+//        GraphicPoint * pred = &newHead;
+//        std::vector<GraphicPoint>::iterator curr = gSnake.begin();
+//        std::vector<GraphicPoint>::iterator next = curr + 1;
+//        if (next == gSnake.end())
+//            next = curr;
 
-        if (next->getY() == pred->getY()) {
-            curr->changeToHorisontal();
+//        if (next->getY() == pred->getY()) {
+//            curr->changeToHorisontal();
 
-        } else if (next->getX() == pred->getX()) {
-            curr->changeToVertical();
+//        } else if (next->getX() == pred->getX()) {
+//            curr->changeToVertical();
 
-        } else {
-            const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;
-            const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;
+//        } else {
+//            const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;
+//            const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;
 
-            curr->changeToCorner(toLeft, toUp);
+//            curr->changeToCorner(toLeft, toUp);
 
-            if (curr->getPosition() == 1) {
-                    if (_way.isHorisontal()) newHead.setStep(toUp? 2:0);   //Определяем новое положение головы
-                    else                     newHead.setStep(toLeft? 2:0);
-            }
-        }
-    }
+//            if (curr->getPosition() == 1) {
+//                    if (_way.isHorisontal()) newHead.setStep(toUp? 2:0);   //Определяем новое положение головы
+//                    else                     newHead.setStep(toLeft? 2:0);
+//            }
+//        }
+//    }
 
-    gSnake.insert(gSnake.begin(), newHead);
-    while (_removed-- > 0 && !gSnake.empty())
-        gSnake.pop_back();
-}
+//    gSnake.insert(gSnake.begin(), newHead);
+//    while (_removed-- > 0 && !gSnake.empty())
+//        gSnake.pop_back();
+//}
