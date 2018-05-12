@@ -14,7 +14,7 @@
 
 #include "Point.h"
 #include "Way.h"
-
+#include "Config.h"
 
 class Control;
 class Rabbit;
@@ -41,17 +41,9 @@ public:
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
      */
-    void setSnake(std::vector<Point> * _snake) {
+    void setSnake(Snake * _snake) {
         m_snake = _snake;
     }
-
-//    /**
-//     * @brief setRabbits Установка уазателя на вескор кроликов
-//     * @param _rabbits[in] Указатель на вектор кроликов
-//     */
-//    void setRabbits(std::vector<Rabbit> * _rabbits) {
-//        m_rabbits = _rabbits;
-//    }
 
     /**
      * @brief setRabbitFactory Установка уазателя на вескор кроликов
@@ -113,7 +105,7 @@ private:
 protected:
 
     Control *m_control;
-    std::vector<Point> * m_snake;
+    Snake * m_snake;
     RabbitFactory * m_rf;
     Way m_way;
 };

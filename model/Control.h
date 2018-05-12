@@ -4,23 +4,21 @@
 
 class View;
 
-#include "Model.h"
+#include "TModel.h"
+#include "Config.h"
 
 // контроллер между View и Model
 
 class Control
 {
 public:
-	Control(View&, Model&);
+    Control(View&, Model&);
 	virtual ~Control(void);
 
     inline Model & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);
-
-	// получить текущее направление
-    inline Way getWay() const {return m_model.getWay();}
 
     inline bool isPause() const {return m_pause;}
 
@@ -51,7 +49,7 @@ private:
     const int BEGIN_STEP = 20;
     const int NEXT_STEP = 50;
 
-	Model &m_model;
+    Model &m_model;
 	View &m_view;
 
 	// флаг выхода 

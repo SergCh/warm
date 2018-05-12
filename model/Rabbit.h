@@ -14,7 +14,7 @@
 #include <utility>
 
 #include "Point.h"
-class Rabbit
+class Rabbit : public Point
 {
 
 public:
@@ -26,7 +26,9 @@ public:
      * @param _weight Колличество элементов добавляемых змею при поедания этого кролика
      */
     Rabbit(Point _point, int _live = -1, int _weight = 5)
-        :m_point(_point), m_live(_live), m_weight(_weight) {}
+        : m_live(_live), m_weight(_weight) {
+        setXY(_point.getX(), _point.getY());
+    }
 
     /**
      * @brief isDead Возвращает кончились ли жизни у кролика
@@ -39,12 +41,6 @@ public:
      * @return Количество добавляемых элементов змею при поедания этого кролика
      */
     int getWeight() const {return m_weight;}
-
-    /**
-     * @brief getPoint Возвращает координаты кролика
-     * @return Координаты кролика
-     */
-    const Point &getPoint() const {return m_point;}
 
     /**
      * @brief eat Проверка на съедение кролика
@@ -61,24 +57,9 @@ public:
      * @param _point Координаты головы змея
      * @return совпили ли координаты
      */
-    bool check(const Point & _point) const {return m_point == _point;}
-
-    /**
-     * @brief getX Возвращает координату X
-     * @return Координату X
-     */
-    int getX() const {return m_point.getX();}
-
-    /**
-     * @brief getY Возвращает коорлинату Y
-     * @return Координату Y
-     */
-    int getY() const {return m_point.getY();}
+    bool check(const Point & _point) const {return getX() == _point.getX() && getY() == _point.getY();}
 
 private:
-
-    /// Координата кролика
-    Point m_point;
 
     /// Количество жизней
     int m_live;

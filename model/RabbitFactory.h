@@ -10,8 +10,11 @@
  */
 
 #include <vector>
+//class Snake<Point>;
+
 #include "Rabbit.h"
-#include "Point.h"
+#include "Config.h"
+
 
 class RabbitFactory
 {
@@ -29,14 +32,14 @@ public:
     /**
      * @brief clear Удалить всех кроликов (перед началом игры)
      */
-    void clear();
+    inline void clear() {m_rabbits.clear();}
 
     /**
      * @brief newRabbit Сгенерировать случайным образом нового кролика
      * @param size Размер поля
-     * @param occuped Занятые точки змеем
+     * @param snake Змей
      */
-    void newRabbit(Point & size, std::vector<Point> & occuped);
+    void newRabbit(Point & size, Snake & snake);
 
     /**
      * @brief eat Кушаем кпроликов
@@ -61,17 +64,12 @@ public:
      * @brief getData Возвращаем вектор кпроликов
      * @return Вектор кроликов
      */
-    std::vector<Rabbit> & getData();
+    std::vector<Rabbit> & data();
 
-    Rabbit* at(int i);
-
-    std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
-    std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
-
-
-    unsigned int size() const {
-        return m_rabbits.size();
-    }
+    inline Rabbit* at(int i) {return &m_rabbits.at(i);}
+    inline std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
+    inline std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
+    inline unsigned int size() const {return m_rabbits.size();}
 
 private:
     /// Вектор кроликов

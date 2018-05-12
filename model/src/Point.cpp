@@ -1,4 +1,4 @@
-//#include "StdAfx.h"
+
 #include "Point.h"
 
 Point::Point(int _x, int _y):pair<int,int>(_x, _y){}

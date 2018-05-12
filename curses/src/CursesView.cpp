@@ -11,7 +11,7 @@
 #include "CursesView.h"
 #include "Point.h"
 #include "Control.h"
-#include "Model.h"
+#include "TModel.h"
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
@@ -158,23 +158,20 @@ void CursesView::paint() {
     if (m_control == 0)
         return;
     if (getHieghtField()>0 && getWidthField()>0) {
-        m_way = m_control->getWay();
+        m_way = m_snake->getWay();
 
-        if (m_snake != 0 && m_snake->size() > 0) {
+        if (!m_snake->empty()) {
             paintWay();
             paintSnake();
         }
 
-//        if (m_rabbits != 0)
-//            for (std::vector<Rabbit>::iterator iter=m_rabbits->begin(); iter != m_rabbits->end(); iter++)
         for (std::vector<Rabbit>::iterator iter=m_rf->begin(); iter != m_rf->end(); iter++)
             paintRabbit(*iter);
     }
     afterPaintField();
 
     if (m_control->isPause()) {
-        const int score = m_snake==0? 0 : m_snake->size();
-        endGame(score);
+        endGame(m_score);
         m_control->restart();
     }
 }
@@ -205,7 +202,7 @@ void CursesView::afterPaintField() {
 
 void CursesView::paintWay() {
     Point pEnd = Point(getWidthField(), getHieghtField());
-    Point pFrom = m_snake->at(0);
+    Point pFrom = m_snake->front();
     for (; pFrom.between(pEnd); pFrom += m_way.getPoint())
 		drawDraw(pFrom, Draw::POINT);
 }
@@ -215,10 +212,9 @@ void CursesView::paintSnake() {
 		int i = iter - m_snake->begin();
 		drawDraw(*iter, i%5 == 3 ? Draw::BODY2 : Draw::BODY);
 	}
-	drawDraw(m_snake->at(0), Draw::HEAD);
+    drawDraw(m_snake->front(), Draw::HEAD);
 }
 
 void CursesView::paintRabbit(Rabbit & rabbit) {
-    Point point = rabbit.getPoint();
-    drawDraw(point, Draw::RABBIT);
+    drawDraw(rabbit, Draw::RABBIT);
 }
