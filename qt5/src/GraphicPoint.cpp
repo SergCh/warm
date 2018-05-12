@@ -81,7 +81,7 @@ void GraphicPoint::draw(const QSize & _squareSize, QPainter * _painter, int _ind
 
 void GraphicPoint::addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed){
 
-    GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.size() == 0 ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
+    GraphicPoint newHead = GraphicPoint::getHead(_head, gSnake.empty() ? 0 : (gSnake.front().getStep()+1) & 3 , _way);
 
     if (!gSnake.empty()) {
         GraphicPoint * pred = &newHead;

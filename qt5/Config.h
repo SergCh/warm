@@ -21,13 +21,14 @@
 
 template <class TSnake> class TModel;
 
-//typedef Snake<Point> Snake;
-//typedef Model<SnakePoint> Model;
+//typedef TSnake<Point> Snake;
+typedef GraphicSnake Snake;
 
 
 //#include "GraphicSnake.h"
 //#include "Model.h"
 
 
-typedef GraphicSnake Snake;
+//typedef GraphicSnake Snake;
+
 typedef TModel<Snake> Model;

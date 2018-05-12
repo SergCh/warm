@@ -1,5 +1,4 @@
 
-//#include "StdAfx.h"
 #include "Control.h"
 
 #include "TModel.h"

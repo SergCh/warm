@@ -13,6 +13,7 @@
 #include <algorithm>
 
 #include "Point.h"
+#include "Way.h"
 
 template <class TPoint>
 class TSnake
@@ -23,6 +24,20 @@ public:
 
     virtual ~TSnake() {
         m_snake.clear();
+    }
+
+    virtual bool generateNewHead(Point _sizeField) {
+        TPoint newHead = front();
+        newHead += getWay().getPoint();
+
+        if (!newHead.between(_sizeField))
+            return false;
+
+        if (!checkPoint(newHead))
+            return false;
+
+        addNewHead(newHead);
+        return true;
     }
 
     virtual void addNewHead(TPoint _newHead) {
@@ -52,7 +67,11 @@ public:
 
     inline TPoint & front() {return m_snake.front();}
 
+    inline void setWay(Way _way) {m_way = _way;}
+    inline Way getWay() const {return m_way;}
+
 protected:
     std::vector<TPoint> m_snake;
+    Way m_way;
 };
 

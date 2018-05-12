@@ -50,7 +50,7 @@ public:
         int x = m_size.getX() / 2, y = m_size.getY() / 2;
         m_snake.addNewHead(Point(x+1, y));
         m_snake.addNewHead(Point(x, y));
-        m_way = Way::LEFT;
+        changeWay(Way::LEFT);
         m_length = 0;
         m_stateGame = TModel::GOOD;
     }
@@ -60,10 +60,10 @@ public:
     TSnake & getSnake() {return m_snake;}
 
 	// сменить путь направления змея
-    inline void changeWay(Way _way) {m_way = _way;}
+    inline void changeWay(Way _way) {m_snake.setWay(_way);}
 
 	// чисто для любопытства, а куда сейчас двигается змей :)
-    inline const Way getWay() const {return m_way;}
+    inline const Way getWay() const {return m_snake.getWay();}
 
 	// добавить кролика (на поле может быть несколько кроликов)
     inline void addRabbit() {m_rabbits.newRabbit(m_size, m_snake);}
@@ -83,18 +83,23 @@ public:
         if (m_stateGame == TModel::DEAD)
             return std::make_pair(TModel::DEAD, TModel::NOT_CHANGED);
 
-        Point newHead = m_snake.front();                 // голова змея
-        newHead += m_way.getPoint();
+//        Point newHead = m_snake.front();                 // голова змея
+//        newHead += getWay().getPoint();
 
-        if (!newHead.between(m_size))
+//        if (!newHead.between(m_size))
+//            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
+
+//        if (!m_snake.checkPoint(newHead))
+//            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
+
+        if (!m_snake.generateNewHead(m_size))
             return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
 
-        if (!m_snake.checkPoint(newHead))
-            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
+        m_length += m_rabbits.eat(m_snake.front());
 
-        m_length += m_rabbits.eat(newHead);
+//        m_length += m_rabbits.eat(newHead);
 
-        m_snake.addNewHead(newHead);                // двигаем червя
+//        m_snake.addNewHead(newHead);                // двигаем червя
 
         TModel::StateSnake stateSnake = TModel::MOVED;
         if (m_length < 0) {                         // длина змея уменьшилась
@@ -126,9 +131,6 @@ private:
 
     // целая фабрика для кроликов
     RabbitFactory &m_rabbits;
-
-	// направление движения
-	Way m_way;
 
 	// добавляемая длина при поедании кролика
 	int m_length;

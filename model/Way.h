@@ -36,7 +36,7 @@ public:
 
     inline operator int () const {return (int) m_way;}
 
-    const Point & getPoint() {
+    const Point & getPoint() const {
         return Way::POINTS_WAY[m_way];
     }
 
