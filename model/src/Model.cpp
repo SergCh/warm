@@ -1,29 +1,8 @@
-//#include "StdAfx.h"
-#include <algorithm>
 
-//#include <cstdlib>
-//#include <ctime>
+#include <algorithm>
 
 #include "Model.h"
 #include "RabbitFactory.h"
-
-//Model::Model(Point _size, RabbitFactory &_rabbits) : m_size(_size), m_rabbits(_rabbits) {
-//}
-
-//Model::~Model(void) {
-//}
-
-//void Model::init() {
-//    std::srand(unsigned(std::time(0)));
-//    m_rabbits.clear();
-//    m_snake.clear();
-//    int x = m_size.getX() / 2, y = m_size.getY() / 2;
-//    m_snake.addNewHead(Point(x+1, y));
-//    m_snake.addNewHead(Point(x, y));
-//    m_way = Way::LEFT;
-//    m_length = 0;
-//    m_stateGame = Model::GOOD;
-//}
 
 std::pair<Model::StateGame, Model::StateSnake> Model::move() {
 
@@ -61,10 +40,3 @@ std::pair<Model::StateGame, Model::StateSnake> Model::move() {
     return std::make_pair(Model::GOOD, stateSnake);
 }
 
-//void Model::addRabbit() {
-//    m_rabbits.newRabbit(m_size, m_snake);
-//}
-
-//std::vector<Rabbit> & Model::getRabbits() {
-//    return m_rabbits.data();                 // неределать на передачу фабрики
-//}

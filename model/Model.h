@@ -56,9 +56,7 @@ public:
     }
 
 	// получить змея для передачи его на прорисовку
-    std::vector<Point> & getSnake() {
-        return m_snake.data();
-    }
+    std::vector<Point> & getSnake() {return m_snake.data();}
 
 	// сменить путь направления змея
     inline void changeWay(Way _way) {m_way = _way;}

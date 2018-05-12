@@ -42,7 +42,7 @@ public:
     std::vector<TPoint> & data() {return m_snake;}
     void clear() {m_snake.clear();}
 
-    Point & front() {return m_snake.front();}
+    const Point & front() const {return m_snake.front();}
 
 private:
     std::vector<TPoint> m_snake;
