@@ -66,15 +66,10 @@ public:
      */
     std::vector<Rabbit> & data();
 
-    Rabbit* at(int i);
-
-    std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
-    std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
-
-
-    unsigned int size() const {
-        return m_rabbits.size();
-    }
+    inline Rabbit* at(int i) {return &m_rabbits.at(i);}
+    inline std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
+    inline std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
+    inline unsigned int size() const {return m_rabbits.size();}
 
 private:
     /// Вектор кроликов

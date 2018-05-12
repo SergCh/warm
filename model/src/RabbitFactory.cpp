@@ -45,7 +45,6 @@ void RabbitFactory::newRabbit(Point & size, Snake & snake) {
     Point point(std::rand() % size.getX(), std::rand() % size.getY());
     do {
 
-//        if (std::find(occuped.begin(), occuped.end(), point) == occuped.end() &&
         if (snake.checkPoint(point) &&
             std::find_if(m_rabbits.begin(), m_rabbits.end(), checkPoint(point)) == m_rabbits.end()) {
                 Rabbit rabbit(point, getLive(), getWeight());
@@ -82,7 +81,5 @@ int RabbitFactory::eat(Point & _head) {
     return weight;
 }
 
-Rabbit * RabbitFactory::at(int i) {
-    return &m_rabbits.at(i);
-}
+
 

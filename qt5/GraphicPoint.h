@@ -16,7 +16,7 @@ class QPainter;
 QT_END_NAMESPACE
 
 
-class GraphicPoint {
+class GraphicPoint : public Point{
 
 public:
     typedef enum {
@@ -26,8 +26,10 @@ public:
         CORNER
     } Type;
 
-    GraphicPoint(Type _type, Point & _point, int _step) {
-        m_type = _type, m_point = _point; m_step= _step;
+    GraphicPoint(Type _type, Point _point, int _step) :Point(_point.getX(), _point.getY()){
+        m_type = _type;
+//        m_point = _point;
+        m_step= _step;
     }
 
     inline void setPosition(int _position) {
@@ -50,13 +52,13 @@ public:
         return m_position;
     }
 
-    inline int getX() const {
-        return m_point.getX();
-    }
+//    inline int getX() const {
+//        return m_point.getX();
+//    }
 
-    inline int getY() const {
-        return m_point.getY();
-    }
+//    inline int getY() const {
+//        return m_point.getY();
+//    }
 
     void draw(const QSize & _squareSize, QPainter * _painter, int _index);
 
@@ -71,7 +73,7 @@ public:
     static void addHead(std::vector<GraphicPoint> & gSnake, Point & _head, Way _way, int _removed);
 
 private:
-    Point m_point;
+//    Point m_point;
     int m_step;
     Type m_type;
     int m_position;

@@ -12,9 +12,9 @@
 #include "Way.h"
 
 GraphicPoint GraphicPoint::getHead(Point & _point, int _step, Way _way) {
-    GraphicPoint e(HEAD, _point, _step);
-    e.setPosition(_way);
-    return e;
+    GraphicPoint head(HEAD, _point, _step);
+    head.setPosition(_way);
+    return head;
 }
 
 void GraphicPoint::changeToHorisontal() {
@@ -36,7 +36,7 @@ void GraphicPoint::changeToCorner(bool _toLeft, bool _toUp) {
 
 
 void GraphicPoint::draw(const QSize & _squareSize, QPainter * _painter, int _index) {
-    QRect body1(m_point.getX() * _squareSize.width(), m_point.getY() * _squareSize.height(),
+    QRect body1(getX() * _squareSize.width(), getY() * _squareSize.height(),
                 _squareSize.width(), _squareSize.height());
 
     const QColor color = _index % 5 == 3 ? Qt::yellow: Qt::red;
