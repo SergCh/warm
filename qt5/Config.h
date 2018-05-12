@@ -13,7 +13,7 @@
 //#include "Model.h"
 #include "Point.h"
 #include "GraphicPoint.h"
-#include "Snake.h"
+#include "TSnake.h"
 #include "GraphicSnake.h"
 
 //class GraphicPoint;

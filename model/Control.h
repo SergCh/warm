@@ -4,7 +4,7 @@
 
 class View;
 
-#include "Model.h"
+#include "TModel.h"
 #include "Config.h"
 
 // контроллер между View и Model

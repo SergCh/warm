@@ -1,8 +1,8 @@
 #pragma once
 
 /**
- * @file Snake.h
- * @brief Snake
+ * @file TSnake.h
+ * @brief TSnake
  * @author Чугайнов С.В.
  * @date 11.05.2018
  *
@@ -15,13 +15,13 @@
 #include "Point.h"
 
 template <class TPoint>
-class Snake
+class TSnake
 {
 public:
 
-    Snake() {}
+    TSnake() {}
 
-    virtual ~Snake() {
+    virtual ~TSnake() {
         m_snake.clear();
     }
 

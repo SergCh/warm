@@ -9,13 +9,13 @@
  *
  */
 
-#include "Snake.h"
+#include "TSnake.h"
 #include "GraphicPoint.h"
 
-class GraphicSnake : public Snake<GraphicPoint>
+class GraphicSnake : public TSnake<GraphicPoint>
 {
 public:
-    GraphicSnake(): Snake<GraphicPoint>() {}
+    GraphicSnake(): TSnake<GraphicPoint>() {}
 
 //    virtual void addNewHead(TPoint _newHead) {
 //            m_snake.insert(m_snake.begin(), _newHead);
@@ -24,7 +24,7 @@ public:
 
     virtual void addNewHead(Point _newHead) {
         GraphicPoint newHead = GraphicPoint::getHead(_newHead, 0, Way::LEFT);
-        Snake::addNewHead(newHead);
+        TSnake::addNewHead(newHead);
     }
 
 

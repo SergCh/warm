@@ -6,7 +6,7 @@
 #include "Qt5View.h"
 #include "View.h"
 #include "Control.h"
-#include "Model.h"
+#include "TModel.h"
 #include "RabbitFactory.h"
 #include "Config.h"
 

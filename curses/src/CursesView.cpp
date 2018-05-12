@@ -11,7 +11,7 @@
 #include "CursesView.h"
 #include "Point.h"
 #include "Control.h"
-#include "Model.h"
+#include "TModel.h"
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 

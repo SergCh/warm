@@ -2,7 +2,7 @@
 //#include "StdAfx.h"
 #include "Control.h"
 
-#include "Model.h"
+#include "TModel.h"
 #include "View.h"
 #include "RabbitFactory.h"
 #include "Rabbit.h"

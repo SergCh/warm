@@ -10,7 +10,7 @@
 
 #include "Point.h"
 #include "Way.h"
-#include "Snake.h"
+#include "TSnake.h"
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
