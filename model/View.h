@@ -41,7 +41,7 @@ public:
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
      */
-    void setSnake(SnakePoint * _snake) {
+    void setSnake(Snake * _snake) {
         m_snake = _snake;
     }
 
@@ -105,7 +105,7 @@ private:
 protected:
 
     Control *m_control;
-    SnakePoint * m_snake;
+    Snake * m_snake;
     RabbitFactory * m_rf;
     Way m_way;
 };

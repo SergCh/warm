@@ -39,7 +39,7 @@ public:
      * @param size Размер поля
      * @param snake Змей
      */
-    void newRabbit(Point & size, SnakePoint & snake);
+    void newRabbit(Point & size, Snake & snake);
 
     /**
      * @brief eat Кушаем кпроликов

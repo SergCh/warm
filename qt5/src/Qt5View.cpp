@@ -26,25 +26,25 @@ void Qt5View::paint() {
 
 void Qt5View::changeScore(int _score, int _stateSnake) {
     emit scoreChanged(_score);
-    if (ModelSnake::NOT_CHANGED == _stateSnake)
+    if (Model::NOT_CHANGED == _stateSnake)
         return;
 
     int remove = 0;
-    switch ((ModelSnake::StateSnake)_stateSnake) {
-    case ModelSnake::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
+    switch ((Model::StateSnake)_stateSnake) {
+    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
         remove = 0;
         break;
-    case ModelSnake::MOVED:
+    case Model::MOVED:
         remove = 1;
         break;
-    case ModelSnake::MOVED_SHOTER:
+    case Model::MOVED_SHOTER:
         remove = 2;
         break;
     default:
         break;
     }
 
-    if (ModelSnake::STARTED == _stateSnake) {
+    if (Model::STARTED == _stateSnake) {
         gSnake.clear();
         for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
             GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
@@ -186,7 +186,7 @@ void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
     m_control->restart();
-    emit scoreChanged(m_snake->size(), ModelSnake::STARTED);
+    emit scoreChanged(m_snake->size(), Model::STARTED);
     timer.start(timeoutTime(), this);
 }
 

@@ -12,10 +12,10 @@ class View;
 class Control
 {
 public:
-    Control(View&, ModelSnake&);
+    Control(View&, Model&);
 	virtual ~Control(void);
 
-    inline ModelSnake & getModel() const {return m_model;}
+    inline Model & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);
@@ -52,7 +52,7 @@ private:
     const int BEGIN_STEP = 20;
     const int NEXT_STEP = 50;
 
-    ModelSnake &m_model;
+    Model &m_model;
 	View &m_view;
 
 	// флаг выхода 

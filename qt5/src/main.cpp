@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     Qt5View view;
 
     RabbitFactory rabbits;
-    ModelSnake model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
 
     Control control(view, model);
     std::srand(unsigned(std::time(0)));

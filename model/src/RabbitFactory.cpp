@@ -40,7 +40,7 @@ std::vector<Rabbit> & RabbitFactory::data() {
     return m_rabbits;
 }
 
-void RabbitFactory::newRabbit(Point & size, SnakePoint & snake) {
+void RabbitFactory::newRabbit(Point & size, Snake & snake) {
     int times=100;
     Point point(std::rand() % size.getX(), std::rand() % size.getY());
     do {
