@@ -10,8 +10,8 @@
  */
 
 #include <vector>
-class Snake;
-
+//class Snake<Point>;
+#include "Snake.h"
 #include "Rabbit.h"
 #include "Point.h"
 
@@ -39,7 +39,7 @@ public:
      * @param size Размер поля
      * @param snake Змей
      */
-    void newRabbit(Point & size, Snake & snake);
+    void newRabbit(Point & size, Snake<Point> & snake);
 
     /**
      * @brief eat Кушаем кпроликов

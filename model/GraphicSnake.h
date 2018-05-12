@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * @file GraphicSnake.h
  * @brief GraphicSnake
@@ -6,14 +8,13 @@
  *
  *
  */
-#ifndef GRAPHICSNAKE_H
-#define GRAPHICSNAKE_H
 
+#include "Snake.h"
+#include "GraphicPoint.h"
 
-class GraphicSnake
+class GraphicSnake : public Snake<GraphicPoint>
 {
 public:
     GraphicSnake();
 };
 
-#endif // GRAPHICSNAKE_H

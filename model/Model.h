@@ -11,19 +11,20 @@
 #include "Point.h"
 #include "Way.h"
 #include "Snake.h"
+#include "Rabbit.h"
+#include "RabbitFactory.h"
 
 
-//#include "RabbitFactory.h"
-
-class RabbitFactory;
-class Rabbit;
+//class RabbitFactory;
+//class Rabbit;
 
 class Model {
 
 public:
-	// передача параметров ширины и высоты поля
-    Model(Point _size, RabbitFactory &_rabbits);
-	~Model(void);
+    // передача параметров ширины и высоты поля и фабрики кроликов а надо?
+    Model(Point _size, RabbitFactory &_rabbits)
+    : m_size(_size), m_rabbits(_rabbits) {}
+//    ~Model(void) {}
 	
     // состояние змея
     typedef enum {
@@ -41,8 +42,18 @@ public:
     } StateSnake;
 
 
-	// начало игры
-	void init();
+    // начало игры
+    void init() {
+
+        m_rabbits.clear();
+        m_snake.clear();
+        int x = m_size.getX() / 2, y = m_size.getY() / 2;
+        m_snake.addNewHead(Point(x+1, y));
+        m_snake.addNewHead(Point(x, y));
+        m_way = Way::LEFT;
+        m_length = 0;
+        m_stateGame = Model::GOOD;
+    }
 
 	// получить змея для передачи его на прорисовку
     std::vector<Point> & getSnake() {
@@ -50,16 +61,18 @@ public:
     }
 
 	// сменить путь направления змея
-    void changeWay(Way _way);
+    inline void changeWay(Way _way) {m_way = _way;}
 
 	// чисто для любопытства, а куда сейчас двигается змей :)
-	Way getWay();
+    inline const Way getWay() const {return m_way;}
 
 	// добавить кролика (на поле может быть несколько кроликов)
-	void addRabbit();
+    inline void addRabbit() {m_rabbits.newRabbit(m_size, m_snake);}
 
-	// получить кроликов для прорисовки
-    std::vector<Rabbit> & getRabbits();
+    // получить кроликов для прорисовки Надо избавляться от этого метода, оставить только выдачю фабрики
+    std::vector<Rabbit> & getRabbits() {
+        return m_rabbits.data();
+    }
 
     inline RabbitFactory * getRabbitFactory(){
         return & m_rabbits;
@@ -77,7 +90,7 @@ private:
 
 	// сам змей, может выделить змея в отдельный класс
 //	std::vector<Point> m_snake;
-    Snake m_snake;
+    Snake<Point> m_snake;
 
 	// кролики, может выделить кролика в отдельный класс
     //	std::vector<Point> m_rabbits;
