@@ -15,7 +15,6 @@ LIBS += -lncurses
 
 SOURCES +=\
     model/src/Control.cpp \
-    model/src/Model.cpp \
     model/src/Point.cpp \
     model/src/View.cpp \
     model/src/Way.cpp \
@@ -27,11 +26,13 @@ SOURCES +=\
 HEADERS  += \
     version.h \
     model/Control.h \
-    model/Model.h \
+    model/TModel.h \
+    model/TSnake.h \
     model/Point.h \
     model/View.h \
     model/Way.h \
     model/RabbitFactory.h \
     model/Rabbit.h \
     curses/CursesView.h \
-    curses/CursesVersion.h
+    curses/CursesVersion.h \
+    curses/Config.h

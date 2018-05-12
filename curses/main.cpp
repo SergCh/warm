@@ -8,13 +8,14 @@
 #include "CursesView.h"
 #include "Point.h"
 #include "RabbitFactory.h"
+#include "Config.h"
 
 int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {
 
 	CursesView view;
     RabbitFactory rabbits;
-    TModel model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
+    Model model(Point(view.getWidthField(), view.getHieghtField()), rabbits);
 
 	Control control(view, model);
 
