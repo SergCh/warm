@@ -26,7 +26,6 @@ INCLUDEPATH += model qt5
 
 SOURCES +=\
     model/src/Control.cpp \
-    model/src/Model.cpp \
     model/src/Point.cpp \
     model/src/View.cpp \
     model/src/Way.cpp \
@@ -42,7 +41,6 @@ SOURCES +=\
 HEADERS  += \
     version.h \
     model/Control.h \
-    model/Model.h \
     model/Point.h \
     model/View.h \
     model/Way.h \
@@ -54,4 +52,5 @@ HEADERS  += \
     qt5/GraphicPoint.h \
     model/Snake.h \
     model/GraphicSnake.h \
-    qt5/Config.h
+    qt5/Config.h \
+    model/TModel.h

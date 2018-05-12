@@ -19,7 +19,7 @@
 //class GraphicPoint;
 //class GraphicSnake;
 
-template <class TSnake> class Model;
+template <class TSnake> class TModel;
 
 //typedef Snake<Point> SnakePoint;
 //typedef Model<SnakePoint> ModelSnake;
@@ -30,4 +30,4 @@ template <class TSnake> class Model;
 
 
 typedef GraphicSnake SnakePoint;
-typedef Model<SnakePoint> ModelSnake;
+typedef TModel<SnakePoint> ModelSnake;

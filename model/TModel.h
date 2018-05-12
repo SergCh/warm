@@ -19,11 +19,11 @@
 //class Rabbit;
 
 template <class TSnake>
-class Model {
+class TModel {
 
 public:
     // передача параметров ширины и высоты поля и фабрики кроликов а надо?
-    Model(Point _size, RabbitFactory &_rabbits)
+    TModel(Point _size, RabbitFactory &_rabbits)
     : m_size(_size), m_rabbits(_rabbits) {}
 	
     // состояние змея
@@ -52,7 +52,7 @@ public:
         m_snake.addNewHead(Point(x, y));
         m_way = Way::LEFT;
         m_length = 0;
-        m_stateGame = Model::GOOD;
+        m_stateGame = TModel::GOOD;
     }
 
 	// получить змея для передачи его на прорисовку
@@ -78,44 +78,44 @@ public:
     }
 
     // сделать шаг (Выдача состояние модели)
-    std::pair<Model::StateGame, Model::StateSnake> move() {
+    std::pair<TModel::StateGame, TModel::StateSnake> move() {
 
-        if (m_stateGame == Model::DEAD)
-            return std::make_pair(Model::DEAD, Model::NOT_CHANGED);
+        if (m_stateGame == TModel::DEAD)
+            return std::make_pair(TModel::DEAD, TModel::NOT_CHANGED);
 
         Point newHead = m_snake.front();                 // голова змея
         newHead += m_way.getPoint();
 
         if (!newHead.between(m_size))
-            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
 
         if (!m_snake.checkPoint(newHead))
-            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
 
         m_length += m_rabbits.eat(newHead);
 
         m_snake.addNewHead(newHead);                // двигаем червя
 
-        Model::StateSnake stateSnake = Model::MOVED;
+        TModel::StateSnake stateSnake = TModel::MOVED;
         if (m_length < 0) {                         // длина змея уменьшилась
             m_snake.removeTail(2);
             m_length++;
-            stateSnake = Model::MOVED_SHOTER;
+            stateSnake = TModel::MOVED_SHOTER;
         } else if (m_length == 0) {                 // не изменилась длина
             m_snake.removeTail(1);
         } else {                                    // длина змея увеличилась
             m_length--;
-            stateSnake = Model::ADDED;
+            stateSnake = TModel::ADDED;
         }
 
         if (m_snake.size() < 2)                     // если осталась одна голова, то змей тоже умер
-            return std::make_pair(m_stateGame=Model::DEAD, Model::NOT_CHANGED);
+            return std::make_pair(m_stateGame=TModel::DEAD, TModel::NOT_CHANGED);
 
-        return std::make_pair(Model::GOOD, stateSnake);
+        return std::make_pair(TModel::GOOD, stateSnake);
     }
 
     // надо ли этот метод
-    inline Model::StateGame getStateGame() const {return m_stateGame;}
+    inline TModel::StateGame getStateGame() const {return m_stateGame;}
 
 private:
     // размеры поля
