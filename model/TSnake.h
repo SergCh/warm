@@ -40,8 +40,7 @@ public:
 
     virtual unsigned int size() const {return m_snake.size();}
     virtual bool empty() const {return m_snake.empty();}
-    std::vector<TPoint> & data() {return m_snake;}
-    void clear() {m_snake.clear();}
+    virtual void clear() {m_snake.clear();}
 
     const Point & front() const {return m_snake.front();}
 

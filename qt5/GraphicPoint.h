@@ -28,7 +28,6 @@ public:
 
     GraphicPoint(Type _type, Point _point, int _step) :Point(_point.getX(), _point.getY()){
         m_type = _type;
-//        m_point = _point;
         m_step= _step;
     }
 
@@ -51,14 +50,6 @@ public:
     inline int getPosition() const {
         return m_position;
     }
-
-//    inline int getX() const {
-//        return m_point.getX();
-//    }
-
-//    inline int getY() const {
-//        return m_point.getY();
-//    }
 
     void draw(const QSize & _squareSize, QPainter * _painter, int _index);
 
