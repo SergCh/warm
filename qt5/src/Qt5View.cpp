@@ -24,34 +24,8 @@ void Qt5View::paint() {
     update();
 }
 
-void Qt5View::changeScore(int _score, int /*_stateSnake*/) {
+void Qt5View::changeScore(int _score, int ) {
     emit scoreChanged(_score);
-//    if (Model::NOT_CHANGED == _stateSnake)
-//        return;
-
-//    int remove = 0;
-//    switch ((Model::StateSnake)_stateSnake) {
-//    case Model::ADDED:      // переделать в модели, что бы было ADDED === 0, MOVED === 1, MOVED_SHOTER === 2
-//        remove = 0;
-//        break;
-//    case Model::MOVED:
-//        remove = 1;
-//        break;
-//    case Model::MOVED_SHOTER:
-//        remove = 2;
-//        break;
-//    default:
-//        break;
-//    }
-
-//    if (Model::STARTED == _stateSnake) {
-//        gSnake.clear();
-//        for (auto iter = m_snake->rbegin(); iter != m_snake->rend(); ++iter)
-//            GraphicPoint::addHead(gSnake, *iter, m_control->getWay(), 0);
-
-//    } else {
-//        GraphicPoint::addHead(gSnake, m_snake->front(), m_control->getWay(), remove);
-//    }
 }
 
 int Qt5View::getHieghtField() {
@@ -127,7 +101,6 @@ void Qt5View::paintEvent(QPaintEvent *event) {
     const int width = BOARD_WIDTH;
     const QSize squareSize = getSquareSize();
     const QSize boardSize(squareSize.width()*width-1, squareSize.height()*height-1);
-    const Way way=m_control->getWay();
 
     painter.fillRect(0, 0, boardSize.width()+1, boardSize.height()+1, Qt::darkGray);
 
@@ -139,7 +112,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
                          head.getY() * squareSize.height() + squareSize.height() / 2);
             QPoint pBorder(pHead);
 
-            switch (way) {
+            switch (m_snake->getWay()) {
                 case Way::LEFT:  pBorder.setX(0);                  break;
                 case Way::RIGHT: pBorder.setX(boardSize.width());  break;
                 case Way::UP:    pBorder.setY(0);                  break;
@@ -152,10 +125,9 @@ void Qt5View::paintEvent(QPaintEvent *event) {
         }
 
         // draw snake
-//        for (auto iter = gSnake.begin(); iter != gSnake.end(); ++iter)
-//            iter->draw(squareSize, &painter, iter - gSnake.begin());
         for (auto iter = m_snake->begin(); iter != m_snake->end(); ++iter)
-            iter->draw(squareSize, &painter, iter - m_snake->begin());
+            draw(&*iter, squareSize, &painter, iter - m_snake->begin());
+//        iter->draw(squareSize, &painter, iter - m_snake->begin());
     }
 
     for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {
@@ -190,6 +162,51 @@ void Qt5View::restart() {
     m_control->restart();
     emit scoreChanged(m_snake->size(), Model::STARTED);
     timer.start(timeoutTime(), this);
+}
+
+
+void Qt5View::draw(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index) {
+    QRect body1(_point->getX() * _squareSize.width(), _point->getY() * _squareSize.height(),
+                _squareSize.width(), _squareSize.height());
+
+    const QColor color = _index % 5 == 3 ? Qt::yellow: Qt::red;
+
+    int ddx = _squareSize.width() / 5, ddx2 = ddx + ddx;
+    int ddy = _squareSize.height() / 5, ddy2 = ddy + ddy;
+
+    switch (_point->getType()) {
+    case GraphicPoint::HEAD:
+        _painter->fillRect(body1, color);
+        return;
+
+    case GraphicPoint::HORISONTAL:
+        body1.translate(0, ddy * _point->getPosition());
+        body1.setHeight(_squareSize.width() - ddy2);
+        _painter->fillRect(body1, color);
+        return;
+
+    case GraphicPoint::VERTICAL:
+        body1.translate(ddx * _point->getPosition(), 0);
+        body1.setWidth(_squareSize.height() - ddx2);
+        _painter->fillRect(body1, color);
+        break;
+
+    case GraphicPoint::CORNER:
+        body1.setSize(_squareSize - QSize(ddx2, ddy2));
+        if (_point->getPosition()) {
+
+            QRect body2 = body1.translated(_point->getToLeft() ? 0:ddx2, ddy);
+            _painter->fillRect(body2, color);
+
+            body1.translate(ddx, _point->getToUp() ? 0:ddy2);
+            _painter->fillRect(body1, color);
+
+            return;
+        }
+        body1.translate(_point->getToLeft() ? 0 : ddx2, _point->getToUp() ? 0 : ddy2);
+        _painter->fillRect(body1, color);
+        return;
+    }
 }
 
 #ifdef QT_DEBUG

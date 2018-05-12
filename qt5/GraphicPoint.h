@@ -31,25 +31,19 @@ public:
         m_step = _step;
     }
 
-    inline void setPosition(int _position) {
-        m_position = _position;
-    }
-
-    inline void setPosition(int _position, bool _toLeft, bool _toUp) {
+    inline void setPosition(int _position, bool _toLeft = true, bool _toUp = true) {
         m_position = _position; m_toLeft = _toLeft; m_toUp = _toUp;
     }
 
-    inline int getStep() const {
-        return m_step;
-    }
+    inline int getStep() const {return m_step;}
 
-    inline void setStep(int _step) {
-        m_step = _step;
-    }
+    inline void setStep(int _step) {m_step = _step;}
 
-    inline int getPosition() const {
-        return m_position;
-    }
+    inline int getPosition() const {return m_position;}
+
+    inline Type getType() const {return m_type;}
+    inline bool getToLeft() const {return m_toLeft;}
+    inline bool getToUp() const {return m_toUp;}
 
     void draw(const QSize & _squareSize, QPainter * _painter, int _index);
 
@@ -68,7 +62,7 @@ private:
     int m_step;
     Type m_type;
     int m_position;
-    bool m_toLeft;
+    bool m_toLeft;      //может переделать в enum?
     bool m_toUp;
 };
 

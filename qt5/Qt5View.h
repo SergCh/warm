@@ -41,6 +41,10 @@ protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
 private:
+
+    void draw(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, int _index);
+
+
     enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
@@ -50,8 +54,6 @@ private:
     inline int timeoutTime() const { return 100; }
 
     QBasicTimer timer;
-
-//    std::vector<GraphicPoint> gSnake;
 
 #ifdef QT_DEBUG
     void pause(bool p);
