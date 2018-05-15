@@ -56,14 +56,7 @@ public:
 	// добавить кролика (на поле может быть несколько кроликов)
     inline void addRabbit() {m_rabbits.newRabbit(m_size, m_snake);}
 
-    // получить кроликов для прорисовки Надо избавляться от этого метода, оставить только выдачю фабрики
-    std::vector<Rabbit> & getRabbits() {
-        return m_rabbits.data();
-    }
-
-    inline RabbitFactory * getRabbitFactory(){
-        return & m_rabbits;
-    }
+    inline RabbitFactory * getRabbitFactory() {return & m_rabbits;}
 
     // сделать шаг (Выдача состояние модели)
     std::pair<TModel::StateGame, TModel::StateSnake> move() {

@@ -41,11 +41,9 @@ protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50, MAX_PATH = 10 };
 
     void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, QColor _color);
-
-
-    enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50 };
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;

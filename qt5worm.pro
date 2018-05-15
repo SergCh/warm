@@ -38,7 +38,7 @@ SOURCES +=\
     qt5/src/main.cpp
 
 HEADERS  += \
-    version.h \
+    model/version.h \
     model/Control.h \
     model/Point.h \
     model/View.h \

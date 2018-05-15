@@ -43,7 +43,9 @@ void Qt5View::nextStep() {
     m_control->nextStep();
 }
 
-void Qt5View::beforeGame() {}
+void Qt5View::beforeGame() {
+    m_snake->setMaxPath(MAX_PATH);
+}
 
 QSize Qt5View::sizeHint() const {
     return QSize(BOARD_HEIGHT * 20 + frameWidth() * 2,
@@ -108,7 +110,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
 
         // draw path
         {
-            int i = 100 + GraphicSnake::MAX_PATH - m_snake->sizePath();
+            int i = 100 + MAX_PATH - m_snake->sizePath();
             for (auto iter = m_snake->rbeginPath(); iter != m_snake->rendPath(); ++iter) {
                 QColor color = Qt::darkGray;
                 color = color.light(i++);

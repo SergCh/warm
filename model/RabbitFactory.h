@@ -27,7 +27,7 @@ public:
     /**
      * @brief ~RabbitFactory Деструктор
      */
-    ~RabbitFactory();
+    ~RabbitFactory() {clear();}
 
     /**
      * @brief clear Удалить всех кроликов (перед началом игры)
@@ -60,13 +60,6 @@ public:
      */
     int getWeight() const {return 5;}
 
-    /**
-     * @brief getData Возвращаем вектор кпроликов
-     * @return Вектор кроликов
-     */
-    std::vector<Rabbit> & data();
-
-    inline Rabbit* at(int i) {return &m_rabbits.at(i);}
     inline std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
     inline std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
     inline unsigned int size() const {return m_rabbits.size();}

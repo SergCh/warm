@@ -15,10 +15,9 @@
 class GraphicSnake : public TSnake<GraphicPoint>
 {
 public:
-    enum {MAX_PATH = 20};
 
     GraphicSnake(): TSnake<GraphicPoint>() {
-        m_path.reserve(MAX_PATH+3);
+        m_maxPath = 0;
     }
 
     virtual void addNewHead(GraphicPoint _newHead) {
@@ -28,21 +27,21 @@ public:
 
         if (!empty()) {
             step = (front().getStep() + 1) & 3;
-            GraphicPoint * pred = &_newHead;
+//            GraphicPoint * pred = &_newHead;
             std::vector<GraphicPoint>::iterator curr = begin();
             std::vector<GraphicPoint>::iterator next = curr + 1;
             if (next == end())
                 next = curr;
 
-            if (next->getY() == pred->getY()) {
+            if (next->getY() == _newHead.getY()) {
                 curr->changeToHorisontal();
 
-            } else if (next->getX() == pred->getX()) {
+            } else if (next->getX() == _newHead.getX()) {
                 curr->changeToVertical();
 
             } else {
-                const bool toLeft = (next->getX() + pred->getX() - 2 * curr->getX()) < 0;
-                const bool toUp   = (next->getY() + pred->getY() - 2 * curr->getY()) < 0;
+                const bool toLeft = (next->getX() + _newHead.getX() - 2 * curr->getX()) < 0;
+                const bool toUp   = (next->getY() + _newHead.getY() - 2 * curr->getY()) < 0;
 
                 curr->changeToCorner(toLeft, toUp);
 
@@ -58,13 +57,14 @@ public:
     }
 
     virtual void removeTail(int _count) {
+
         while (_count-- > 0 && !m_snake.empty()) {
             GraphicPoint point = m_snake.back();
             m_path.insert(m_path.begin(), point);
             m_snake.pop_back();
         }
 
-        while (m_path.size() > MAX_PATH) {
+        while (m_path.size() > m_maxPath) {
             m_path.pop_back();
         }
     }
@@ -80,8 +80,16 @@ public:
         TSnake<GraphicPoint>::start(_sizeField);
     }
 
+    void setMaxPath(unsigned int _maxPath) {
+        if (_maxPath == m_maxPath)
+            return;
+        m_maxPath = _maxPath;
+        if (m_maxPath > 0)
+            m_path.reserve(m_maxPath+3);
+    }
+
 private:
     std::vector<GraphicPoint> m_path;
-
+    unsigned int m_maxPath;
 };
 

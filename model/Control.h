@@ -37,12 +37,10 @@ public:
 	// инициализация 
 	virtual void init();
 
-    unsigned int getCountRubbits();
+    unsigned int getCountRubbits() const {return m_model.getRabbitFactory()->size();}
 
-    Rabbit * getRabbit(unsigned int i);
-
-    std::vector<Rabbit>::iterator beginRabbit();
-    std::vector<Rabbit>::iterator endRabbit();
+    std::vector<Rabbit>::iterator beginRabbit() const {return m_model.getRabbitFactory()->begin();}
+    std::vector<Rabbit>::iterator endRabbit() const {return m_model.getRabbitFactory()->end();}
 
 private:
 	
@@ -57,5 +55,5 @@ private:
     // флаг паузы
     bool m_pause;
     // кол-во шагов до нового кролика
-    int s4nr;   //steps for next rabbit
+    int steps4nextRabbit;   //steps for next rabbit
 };
