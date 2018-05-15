@@ -9,7 +9,7 @@
 Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
-    s4nr = BEGIN_STEP;
+    steps4nextRabbit = BEGIN_STEP;
 }
 
 Control::~Control(void){}
@@ -19,28 +19,12 @@ void Control::changeWay (Way way) {
         m_model.changeWay(way);
 }
 
-unsigned int Control::getCountRubbits() {
-    return m_model.getRabbitFactory()->size();
-}
-
-Rabbit * Control::getRabbit(unsigned int i) {
-    return m_model.getRabbitFactory()->at(i);
-}
-
-std::vector<Rabbit>::iterator Control::beginRabbit() {
-    return m_model.getRabbitFactory()->begin();
-}
-
-std::vector<Rabbit>::iterator Control::endRabbit() {
-    return m_model.getRabbitFactory()->end();
-}
-
 void Control::restart() {
 	m_model.init();
 	m_view.beforeGame();
     m_pause = false;
-    s4nr = BEGIN_STEP;
-    m_view.changeScore(m_model.getSnake().size(), Model::STARTED);
+    steps4nextRabbit = BEGIN_STEP;
+    m_view.changeScore(m_model.getSnake().size());
 }
 
 void Control::nextStep() {
@@ -50,14 +34,14 @@ void Control::nextStep() {
         if (state.first == Model::DEAD) {
             m_pause = true;
         } else {
-            if (--s4nr<=0) {
-                s4nr = NEXT_STEP;
+            if (--steps4nextRabbit<=0) {
+                steps4nextRabbit = NEXT_STEP;
                 m_model.addRabbit();
             }
         }
     }
     if (state.second != Model::NOT_CHANGED)
-        m_view.changeScore(m_model.getSnake().size(), state.second);
+        m_view.changeScore(m_model.getSnake().size());
     m_view.paint();
 }
 

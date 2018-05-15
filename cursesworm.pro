@@ -24,7 +24,7 @@ SOURCES +=\
     curses/main.cpp
 
 HEADERS  += \
-    version.h \
+    model/version.h \
     model/Control.h \
     model/TModel.h \
     model/TSnake.h \

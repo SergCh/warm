@@ -33,7 +33,7 @@ public:
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
      */
-    void setControl(Control* _control) {
+    virtual void setControl(Control* _control) {
         m_control = _control;
     }
 
@@ -41,7 +41,7 @@ public:
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
      */
-    void setSnake(Snake * _snake) {
+    virtual void setSnake(Snake * _snake) {
         m_snake = _snake;
     }
 
@@ -49,7 +49,7 @@ public:
      * @brief setRabbitFactory Установка уазателя на вескор кроликов
      * @param _rabbits[in] Указатель на вектор кроликов
      */
-    void setRabbitFactory(RabbitFactory * _rabbitFabrica) {
+    virtual void setRabbitFactory(RabbitFactory * _rabbitFabrica) {
         m_rf = _rabbitFabrica;
     }
 
@@ -63,7 +63,7 @@ public:
      * @brief changeScore Изменение результата
      * @param _score результат
      */
-    virtual void changeScore(int _score, int = 0) = 0;
+    virtual void changeScore(int _score) = 0;
 
     /**
      * @brief getHieghtField Возвращает высоту игроого поля
