@@ -26,7 +26,6 @@ INCLUDEPATH += model qt5
 
 SOURCES +=\
     model/src/Point.cpp \
-    model/src/View.cpp \
     model/src/Way.cpp \
     model/src/RabbitFactory.cpp \
     model/src/Rabbit.cpp \

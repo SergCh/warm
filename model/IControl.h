@@ -34,10 +34,6 @@ public:
     virtual void nextStep()=0;
     virtual void restart()=0;
 
-
-    virtual std::vector<Rabbit>::iterator beginRabbit() const =0;
-    virtual std::vector<Rabbit>::iterator endRabbit() const =0;
-
 protected:
     // флаг выхода
     bool m_quit;

@@ -32,7 +32,7 @@ public:
     IView(void)
     : m_control(0){
         m_way = Way::LEFT;
-        m_rf = 0;
+        m_rabbitFactory = 0;
     }
 
     /**
@@ -54,7 +54,7 @@ public:
      * @param _rabbits[in] Указатель на вектор кроликов
      */
     virtual void setRabbitFactory(RabbitFactory * _rabbitFabrica) {
-        m_rf = _rabbitFabrica;
+        m_rabbitFactory = _rabbitFabrica;
     }
 
     /**
@@ -109,6 +109,6 @@ private:
 protected:
 
     IControl *m_control;
-    RabbitFactory * m_rf;
+    RabbitFactory * m_rabbitFactory;
     Way m_way;
 };

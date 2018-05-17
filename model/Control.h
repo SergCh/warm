@@ -30,11 +30,6 @@ public:
 	// инициализация 
 	virtual void init();
 
-//    Way getWay() {return m_model.getSnake().getWay();}
-
-    std::vector<Rabbit>::iterator beginRabbit() const {return m_model.getRabbitFactory()->begin();} //зачем?
-    std::vector<Rabbit>::iterator endRabbit() const {return m_model.getRabbitFactory()->end();}
-
 protected:
 	
     enum {BEGIN_STEP = 20, NEXT_STEP = 50};

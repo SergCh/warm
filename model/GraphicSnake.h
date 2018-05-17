@@ -27,7 +27,6 @@ public:
 
         if (!empty()) {
             step = (front().getStep() + 1) & 3;
-//            GraphicPoint * pred = &_newHead;
             std::vector<GraphicPoint>::iterator curr = begin();
             std::vector<GraphicPoint>::iterator next = curr + 1;
             if (next == end())
@@ -78,7 +77,6 @@ public:
     virtual void start(Point _sizeField) {
         m_path.clear();
         ISnake::start(_sizeField);
-//        TSnake<GraphicPoint>::start(_sizeField);
     }
 
     void setMaxPath(unsigned int _maxPath) {
