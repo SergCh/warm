@@ -10,8 +10,6 @@
 #include "TModel.h"
 #include "RabbitFactory.h"
 
-#include "Config.h"
-
 #include "TModel.tcc"
 #include "Control.tcc"
 

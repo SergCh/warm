@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file IView.h
  *      @brief Заголовочный файла абстрактного интерфеса для отображения игрового поля
  *      @author Чугайнов С.В.
  *      @date 09.05.2018
@@ -27,7 +27,7 @@ class IView
 public:
 
     /**
-     * @brief View Конструктор
+     * @brief IView Конструктор
      */
     IView(void)
     : m_control(0){

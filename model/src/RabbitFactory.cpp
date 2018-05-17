@@ -2,7 +2,6 @@
 #include <algorithm>
 #include "RabbitFactory.h"
 #include "Rabbit.h"
-#include "Config.h"
 
 #include "ISnake.h"
 

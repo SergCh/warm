@@ -10,7 +10,6 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 #include "Way.h"
-#include "Config.h"
 
 #include "GraphicPoint.h"
 
