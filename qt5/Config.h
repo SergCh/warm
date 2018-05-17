@@ -22,4 +22,4 @@
 //template <class T_Snake> class TModel;
 
 //typedef GraphicSnake Snake;
-typedef TModel<GraphicSnake> Model;
+//typedef TModel<GraphicSnake> Model;

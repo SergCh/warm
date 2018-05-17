@@ -15,7 +15,7 @@
 #include "GraphicPoint.h"
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
-
+    m_snake = 0;
     setFocusPolicy(Qt::StrongFocus);
     emit scoreChanged(0);
 }
@@ -36,6 +36,9 @@ int Qt5View::getWidthField() {
     return BOARD_WIDTH;
 }
 
+void Qt5View::setSnake(ISnake * _snake){
+    m_snake = static_cast<GraphicSnake*> (_snake);
+}
 
 void Qt5View::nextStep() {
     Q_CHECK_PTR(m_control);
@@ -175,7 +178,7 @@ void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
     m_control->restart();
-    emit scoreChanged(m_snake->size(), Model::STARTED);
+    emit scoreChanged(m_snake->size(), IModel::STARTED);
     timer.start(timeoutTime(), this);
 }
 

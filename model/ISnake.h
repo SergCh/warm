@@ -25,6 +25,16 @@ public:
 
     inline Way getWay() const {return m_way;}
 
+    virtual void clear() = 0;
+
+    virtual void start(Point _sizeField) {
+        clear();
+        m_way = Way::LEFT;
+        generateNewHead(_sizeField);
+        generateNewHead(_sizeField);
+    }
+
+
 protected:
     Way m_way;
 };

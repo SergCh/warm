@@ -16,7 +16,7 @@ class Control;
 class Rabbit;
 
 
-class CursesView : virtual public View 
+class CursesView : virtual public IView 
 {
 public:
     CursesView();

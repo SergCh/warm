@@ -61,19 +61,17 @@ public:
             m_snake.pop_back();
     }
 
-    virtual void start(Point _sizeField) {
-        clear();
-        m_way = Way::LEFT;
-        generateNewHead(_sizeField);
-        generateNewHead(_sizeField);
-    }
+//    virtual void start(Point _sizeField) {
+//        clear();
+//        m_way = Way::LEFT;
+//        generateNewHead(_sizeField);
+//        generateNewHead(_sizeField);
+//    }
 
 
     virtual unsigned int size() const {return m_snake.size();}
     virtual bool empty() const {return m_snake.empty();}
     virtual void clear() {m_snake.clear();}
-
-//    inline const T_Point & front() const {return m_snake.front();}
 
     inline typename std::vector<T_Point>::reverse_iterator rbegin() {return m_snake.rbegin();}
     inline typename std::vector<T_Point>::reverse_iterator rend() {return m_snake.rend();}
@@ -83,10 +81,8 @@ public:
 
     inline T_Point & front() {return m_snake.front();}
 
-//    inline Way getWay() const {return m_way;}
-
 protected:
     std::vector<T_Point> m_snake;
-//    Way m_way;
+
 };
 

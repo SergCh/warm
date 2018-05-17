@@ -95,7 +95,7 @@ public:
 //    }
 
     // надо ли этот метод
-    inline TModel::StateGame getStateGame() const {return m_stateGame;}
+//    inline TModel::StateGame getStateGame() const {return m_stateGame;}
 
 private:
     // размеры поля

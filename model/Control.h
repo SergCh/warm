@@ -13,10 +13,10 @@ template <class T_Snake>
 class Control
 {
 public:
-    Control(View<T_Snake> &, TModel<T_Snake>&);
+    Control(IView<T_Snake> &, TModel<T_Snake>&);
 	virtual ~Control(void);
 
-    inline Model & getModel() const {return m_model;}
+    inline TModel<T_Snake> & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);
@@ -38,8 +38,10 @@ public:
 	// инициализация 
 	virtual void init();
 
-    unsigned int getCountRubbits() const {return m_model.getRabbitFactory()->size();}
+//    unsigned int getCountRubbits() const {return m_model.getRabbitFactory()->size();}
 
+    Way getWay() {return m_model.getSnake().getWay();}
+//    std::vector<T_Point>::iterator beginSnake() const {return m_model.getSnake().}
     std::vector<Rabbit>::iterator beginRabbit() const {return m_model.getRabbitFactory()->begin();}
     std::vector<Rabbit>::iterator endRabbit() const {return m_model.getRabbitFactory()->end();}
 
@@ -48,7 +50,7 @@ private:
     enum {BEGIN_STEP = 20, NEXT_STEP = 50};
 
     TModel<T_Snake> &m_model;
-    View<T_Snake> &m_view;
+    IView<T_Snake> &m_view;
 
 	// флаг выхода 
 	bool m_quit;

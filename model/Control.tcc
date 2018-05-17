@@ -7,7 +7,7 @@
 #include "Rabbit.h"
 
 template <class T_Snake>
-Control<T_Snake>::Control(View<T_Snake>& _view, TModel<T_Snake>& _model):  m_model(_model) , m_view(_view) {
+Control<T_Snake>::Control(IView<T_Snake>& _view, TModel<T_Snake>& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
     steps4nextRabbit = BEGIN_STEP;
@@ -34,10 +34,10 @@ void Control<T_Snake>::restart() {
 template <class T_Snake>
 void Control<T_Snake>::nextStep() {
 //    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
-      std::pair<int, int> state(Model::GOOD, Model::NOT_CHANGED);
+      std::pair<IModel::StateGame, IModel::StateSnake> state(IModel::GOOD, IModel::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
-        if (state.first == Model::DEAD) {
+        if (state.first == IModel::DEAD) {
             m_pause = true;
         } else {
             if (--steps4nextRabbit<=0) {
@@ -46,7 +46,7 @@ void Control<T_Snake>::nextStep() {
             }
         }
     }
-    if (state.second != Model::NOT_CHANGED)
+    if (state.second != IModel::NOT_CHANGED)
         m_view.changeScore(m_model.getSnake().size());
     m_view.paint();
 }
@@ -54,6 +54,6 @@ void Control<T_Snake>::nextStep() {
 template <class T_Snake>
 void Control<T_Snake>::init() {
     m_view.setControl(this);
-    m_view.setSnake(&m_model.getSnake());
+    m_view.setSnake(&m_model.getSnake());           //нарушение MVC избавляемся или избавляемся от MVC :)
     m_view.setRabbitFactory((RabbitFactory*)m_model.getRabbitFactory());
 }

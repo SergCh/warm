@@ -37,9 +37,6 @@ public:
     } StateSnake;
 
 
-    // начало игры
-    virtual void init() = 0;
-
     // получить змея для передачи его на прорисовку
     virtual ISnake & getSnake() = 0;
 
@@ -53,7 +50,9 @@ public:
 
     // сделать шаг (Выдача состояние модели)
     virtual std::pair<typename IModel::StateGame, typename IModel::StateSnake> move() = 0;
+
     inline IModel::StateGame getStateGame() const {return m_stateGame;}
+
 
 protected:
     // размеры поля

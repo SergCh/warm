@@ -77,7 +77,8 @@ public:
 
     virtual void start(Point _sizeField) {
         m_path.clear();
-        TSnake<GraphicPoint>::start(_sizeField);
+        ISnake::start(_sizeField);
+//        TSnake<GraphicPoint>::start(_sizeField);
     }
 
     void setMaxPath(unsigned int _maxPath) {

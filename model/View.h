@@ -15,22 +15,22 @@
 #include "Point.h"
 #include "Way.h"
 #include "Config.h"
+#include "ISnake.h"
 
 template <class T_Snake> class Control;
 class Rabbit;
 class RabbitFactory;
 
 template <class T_Snake>
-class View
+class IView
 {
 public:
 
     /**
      * @brief View Конструктор
      */
-    View(void)
+    IView(void)
     : m_control(0){
-        m_snake = 0;
         m_way = Way::LEFT;
         m_rf = 0;
     }
@@ -44,12 +44,10 @@ public:
     }
 
     /**
-     * @brief setSnake Установка указателя на змея
-     * @param[in] _snake Указатель на замея (векор точек)
+     * @brief setSnake Чисто виртуальный метод, установка указателя на змея
+     * @param[in] _snake Указатель на замея
      */
-    virtual void setSnake(T_Snake * _snake) {
-        m_snake = _snake;
-    }
+    virtual void setSnake(ISnake * _snake) = 0;
 
     /**
      * @brief setRabbitFactory Установка уазателя на вескор кроликов
@@ -111,7 +109,6 @@ private:
 protected:
 
     Control<T_Snake> *m_control;
-    T_Snake * m_snake;
     RabbitFactory * m_rf;
     Way m_way;
 };

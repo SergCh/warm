@@ -15,7 +15,7 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
-CursesView::CursesView() : View() {
+CursesView::CursesView() : IView() {
 	initscr();
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
