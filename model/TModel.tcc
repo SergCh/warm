@@ -9,6 +9,8 @@
  *
  */
 
+//#include "IModel.h"
+
 template <class T_Snake>
 void TModel<T_Snake>::init() {
 
@@ -19,22 +21,21 @@ void TModel<T_Snake>::init() {
 }
 
 
-template <class T_Snake>
-void TModel<T_Snake>::changeWay(Way _way) {
-    m_snake.m_way = _way;
-}
+//template <class T_Snake>
+//void TModel<T_Snake>::changeWay(Way _way) {
+//    m_snake.m_way = _way;
+//}
 
 
 template <class T_Snake>
 void TModel<T_Snake>::addRabbit() {
-//    std::vector<Point> points;
     m_rabbits.newRabbit(m_size, m_snake);
 }
 
 
 // сделать шаг (Выдача состояние модели)
 template <class T_Snake>
-std::pair<int, int> TModel<T_Snake>::move() {
+std::pair<typename IModel::StateGame, typename IModel::StateSnake> TModel<T_Snake>::move() {
 //std::pair<TModel<T_Snake>::StateGame, TModel<T_Snake>::StateSnake> TModel<T_Snake>::move() {
 
     if (m_stateGame == TModel::DEAD)

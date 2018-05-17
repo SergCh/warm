@@ -1,6 +1,6 @@
 
-#include "View.h"
-#include "Rabbit.h"
+//#include "View.h"
+//#include "Rabbit.h"
 
 //teplate
 //View::View() : m_control(0){
