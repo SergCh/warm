@@ -1,7 +1,7 @@
 
 #include "Control.h"
 
-#include "TModel.h"
+#include "Model.h"
 #include "IView.h"
 #include "RabbitFactory.h"
 #include "Rabbit.h"

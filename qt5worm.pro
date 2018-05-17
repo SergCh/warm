@@ -31,28 +31,28 @@ SOURCES +=\
     model/src/Rabbit.cpp \
     model/src/GraphicSnake.cpp \
     model/src/GraphicPoint.cpp \
+    model/src/Model.cpp \
+    model/src/Control.cpp \
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
-    qt5/src/main.cpp \
-    model/Control.cpp
+    qt5/src/main.cpp
 
 HEADERS  += \
     model/version.h \
-    model/Control.h \
     model/Point.h \
     model/Way.h \
-    model/TModel.h \
-    model/TModel.tcc \
+    model/ISnake.h \
     model/TSnake.h \
     model/TSnake.tcc \
+    model/IModel.h \
+    model/Model.h \
+    model/IControl.h \
+    model/Control.h \
+    model/IView.h \
     model/Rabbit.h \
     model/RabbitFactory.h \
     model/GraphicPoint.h \
     model/GraphicSnake.h \
-    model/ISnake.h \
-    model/IModel.h \
-    model/IControl.h \
-    model/IView.h \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
     qt5/Qt5Version.h

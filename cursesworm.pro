@@ -26,7 +26,9 @@ SOURCES +=\
 HEADERS  += \
     model/version.h \
     model/Control.h \
+    model/IModel.h \
     model/TModel.h \
+    model/ISnake.h \
     model/TSnake.h \
     model/Point.h \
     model/View.h \

@@ -18,12 +18,12 @@
 #include "ISnake.h"
 
 
-template <class T_Snake> class TModel;
+class Model;
 
 template <class T_Point>
 class TSnake : public ISnake
 {
-    template <class T_Snake> friend class TModel;
+
 public:
 
     TSnake() {}
@@ -61,13 +61,6 @@ public:
             m_snake.pop_back();
     }
 
-//    virtual void start(Point _sizeField) {
-//        clear();
-//        m_way = Way::LEFT;
-//        generateNewHead(_sizeField);
-//        generateNewHead(_sizeField);
-//    }
-
 
     virtual unsigned int size() const {return m_snake.size();}
     virtual bool empty() const {return m_snake.empty();}
@@ -79,7 +72,7 @@ public:
     inline typename std::vector<T_Point>::iterator begin() {return m_snake.begin();}
     inline typename std::vector<T_Point>::iterator end() {return m_snake.end();}
 
-    inline T_Point & front() {return m_snake.front();}
+    virtual T_Point & front() {return m_snake.front();}
 
 protected:
     std::vector<T_Point> m_snake;

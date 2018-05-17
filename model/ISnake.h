@@ -15,6 +15,8 @@ class ISnake
 {
 public:
 
+    friend class Model;
+
     ISnake() {}
 
     virtual ~ISnake() {}
@@ -28,6 +30,11 @@ public:
     virtual void clear() = 0;
 
     virtual unsigned int size() const = 0;
+
+    virtual void removeTail(int _count) = 0;
+    virtual Point & front() = 0;
+
+
 
     virtual void start(Point _sizeField) {
         clear();

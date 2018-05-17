@@ -4,7 +4,7 @@
 #include <ctime>
 
 #include "Control.h"
-#include "TModel.h"
+#include "Model.h"
 #include "CursesView.h"
 #include "Point.h"
 #include "RabbitFactory.h"
