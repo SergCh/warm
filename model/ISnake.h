@@ -27,6 +27,8 @@ public:
 
     virtual void clear() = 0;
 
+    virtual unsigned int size() const = 0;
+
     virtual void start(Point _sizeField) {
         clear();
         m_way = Way::LEFT;

@@ -7,7 +7,7 @@
 #include "Rabbit.h"
 
 template <class T_Snake>
-Control<T_Snake>::Control(IView& _view, TModel<T_Snake>& _model):  m_model(_model) , m_view(_view) {
+Control<T_Snake>::Control(IView& _view, IModel& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
     steps4nextRabbit = BEGIN_STEP;

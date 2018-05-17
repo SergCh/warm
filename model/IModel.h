@@ -37,6 +37,8 @@ public:
     } StateSnake;
 
 
+    virtual void init() = 0;
+
     // получить змея для передачи его на прорисовку
     virtual ISnake & getSnake() = 0;
 

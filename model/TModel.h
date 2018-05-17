@@ -97,7 +97,7 @@ public:
     // надо ли этот метод
 //    inline TModel::StateGame getStateGame() const {return m_stateGame;}
 
-private:
+protected:
     // размеры поля
 //    Point m_size;
 

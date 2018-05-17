@@ -12,7 +12,7 @@
 #include "GraphicPoint.h"
 #include "GraphicSnake.h"
 
-class Qt5View : public QFrame, public IView /*<GraphicSnake>*/
+class Qt5View : public QFrame, public IView
 {
 
     Q_OBJECT
