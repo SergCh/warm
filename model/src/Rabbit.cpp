@@ -1,5 +1,7 @@
 #include "Rabbit.h"
 
+using namespace SNAKE_MODEL;
+
 
 void Rabbit::eat(const Point & _head) {
     if (m_live == 0) //уже мертвый

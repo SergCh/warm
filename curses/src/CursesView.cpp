@@ -17,8 +17,6 @@
 
 #include "TSnake.h"
 
-//typedef TSnake<Point> Snake;
-
 CursesView::CursesView() : IView() {
 	initscr();
 	keypad(stdscr, TRUE);

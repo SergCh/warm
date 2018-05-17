@@ -15,41 +15,44 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
+namespace SNAKE_MODEL {
 
-class ISnake;
+    class ISnake;
 
-class Model : public IModel {
+    class Model : public IModel {
 
-public:
-    // передача параметров ширины и высоты поля
-    Model(Point _size, ISnake & _snake)
-    : IModel(_size), m_snake(_snake) {}
-	
+    public:
+        // передача параметров ширины и высоты поля
+        Model(Point _size, ISnake & _snake)
+        : IModel(_size), m_snake(_snake) {}
 
-    // начало игры
-    void init();
 
-    // получить змея для передачи его на прорисовку
-    ISnake & getSnake() {
-        return m_snake;
-    }
+        // начало игры
+        void init();
 
-	// сменить путь направления змея
-    void changeWay(Way _way) {
-        m_snake.m_way = _way;
-    }
+        // получить змея для передачи его на прорисовку
+        ISnake & getSnake() {
+            return m_snake;
+        }
 
-	// добавить кролика (на поле может быть несколько кроликов)
-    void addRabbit();
+        // сменить путь направления змея
+        void changeWay(Way _way) {
+            m_snake.m_way = _way;
+        }
 
-    // сделать шаг (Выдача состояние модели)
-    std::pair<IModel::StateGame, IModel::StateSnake> move();
+        // добавить кролика (на поле может быть несколько кроликов)
+        void addRabbit();
 
-protected:
+        // сделать шаг (Выдача состояние модели)
+        std::pair<IModel::StateGame, IModel::StateSnake> move();
 
-    ISnake & m_snake;
+    protected:
 
-	// добавляемая длина при поедании кролика
-	int m_length;
+        ISnake & m_snake;
 
-};
+        // добавляемая длина при поедании кролика
+        int m_length;
+
+    };
+
+}

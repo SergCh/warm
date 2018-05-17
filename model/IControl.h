@@ -11,34 +11,38 @@
 
 #include "Way.h"
 
-class Rabbits;
+namespace SNAKE_MODEL {
 
-class IControl
-{
-public:
-    IControl() {
-        m_quit = false;
-        m_pause = true;
-    }
+    class Rabbits;
 
-    inline bool isPause() const {return m_pause;}
-    // метод для View, вызывается, когда клиент хочет выйти.
-    inline void quit() {m_quit = true;}
+    class IControl
+    {
+    public:
+        IControl() {
+            m_quit = false;
+            m_pause = true;
+        }
 
-    // геттер для m_quit
-    inline bool isQuit() const {return m_quit;}
+        inline bool isPause() const {return m_pause;}
+        // метод для View, вызывается, когда клиент хочет выйти.
+        inline void quit() {m_quit = true;}
 
-    // поменять направление
-    virtual void changeWay(Way _way)=0;
+        // геттер для m_quit
+        inline bool isQuit() const {return m_quit;}
 
-    virtual void nextStep()=0;
-    virtual void restart()=0;
+        // поменять направление
+        virtual void changeWay(Way _way)=0;
 
-protected:
-    // флаг выхода
-    bool m_quit;
-    // флаг паузы
-    bool m_pause;
+        virtual void nextStep()=0;
+        virtual void restart()=0;
+
+    protected:
+        // флаг выхода
+        bool m_quit;
+        // флаг паузы
+        bool m_pause;
 
 
-};
+    };
+
+}

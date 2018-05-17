@@ -7,35 +7,38 @@
 #include "IModel.h"
 #include "IView.h"
 
+namespace SNAKE_MODEL {
 
-// контроллер между View и Model
+    // контроллер между View и Model
 
-class Control : public IControl
-{
-public:
-    Control(IView &, IModel&);
-	virtual ~Control(void);
+    class Control : public IControl
+    {
+    public:
+        Control(IView &, IModel&);
+        virtual ~Control(void);
 
-    inline IModel & getModel() const {return m_model;}
+        inline IModel & getModel() const {return m_model;}
 
-	// поменять направление
-	virtual void changeWay(Way);
+        // поменять направление
+        virtual void changeWay(Way);
 
-	// перезапуск игры
-    virtual void restart();
+        // перезапуск игры
+        virtual void restart();
 
-    // следующий шаг
-    virtual void nextStep();
+        // следующий шаг
+        virtual void nextStep();
 
-	// инициализация 
-	virtual void init();
+        // инициализация
+        virtual void init();
 
-protected:
-	
-    enum {BEGIN_STEP = 20, NEXT_STEP = 50};
+    protected:
 
-    IModel &m_model;
-    IView &m_view;
+        enum {BEGIN_STEP = 20, NEXT_STEP = 50};
 
-    int steps4nextRabbit;   //steps for next rabbit
-};
+        IModel &m_model;
+        IView &m_view;
+
+        int steps4nextRabbit;   //steps for next rabbit
+    };
+
+}

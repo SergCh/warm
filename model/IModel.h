@@ -14,54 +14,58 @@
 #include "Way.h"
 #include "RabbitFactory.h"
 
-class IModel {
+namespace SNAKE_MODEL {
 
-public:
-    // передача параметров ширины и высоты поля
-    IModel(Point _size)
-    : m_size(_size), m_stateGame(DEAD) {}
+    class IModel {
 
-    // состояние змея
-    typedef enum {
-        DEAD,           ///< Двигаться дальше не может
-        GOOD            ///< Может двигаться, длина не изменилась
-    } StateGame;
+    public:
+        // передача параметров ширины и высоты поля
+        IModel(Point _size)
+        : m_size(_size), m_stateGame(DEAD) {}
 
-    // изменение змея, надо будкт создать класс змея и убрать в него
-    typedef enum {
-        NOT_CHANGED,    ///< Не измениля
-        ADDED,          ///< Добавился один элемент спереди
-        MOVED,          ///< Добавился один элемент спереди и ублася один элемент сзади
-        MOVED_SHOTER,   ///< Добавился один элемент спереди и убралось 2 элемента сзади
-        STARTED         ///< Начальный короткий змей
-    } StateSnake;
+        // состояние змея
+        typedef enum {
+            DEAD,           ///< Двигаться дальше не может
+            GOOD            ///< Может двигаться, длина не изменилась
+        } StateGame;
 
-
-    virtual void init() = 0;
-
-    // получить змея для передачи его на прорисовку
-    virtual ISnake & getSnake() = 0;
-
-    // сменить путь направления змея
-    virtual void changeWay(Way _way) = 0;
-
-    // добавить кролика (на поле может быть несколько кроликов)
-    virtual void addRabbit() = 0;
-
-    RabbitFactory * getRabbitFactory() {return & m_rabbits;}
-
-    // сделать шаг (Выдача состояние модели)
-    virtual std::pair<typename IModel::StateGame, typename IModel::StateSnake> move() = 0;
-
-    inline IModel::StateGame getStateGame() const {return m_stateGame;}
+        // изменение змея, надо будкт создать класс змея и убрать в него
+        typedef enum {
+            NOT_CHANGED,    ///< Не измениля
+            ADDED,          ///< Добавился один элемент спереди
+            MOVED,          ///< Добавился один элемент спереди и ублася один элемент сзади
+            MOVED_SHOTER,   ///< Добавился один элемент спереди и убралось 2 элемента сзади
+            STARTED         ///< Начальный короткий змей
+        } StateSnake;
 
 
-protected:
-    // размеры поля
-    Point m_size;
+        virtual void init() = 0;
 
-    // целая фабрика для кроликов
-    RabbitFactory m_rabbits;
+        // получить змея для передачи его на прорисовку
+        virtual ISnake & getSnake() = 0;
 
-    StateGame m_stateGame;
-};
+        // сменить путь направления змея
+        virtual void changeWay(Way _way) = 0;
+
+        // добавить кролика (на поле может быть несколько кроликов)
+        virtual void addRabbit() = 0;
+
+        RabbitFactory * getRabbitFactory() {return & m_rabbits;}
+
+        // сделать шаг (Выдача состояние модели)
+        virtual std::pair<typename IModel::StateGame, typename IModel::StateSnake> move() = 0;
+
+        inline IModel::StateGame getStateGame() const {return m_stateGame;}
+
+
+    protected:
+        // размеры поля
+        Point m_size;
+
+        // целая фабрика для кроликов
+        RabbitFactory m_rabbits;
+
+        StateGame m_stateGame;
+    };
+
+}

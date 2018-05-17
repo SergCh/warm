@@ -13,6 +13,8 @@
 
 #include "GraphicPoint.h"
 
+using namespace SNAKE_MODEL;
+
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
     m_snake = 0;
     setFocusPolicy(Qt::StrongFocus);

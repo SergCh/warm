@@ -9,6 +9,8 @@
 
 #include "Model.h"
 
+using namespace SNAKE_MODEL;
+
 void Model::init() {
 
     m_rabbits.clear();

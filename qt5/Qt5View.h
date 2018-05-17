@@ -12,6 +12,8 @@
 #include "GraphicPoint.h"
 #include "GraphicSnake.h"
 
+using namespace SNAKE_MODEL;
+
 class Qt5View : public QFrame, public IView
 {
 

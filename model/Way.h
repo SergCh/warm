@@ -10,37 +10,41 @@
 
 #include "Point.h"
 
-class Way {
-public:
+namespace SNAKE_MODEL {
 
-    /// Направления движения
-    typedef enum {
-        UP,         ///< Вверх
-        DOWN,       ///< Вниз
-        LEFT,       ///< Влево
-        RIGHT,      ///< Вправо
-        COUNT_WAYS  ///< Количество направлений
-    } EWay;
+    class Way {
+    public:
 
-    Way(EWay _way=LEFT):m_way(_way) {}
+        /// Направления движения
+        typedef enum {
+            UP,         ///< Вверх
+            DOWN,       ///< Вниз
+            LEFT,       ///< Влево
+            RIGHT,      ///< Вправо
+            COUNT_WAYS  ///< Количество направлений
+        } EWay;
 
-    inline bool isHorisontal() const {
-        return m_way == LEFT || m_way == RIGHT;
-    }
+        Way(EWay _way=LEFT):m_way(_way) {}
 
-    /// Константы для инкрементных операций при движении в направлении на еденицу
-    static const Point POINTS_WAY[COUNT_WAYS];
+        inline bool isHorisontal() const {
+            return m_way == LEFT || m_way == RIGHT;
+        }
 
-    inline EWay getWay() const {return m_way;}
-    inline void setWay(EWay _way) {m_way = _way;}
+        /// Константы для инкрементных операций при движении в направлении на еденицу
+        static const Point POINTS_WAY[COUNT_WAYS];
 
-    inline operator int () const {return (int) m_way;}
+        inline EWay getWay() const {return m_way;}
+        inline void setWay(EWay _way) {m_way = _way;}
 
-    const Point & getPoint() const {
-        return Way::POINTS_WAY[m_way];
-    }
+        inline operator int () const {return (int) m_way;}
+
+        const Point & getPoint() const {
+            return Way::POINTS_WAY[m_way];
+        }
 
 
-private:
-    EWay m_way;
-};
+    private:
+        EWay m_way;
+    };
+
+}

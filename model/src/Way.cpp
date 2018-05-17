@@ -2,6 +2,8 @@
 #include "Way.h"
 #include "Point.h"
 
+using namespace SNAKE_MODEL;
+
 const Point Way::POINTS_WAY[Way::COUNT_WAYS] = {
     /*UP*/    Point( 0, -1),                /// UP
     /*DOWN*/  Point( 0,  1),                /// DOWN

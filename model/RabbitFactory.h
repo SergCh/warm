@@ -13,60 +13,62 @@
 //class Snake<Point>;
 
 #include "Rabbit.h"
-//#include "Config.h"
 
-class ISnake;
+namespace SNAKE_MODEL {
 
-class RabbitFactory
-{
-public:
-    /**
-     * @brief RabbitFactory Конструктор
-     */
-    RabbitFactory();
+    class ISnake;
 
-    /**
-     * @brief ~RabbitFactory Деструктор
-     */
-    ~RabbitFactory() {clear();}
+    class RabbitFactory
+    {
+    public:
+        /**
+         * @brief RabbitFactory Конструктор
+         */
+        RabbitFactory();
 
-    /**
-     * @brief clear Удалить всех кроликов (перед началом игры)
-     */
-    inline void clear() {m_rabbits.clear();}
+        /**
+         * @brief ~RabbitFactory Деструктор
+         */
+        ~RabbitFactory() {clear();}
 
-    /**
-     * @brief newRabbit Сгенерировать случайным образом нового кролика
-     * @param size Размер поля
-     * @param snake Змей
-     */
-    void newRabbit(Point & _size, ISnake & _snake);
+        /**
+         * @brief clear Удалить всех кроликов (перед началом игры)
+         */
+        inline void clear() {m_rabbits.clear();}
 
-    /**
-     * @brief eat Кушаем кпроликов
-     * @param координаты кроликов
-     * @return кодичество добавляемы элементов змею (если ничего не съели то 0)
-     */
-    int eat(Point & _head);
+        /**
+         * @brief newRabbit Сгенерировать случайным образом нового кролика
+         * @param size Размер поля
+         * @param snake Змей
+         */
+        void newRabbit(Point & _size, ISnake & _snake);
 
-    /**
-     * @brief getLive Количество жизней новому кролику
-     * @return Количество жизней новому кролику
-     */
-    int getLive() const {return 134;}
+        /**
+         * @brief eat Кушаем кпроликов
+         * @param координаты кроликов
+         * @return кодичество добавляемы элементов змею (если ничего не съели то 0)
+         */
+        int eat(Point & _head);
 
-    /**
-     * @brief getWeight Вес новому кролику
-     * @return Вес новому кролику
-     */
-    int getWeight() const {return 5;}
+        /**
+         * @brief getLive Количество жизней новому кролику
+         * @return Количество жизней новому кролику
+         */
+        int getLive() const {return 134;}
 
-    inline std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
-    inline std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
-    inline unsigned int size() const {return m_rabbits.size();}
+        /**
+         * @brief getWeight Вес новому кролику
+         * @return Вес новому кролику
+         */
+        int getWeight() const {return 5;}
 
-private:
-    /// Вектор кроликов
-    std::vector<Rabbit> m_rabbits;
-};
+        inline std::vector<Rabbit>::iterator begin() {return m_rabbits.begin();}
+        inline std::vector<Rabbit>::iterator end() {return m_rabbits.end();}
+        inline unsigned int size() const {return m_rabbits.size();}
 
+    private:
+        /// Вектор кроликов
+        std::vector<Rabbit> m_rabbits;
+    };
+
+}

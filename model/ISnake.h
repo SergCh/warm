@@ -11,40 +11,43 @@
 #include "Point.h"
 #include "Way.h"
 
-class ISnake
-{
-public:
+namespace SNAKE_MODEL {
 
-    friend class Model;
+    class ISnake
+    {
+    public:
 
-    ISnake() {}
+        friend class Model;
 
-    virtual ~ISnake() {}
+        ISnake() {}
 
-    virtual bool generateNewHead(Point _sizeField) = 0;
+        virtual ~ISnake() {}
 
-    virtual bool checkPoint(Point & _point) = 0;
+        virtual bool generateNewHead(Point _sizeField) = 0;
 
-    inline Way getWay() const {return m_way;}
+        virtual bool checkPoint(Point & _point) = 0;
 
-    virtual void clear() = 0;
+        inline Way getWay() const {return m_way;}
 
-    virtual unsigned int size() const = 0;
+        virtual void clear() = 0;
 
-    virtual void removeTail(int _count) = 0;
-    virtual Point & front() = 0;
+        virtual unsigned int size() const = 0;
 
-
-
-    virtual void start(Point _sizeField) {
-        clear();
-        m_way = Way::LEFT;
-        generateNewHead(_sizeField);
-        generateNewHead(_sizeField);
-    }
+        virtual void removeTail(int _count) = 0;
+        virtual Point & front() = 0;
 
 
-protected:
-    Way m_way;
-};
 
+        virtual void start(Point _sizeField) {
+            clear();
+            m_way = Way::LEFT;
+            generateNewHead(_sizeField);
+            generateNewHead(_sizeField);
+        }
+
+
+    protected:
+        Way m_way;
+    };
+
+}

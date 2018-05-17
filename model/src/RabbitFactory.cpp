@@ -5,6 +5,9 @@
 
 #include "ISnake.h"
 
+using namespace SNAKE_MODEL;
+
+
 /**
  * @brief The checkPoint struct is Функтор для std::find_if
  */

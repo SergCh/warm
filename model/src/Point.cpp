@@ -1,6 +1,8 @@
 
 #include "Point.h"
 
+using namespace SNAKE_MODEL;
+
 Point::Point(int _x, int _y):pair<int,int>(_x, _y){}
 
 Point::Point():pair<int,int>(0, 0){}

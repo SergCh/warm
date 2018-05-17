@@ -10,9 +10,6 @@
 #include "Model.h"
 #include "RabbitFactory.h"
 
-#include "TSnake.tcc"
-
-
 int main(int argc, char *argv[])
 {
 

@@ -6,6 +6,8 @@
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
+using namespace SNAKE_MODEL;
+
 Control::Control(IView& _view, IModel& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
