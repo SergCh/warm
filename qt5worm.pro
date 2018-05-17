@@ -54,5 +54,6 @@ HEADERS  += \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
     qt5/Qt5Version.h \
-    qt5/Config.h
+    qt5/Config.h \
+    model/ISnake.h
 

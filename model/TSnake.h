@@ -15,11 +15,13 @@
 #include "Point.h"
 #include "Way.h"
 
+#include "ISnake.h"
+
 
 template <class T_Snake> class TModel;
 
 template <class T_Point>
-class TSnake
+class TSnake : public ISnake
 {
     template <class T_Snake> friend class TModel;
 public:
@@ -81,10 +83,10 @@ public:
 
     inline T_Point & front() {return m_snake.front();}
 
-    inline Way getWay() const {return m_way;}
+//    inline Way getWay() const {return m_way;}
 
 protected:
     std::vector<T_Point> m_snake;
-    Way m_way;
+//    Way m_way;
 };
 

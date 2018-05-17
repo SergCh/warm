@@ -27,8 +27,8 @@ void TModel<T_Snake>::changeWay(Way _way) {
 
 template <class T_Snake>
 void TModel<T_Snake>::addRabbit() {
-    std::vector<Point> points;
-    m_rabbits.newRabbit(m_size, points);
+//    std::vector<Point> points;
+    m_rabbits.newRabbit(m_size, m_snake);
 }
 
 
