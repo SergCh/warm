@@ -32,12 +32,12 @@ RabbitFactory::RabbitFactory() {
     m_rabbits.reserve(10);
 }
 
-void RabbitFactory::newRabbit(Point & size, Snake & snake) {
+void RabbitFactory::newRabbit(Point & _size, std::vector<Point> & _snake) {
     int times=100;
-    Point point(std::rand() % size.getX(), std::rand() % size.getY());
+    Point point(std::rand() % _size.getX(), std::rand() % _size.getY());
     do {
 
-        if (snake.checkPoint(point) &&
+        if (/*_snake.checkPoint(point) &&*/
             std::find_if(m_rabbits.begin(), m_rabbits.end(), checkPoint(point)) == m_rabbits.end()) {
                 Rabbit rabbit(point, getLive(), getWeight());
                 m_rabbits.push_back(rabbit);
@@ -46,9 +46,9 @@ void RabbitFactory::newRabbit(Point & size, Snake & snake) {
 
         int x = point.getX();
         int y = point.getY();
-        if (++x >= size.getX()) {
+        if (++x >= _size.getX()) {
             x=0;
-            if (++y >= size.getY()) {
+            if (++y >= _size.getY()) {
                 y=0;
             }
         }

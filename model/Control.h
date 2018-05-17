@@ -2,17 +2,18 @@
 
 #include "Way.h"
 
-class View;
+template <class T_Snake> class View;
 
 #include "TModel.h"
 #include "Config.h"
 
 // контроллер между View и Model
 
+template <class T_Snake>
 class Control
 {
 public:
-    Control(View&, Model&);
+    Control(View<T_Snake> &, TModel<T_Snake>&);
 	virtual ~Control(void);
 
     inline Model & getModel() const {return m_model;}
@@ -44,11 +45,10 @@ public:
 
 private:
 	
-    const int BEGIN_STEP = 20;
-    const int NEXT_STEP = 50;
+    enum {BEGIN_STEP = 20, NEXT_STEP = 50};
 
-    Model &m_model;
-	View &m_view;
+    TModel<T_Snake> &m_model;
+    View<T_Snake> &m_view;
 
 	// флаг выхода 
 	bool m_quit;

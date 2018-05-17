@@ -16,12 +16,12 @@
 #include "Way.h"
 
 
-template <class TSnake> class TModel;
+template <class T_Snake> class TModel;
 
-template <class TPoint>
+template <class T_Point>
 class TSnake
 {
-    template <class TSnake> friend class TModel;
+    template <class T_Snake> friend class TModel;
 public:
 
     TSnake() {}
@@ -31,7 +31,7 @@ public:
     }
 
     virtual bool generateNewHead(Point _sizeField) {
-        TPoint newHead = TPoint(_sizeField.getX() / 2, _sizeField.getY() / 2);
+        T_Point newHead = T_Point(_sizeField.getX() / 2, _sizeField.getY() / 2);
         if (!m_snake.empty()) {
             newHead = m_snake.front();
             newHead += m_way.getPoint();
@@ -46,7 +46,7 @@ public:
         return true;
     }
 
-    virtual void addNewHead(TPoint _newHead) {
+    virtual void addNewHead(T_Point _newHead) {
             m_snake.insert(m_snake.begin(), _newHead);
     }
 
@@ -71,20 +71,20 @@ public:
     virtual bool empty() const {return m_snake.empty();}
     virtual void clear() {m_snake.clear();}
 
-    inline const Point & front() const {return m_snake.front();}
+//    inline const T_Point & front() const {return m_snake.front();}
 
-    inline typename std::vector<TPoint>::reverse_iterator rbegin() {return m_snake.rbegin();}
-    inline typename std::vector<TPoint>::reverse_iterator rend() {return m_snake.rend();}
+    inline typename std::vector<T_Point>::reverse_iterator rbegin() {return m_snake.rbegin();}
+    inline typename std::vector<T_Point>::reverse_iterator rend() {return m_snake.rend();}
 
-    inline typename std::vector<TPoint>::iterator begin() {return m_snake.begin();}
-    inline typename std::vector<TPoint>::iterator end() {return m_snake.end();}
+    inline typename std::vector<T_Point>::iterator begin() {return m_snake.begin();}
+    inline typename std::vector<T_Point>::iterator end() {return m_snake.end();}
 
-    inline TPoint & front() {return m_snake.front();}
+    inline T_Point & front() {return m_snake.front();}
 
     inline Way getWay() const {return m_way;}
 
 protected:
-    std::vector<TPoint> m_snake;
+    std::vector<T_Point> m_snake;
     Way m_way;
 };
 

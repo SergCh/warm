@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += model qt5
 
 SOURCES +=\
-    model/src/Control.cpp \
     model/src/Point.cpp \
     model/src/View.cpp \
     model/src/Way.cpp \
@@ -40,11 +39,14 @@ SOURCES +=\
 HEADERS  += \
     model/version.h \
     model/Control.h \
+    model/Control.tcc \
     model/Point.h \
     model/View.h \
     model/Way.h \
     model/TModel.h \
+    model/TModel.tcc \
     model/TSnake.h \
+    model/TSnake.tcc \
     model/Rabbit.h \
     model/RabbitFactory.h \
     model/GraphicPoint.h \

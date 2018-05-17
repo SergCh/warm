@@ -13,7 +13,7 @@
 //class Snake<Point>;
 
 #include "Rabbit.h"
-#include "Config.h"
+//#include "Config.h"
 
 
 class RabbitFactory
@@ -39,7 +39,7 @@ public:
      * @param size Размер поля
      * @param snake Змей
      */
-    void newRabbit(Point & size, Snake & snake);
+    void newRabbit(Point & _size, std::vector<Point> & _snake);
 
     /**
      * @brief eat Кушаем кпроликов

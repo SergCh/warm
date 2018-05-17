@@ -6,20 +6,24 @@
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
-Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
+template <class T_Snake>
+Control<T_Snake>::Control(View<T_Snake>& _view, TModel<T_Snake>& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
     steps4nextRabbit = BEGIN_STEP;
 }
 
-Control::~Control(void){}
+template <class T_Snake>
+Control<T_Snake>::~Control(void){}
 
-void Control::changeWay (Way way) {
+template <class T_Snake>
+void Control<T_Snake>::changeWay (Way way) {
     if (!m_pause)
         m_model.changeWay(way);
 }
 
-void Control::restart() {
+template <class T_Snake>
+void Control<T_Snake>::restart() {
 	m_model.init();
 	m_view.beforeGame();
     m_pause = false;
@@ -27,8 +31,10 @@ void Control::restart() {
     m_view.changeScore(m_model.getSnake().size());
 }
 
-void Control::nextStep() {
-    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
+template <class T_Snake>
+void Control<T_Snake>::nextStep() {
+//    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
+      std::pair<int, int> state(Model::GOOD, Model::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
         if (state.first == Model::DEAD) {
@@ -45,7 +51,8 @@ void Control::nextStep() {
     m_view.paint();
 }
 
-void Control::init() {
+template <class T_Snake>
+void Control<T_Snake>::init() {
     m_view.setControl(this);
     m_view.setSnake(&m_model.getSnake());
     m_view.setRabbitFactory((RabbitFactory*)m_model.getRabbitFactory());

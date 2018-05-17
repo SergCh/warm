@@ -16,10 +16,11 @@
 #include "Way.h"
 #include "Config.h"
 
-class Control;
+template <class T_Snake> class Control;
 class Rabbit;
 class RabbitFactory;
 
+template <class T_Snake>
 class View
 {
 public:
@@ -27,13 +28,18 @@ public:
     /**
      * @brief View Конструктор
      */
-	View(void);
+    View(void)
+    : m_control(0){
+        m_snake = 0;
+        m_way = Way::LEFT;
+        m_rf = 0;
+    }
 
     /**
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
      */
-    virtual void setControl(Control* _control) {
+    virtual void setControl(Control<T_Snake>* _control) {
         m_control = _control;
     }
 
@@ -41,7 +47,7 @@ public:
      * @brief setSnake Установка указателя на змея
      * @param[in] _snake Указатель на замея (векор точек)
      */
-    virtual void setSnake(Snake * _snake) {
+    virtual void setSnake(T_Snake * _snake) {
         m_snake = _snake;
     }
 
@@ -104,8 +110,8 @@ private:
     
 protected:
 
-    Control *m_control;
-    Snake * m_snake;
+    Control<T_Snake> *m_control;
+    T_Snake * m_snake;
     RabbitFactory * m_rf;
     Way m_way;
 };

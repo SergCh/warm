@@ -14,9 +14,12 @@
 #include "GraphicPoint.h"
 #include "TSnake.h"
 #include "GraphicSnake.h"
+#include "TModel.h"
+
+#include "TModel.tcc"
 
 
-template <class TSnake> class TModel;
+//template <class T_Snake> class TModel;
 
-typedef GraphicSnake Snake;
-typedef TModel<Snake> Model;
+//typedef GraphicSnake Snake;
+typedef TModel<GraphicSnake> Model;

@@ -10,8 +10,9 @@
 #include "Way.h"
 #include "Point.h"
 #include "GraphicPoint.h"
+#include "GraphicSnake.h"
 
-class Qt5View : public QFrame, public View
+class Qt5View : public QFrame, public View <GraphicSnake>
 {
 
     Q_OBJECT
