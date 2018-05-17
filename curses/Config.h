@@ -11,9 +11,9 @@
 
 
 #include "Point.h"
-#include "Snake.h"
+//#include "Snake.h"
 
-template <class TSnake> class TModel;
+//template <class TSnake> class TModel;
 
-typedef TSnake<Point> Snake;
-typedef Model<Snake> Model;
+//typedef TSnake<Point> Snake;
+//typedef Model<Snake> Model;

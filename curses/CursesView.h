@@ -11,16 +11,19 @@
 #include "IView.h"
 #include "Point.h"
 
-
 class Control;
 class Rabbit;
+template <class T_Point> class TSnake;
 
+typedef TSnake<Point> Snake;
 
 class CursesView : virtual public IView 
 {
 public:
     CursesView();
     ~CursesView();
+
+    virtual void setSnake(ISnake * _snake);
 
 	int getHieghtField();
 	int getWidthField();
@@ -50,6 +53,7 @@ private:
 	int m_hieght;
     int m_width;
     int m_score;
+    TSnake<Point> * m_snake;
 
 protected:
     void beforePaintField();

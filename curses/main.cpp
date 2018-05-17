@@ -9,13 +9,19 @@
 #include "Point.h"
 #include "RabbitFactory.h"
 #include "Config.h"
+#include "TSnake.h"
+#include "TSnake.tcc"
+
+//m_rabbitFactorytypedef TSnake<Point> Snake;
 
 int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {
 
     std::srand(unsigned(std::time(0)));
 	CursesView view;
-    Model model(Point(view.getWidthField(), view.getHieghtField()));
+    Snake snake;
+
+    Model model(Point(view.getWidthField(), view.getHieghtField()), snake);
 
 	Control control(view, model);
 

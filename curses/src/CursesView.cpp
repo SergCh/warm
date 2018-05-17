@@ -15,6 +15,10 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
+#include "TSnake.h"
+
+//typedef TSnake<Point> Snake;
+
 CursesView::CursesView() : IView() {
 	initscr();
 	keypad(stdscr, TRUE);
@@ -28,8 +32,14 @@ CursesView::CursesView() : IView() {
     m_width = getSystemWigth();
 	initColors();
 	curs_set(0);
-    m_score=0;
+    m_score = 0;
+    m_snake = 0;
 }
+
+void CursesView::setSnake(ISnake * _snake){
+    m_snake = static_cast<Snake*> (_snake);
+}
+
 
 CursesView::~CursesView() {
 	endwin();
@@ -165,7 +175,7 @@ void CursesView::paint() {
             paintSnake();
         }
 
-        for (std::vector<Rabbit>::iterator iter=m_rf->begin(); iter != m_rf->end(); iter++)
+        for (std::vector<Rabbit>::iterator iter=m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); iter++)
             paintRabbit(*iter);
     }
     afterPaintField();
