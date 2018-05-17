@@ -5,7 +5,7 @@
 #include "GraphicSnake.h"
 
 #include "Qt5View.h"
-#include "View.h"
+#include "IView.h"
 #include "Control.h"
 #include "TModel.h"
 #include "RabbitFactory.h"

@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "View.h"
+#include "IView.h"
 #include "Point.h"
 
 

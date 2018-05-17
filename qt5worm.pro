@@ -41,7 +41,6 @@ HEADERS  += \
     model/Control.h \
     model/Control.tcc \
     model/Point.h \
-    model/View.h \
     model/Way.h \
     model/TModel.h \
     model/TModel.tcc \
@@ -54,8 +53,8 @@ HEADERS  += \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
     qt5/Qt5Version.h \
-    qt5/Config.h \
     model/ISnake.h \
     model/IModel.h \
-    model/IControl.h
+    model/IControl.h \
+    model/IView.h
 

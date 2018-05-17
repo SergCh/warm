@@ -21,7 +21,7 @@ class IControl;
 class Rabbit;
 class RabbitFactory;
 
-template <class T_Snake>
+//template <class T_Snake>
 class IView
 {
 public:

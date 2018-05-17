@@ -13,7 +13,7 @@ template <class T_Snake>
 class Control : public IControl
 {
 public:
-    Control(IView<T_Snake> &, TModel<T_Snake>&);
+    Control(IView/*<T_Snake>*/ &, TModel<T_Snake>&);
 	virtual ~Control(void);
 
     inline TModel<T_Snake> & getModel() const {return m_model;}
@@ -50,7 +50,7 @@ private:
     enum {BEGIN_STEP = 20, NEXT_STEP = 50};
 
     TModel<T_Snake> &m_model;
-    IView<T_Snake> &m_view;
+    IView/*<T_Snake>*/ &m_view;
 
 	// флаг выхода 
 //	bool m_quit;

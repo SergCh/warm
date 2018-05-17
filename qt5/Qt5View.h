@@ -6,13 +6,13 @@
 
 #include <vector>
 
-#include "View.h"
+#include "IView.h"
 #include "Way.h"
 #include "Point.h"
 #include "GraphicPoint.h"
 #include "GraphicSnake.h"
 
-class Qt5View : public QFrame, public IView <GraphicSnake>
+class Qt5View : public QFrame, public IView /*<GraphicSnake>*/
 {
 
     Q_OBJECT
