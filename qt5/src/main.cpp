@@ -11,7 +11,7 @@
 #include "RabbitFactory.h"
 
 #include "TModel.tcc"
-#include "Control.tcc"
+//#include "Control.cpp"
 
 
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     TModel<GraphicSnake> model(Point(view.getWidthField(), view.getHieghtField()));
 
-    Control<GraphicSnake> control(view, model);
+    Control control(view, model);
     std::srand(unsigned(std::time(0)));
 
     control.init();

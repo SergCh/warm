@@ -2,11 +2,7 @@
 
 #include "Way.h"
 
-
 #include "IControl.h"
-
-//class IModel;
-//class IView;
 
 #include "IModel.h"
 #include "IView.h"
@@ -14,14 +10,13 @@
 
 // контроллер между View и Model
 
-template <class T_Snake>
 class Control : public IControl
 {
 public:
     Control(IView &, IModel&);
 	virtual ~Control(void);
 
-    inline TModel<T_Snake> & getModel() const {return m_model;}
+    inline IModel & getModel() const {return m_model;}
 
 	// поменять направление
 	virtual void changeWay(Way);

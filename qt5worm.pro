@@ -33,12 +33,12 @@ SOURCES +=\
     model/src/GraphicPoint.cpp \
     qt5/src/Qt5View.cpp \
     qt5/src/MainWindow.cpp \
-    qt5/src/main.cpp
+    qt5/src/main.cpp \
+    model/Control.cpp
 
 HEADERS  += \
     model/version.h \
     model/Control.h \
-    model/Control.tcc \
     model/Point.h \
     model/Way.h \
     model/TModel.h \
@@ -49,11 +49,10 @@ HEADERS  += \
     model/RabbitFactory.h \
     model/GraphicPoint.h \
     model/GraphicSnake.h \
-    qt5/Qt5View.h \
-    qt5/MainWindow.h \
-    qt5/Qt5Version.h \
     model/ISnake.h \
     model/IModel.h \
     model/IControl.h \
-    model/IView.h
-
+    model/IView.h \
+    qt5/Qt5View.h \
+    qt5/MainWindow.h \
+    qt5/Qt5Version.h

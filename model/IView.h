@@ -17,11 +17,9 @@
 #include "ISnake.h"
 
 class IControl;
-//template <class T_Snake> class Control;
 class Rabbit;
 class RabbitFactory;
 
-//template <class T_Snake>
 class IView
 {
 public:
