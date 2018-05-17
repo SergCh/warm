@@ -10,12 +10,13 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 #include "Way.h"
-#include "Config.h"
 
 #include "GraphicPoint.h"
 
-Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
+using namespace SNAKE_MODEL;
 
+Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
+    m_snake = 0;
     setFocusPolicy(Qt::StrongFocus);
     emit scoreChanged(0);
 }
@@ -36,6 +37,9 @@ int Qt5View::getWidthField() {
     return BOARD_WIDTH;
 }
 
+void Qt5View::setSnake(ISnake * _snake){
+    m_snake = static_cast<GraphicSnake*> (_snake);
+}
 
 void Qt5View::nextStep() {
     Q_CHECK_PTR(m_control);
@@ -137,7 +141,6 @@ void Qt5View::paintEvent(QPaintEvent *event) {
             painter.drawLine(pHead, pBorder);
         }
 
-
         // draw snake
         for (auto iter = m_snake->begin(); iter != m_snake->end(); ++iter) {
             const QColor color = (iter - m_snake->begin()) % 5 == 3 ? Qt::yellow: Qt::red;
@@ -145,7 +148,7 @@ void Qt5View::paintEvent(QPaintEvent *event) {
         }
     }
 
-    for (auto iter = m_control->beginRabbit(); iter != m_control->endRabbit(); iter++) {
+    for (auto iter = m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); iter++) {
         painter.fillRect(iter->getX() * squareSize.width() + 1, iter->getY() * squareSize.height() + 1,
                          squareSize.width() - 2, squareSize.height() - 2,
                          Qt::green);
@@ -175,7 +178,7 @@ void Qt5View::restart() {
     Q_CHECK_PTR(m_control);
 
     m_control->restart();
-    emit scoreChanged(m_snake->size(), Model::STARTED);
+    emit scoreChanged(m_snake->size(), IModel::STARTED);
     timer.start(timeoutTime(), this);
 }
 

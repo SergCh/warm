@@ -3,6 +3,8 @@
 
 #include "GraphicPoint.h"
 
+using namespace SNAKE_MODEL;
+
 void GraphicPoint::changeToHorisontal() {
     m_type = HORISONTAL;
     setPosition(m_step == 3 ? 1 : m_step);

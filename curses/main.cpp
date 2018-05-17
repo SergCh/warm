@@ -4,18 +4,23 @@
 #include <ctime>
 
 #include "Control.h"
-#include "TModel.h"
+#include "Model.h"
 #include "CursesView.h"
 #include "Point.h"
 #include "RabbitFactory.h"
 #include "Config.h"
+#include "TSnake.h"
+
+using namespace SNAKE_MODEL;
 
 int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {
 
     std::srand(unsigned(std::time(0)));
 	CursesView view;
-    Model model(Point(view.getWidthField(), view.getHieghtField()));
+    Snake snake;
+
+    Model model(Point(view.getWidthField(), view.getHieghtField()), snake);
 
 	Control control(view, model);
 

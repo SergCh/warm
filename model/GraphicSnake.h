@@ -12,84 +12,86 @@
 #include "GraphicPoint.h"
 #include "TSnake.h"
 
-class GraphicSnake : public TSnake<GraphicPoint>
-{
-public:
+namespace SNAKE_MODEL {
 
-    GraphicSnake(): TSnake<GraphicPoint>() {
-        m_maxPath = 0;
-    }
+    class GraphicSnake : public TSnake<GraphicPoint>
+    {
+    public:
 
-    virtual void addNewHead(GraphicPoint _newHead) {
+        GraphicSnake(): TSnake<GraphicPoint>() {
+            m_maxPath = 0;
+        }
 
-        int step = 0;
-        _newHead.setPosition(m_way);
+        virtual void addNewHead(GraphicPoint _newHead) {
 
-        if (!empty()) {
-            step = (front().getStep() + 1) & 3;
-//            GraphicPoint * pred = &_newHead;
-            std::vector<GraphicPoint>::iterator curr = begin();
-            std::vector<GraphicPoint>::iterator next = curr + 1;
-            if (next == end())
-                next = curr;
+            int step = 0;
+            _newHead.setPosition(m_way);
 
-            if (next->getY() == _newHead.getY()) {
-                curr->changeToHorisontal();
+            if (!empty()) {
+                step = (front().getStep() + 1) & 3;
+                std::vector<GraphicPoint>::iterator curr = begin();
+                std::vector<GraphicPoint>::iterator next = curr + 1;
+                if (next == end())
+                    next = curr;
 
-            } else if (next->getX() == _newHead.getX()) {
-                curr->changeToVertical();
+                if (next->getY() == _newHead.getY()) {
+                    curr->changeToHorisontal();
 
-            } else {
-                const bool toLeft = (next->getX() + _newHead.getX() - 2 * curr->getX()) < 0;
-                const bool toUp   = (next->getY() + _newHead.getY() - 2 * curr->getY()) < 0;
+                } else if (next->getX() == _newHead.getX()) {
+                    curr->changeToVertical();
 
-                curr->changeToCorner(toLeft, toUp);
+                } else {
+                    const bool toLeft = (next->getX() + _newHead.getX() - 2 * curr->getX()) < 0;
+                    const bool toUp   = (next->getY() + _newHead.getY() - 2 * curr->getY()) < 0;
 
-                if (curr->getPosition() == 1) {
-                    if (m_way.isHorisontal()) step = toUp ? 2 : 0;   //Определяем новое положение головы
-                    else                      step = toLeft ? 2 : 0;
+                    curr->changeToCorner(toLeft, toUp);
+
+                    if (curr->getPosition() == 1) {
+                        if (m_way.isHorisontal()) step = toUp ? 2 : 0;   //Определяем новое положение головы
+                        else                      step = toLeft ? 2 : 0;
+                    }
                 }
+            }
+
+            _newHead.setStep(step);
+            TSnake::addNewHead(_newHead);
+        }
+
+        virtual void removeTail(int _count) {
+
+            while (_count-- > 0 && !m_snake.empty()) {
+                GraphicPoint point = m_snake.back();
+                m_path.insert(m_path.begin(), point);
+                m_snake.pop_back();
+            }
+
+            while (m_path.size() > m_maxPath) {
+                m_path.pop_back();
             }
         }
 
-        _newHead.setStep(step);
-        TSnake::addNewHead(_newHead);
-    }
+        inline std::vector<GraphicPoint>::iterator beginPath() {return m_path.begin();}
+        inline std::vector<GraphicPoint>::iterator endPath() {return m_path.end();}
+        inline std::vector<GraphicPoint>::reverse_iterator rbeginPath() {return m_path.rbegin();}
+        inline std::vector<GraphicPoint>::reverse_iterator rendPath() {return m_path.rend();}
+        inline int sizePath() const {return m_path.size();}
 
-    virtual void removeTail(int _count) {
-
-        while (_count-- > 0 && !m_snake.empty()) {
-            GraphicPoint point = m_snake.back();
-            m_path.insert(m_path.begin(), point);
-            m_snake.pop_back();
+        virtual void start(Point _sizeField) {
+            m_path.clear();
+            ISnake::start(_sizeField);
         }
 
-        while (m_path.size() > m_maxPath) {
-            m_path.pop_back();
+        void setMaxPath(unsigned int _maxPath) {
+            if (_maxPath == m_maxPath)
+                return;
+            m_maxPath = _maxPath;
+            if (m_maxPath > 0)
+                m_path.reserve(m_maxPath+3);
         }
-    }
 
-    inline std::vector<GraphicPoint>::iterator beginPath() {return m_path.begin();}
-    inline std::vector<GraphicPoint>::iterator endPath() {return m_path.end();}
-    inline std::vector<GraphicPoint>::reverse_iterator rbeginPath() {return m_path.rbegin();}
-    inline std::vector<GraphicPoint>::reverse_iterator rendPath() {return m_path.rend();}
-    inline int sizePath() const {return m_path.size();}
+    private:
+        std::vector<GraphicPoint> m_path;
+        unsigned int m_maxPath;
+    };
 
-    virtual void start(Point _sizeField) {
-        m_path.clear();
-        TSnake<GraphicPoint>::start(_sizeField);
-    }
-
-    void setMaxPath(unsigned int _maxPath) {
-        if (_maxPath == m_maxPath)
-            return;
-        m_maxPath = _maxPath;
-        if (m_maxPath > 0)
-            m_path.reserve(m_maxPath+3);
-    }
-
-private:
-    std::vector<GraphicPoint> m_path;
-    unsigned int m_maxPath;
-};
-
+}

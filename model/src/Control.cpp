@@ -1,12 +1,14 @@
 
 #include "Control.h"
 
-#include "TModel.h"
-#include "View.h"
+#include "Model.h"
+#include "IView.h"
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
-Control::Control(View& _view, Model& _model):  m_model(_model) , m_view(_view) {
+using namespace SNAKE_MODEL;
+
+Control::Control(IView& _view, IModel& _model):  m_model(_model) , m_view(_view) {
 	m_quit = false;
     m_pause = true;
     steps4nextRabbit = BEGIN_STEP;
@@ -28,10 +30,10 @@ void Control::restart() {
 }
 
 void Control::nextStep() {
-    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
+      std::pair<IModel::StateGame, IModel::StateSnake> state(IModel::GOOD, IModel::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
-        if (state.first == Model::DEAD) {
+        if (state.first == IModel::DEAD) {
             m_pause = true;
         } else {
             if (--steps4nextRabbit<=0) {
@@ -40,13 +42,13 @@ void Control::nextStep() {
             }
         }
     }
-    if (state.second != Model::NOT_CHANGED)
+    if (state.second != IModel::NOT_CHANGED)
         m_view.changeScore(m_model.getSnake().size());
     m_view.paint();
 }
 
 void Control::init() {
     m_view.setControl(this);
-    m_view.setSnake(&m_model.getSnake());
+    m_view.setSnake(&m_model.getSnake());           //нарушение MVC избавляемся или избавляемся от MVC :)
     m_view.setRabbitFactory((RabbitFactory*)m_model.getRabbitFactory());
 }

@@ -6,46 +6,49 @@
 #include "Point.h"
 #include "Way.h"
 
-class GraphicPoint : public Point{
+namespace SNAKE_MODEL {
 
-public:
-    typedef enum {
-        HEAD,
-        HORISONTAL,
-        VERTICAL,
-        CORNER
-    } Type;
+    class GraphicPoint : public Point{
 
-    GraphicPoint(int _x, int _y, Type _type=HEAD, int _step=0) : Point(_x, _y){
-        m_type = _type;
-        m_step = _step;
-    }
+    public:
+        typedef enum {
+            HEAD,
+            HORISONTAL,
+            VERTICAL,
+            CORNER
+        } Type;
 
-    inline void setPosition(int _position, bool _toLeft = true, bool _toUp = true) {
-        m_position = _position; m_toLeft = _toLeft; m_toUp = _toUp;
-    }
+        GraphicPoint(int _x, int _y, Type _type=HEAD, int _step=0) : Point(_x, _y){
+            m_type = _type;
+            m_step = _step;
+        }
 
-    inline int getStep() const {return m_step;}
+        inline void setPosition(int _position, bool _toLeft = true, bool _toUp = true) {
+            m_position = _position; m_toLeft = _toLeft; m_toUp = _toUp;
+        }
 
-    inline void setStep(int _step) {m_step = _step;}
+        inline int getStep() const {return m_step;}
 
-    inline int getPosition() const {return m_position;}
+        inline void setStep(int _step) {m_step = _step;}
 
-    inline Type getType() const {return m_type;}
-    inline bool getToLeft() const {return m_toLeft;}
-    inline bool getToUp() const {return m_toUp;}
+        inline int getPosition() const {return m_position;}
 
-    void changeToHorisontal();
+        inline Type getType() const {return m_type;}
+        inline bool getToLeft() const {return m_toLeft;}
+        inline bool getToUp() const {return m_toUp;}
 
-    void changeToVertical();
+        void changeToHorisontal();
 
-    void changeToCorner(bool _toLeft, bool _toUp);
+        void changeToVertical();
 
-private:
-    int m_step;
-    Type m_type;
-    int m_position;
-    bool m_toLeft;      //может переделать в enum?
-    bool m_toUp;
-};
+        void changeToCorner(bool _toLeft, bool _toUp);
 
+    private:
+        int m_step;
+        Type m_type;
+        int m_position;
+        bool m_toLeft;      //может переделать в enum?
+        bool m_toUp;
+    };
+
+}

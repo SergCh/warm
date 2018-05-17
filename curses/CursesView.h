@@ -8,54 +8,65 @@
 
 #include <vector>
 
-#include "View.h"
+#include "IView.h"
 #include "Point.h"
+//#include "Rabbit.h"
+
+namespace SNAKE_MODEL {
+
+    class Control;
+    class Rabbit;
+    template <class T_Point> class TSnake;
+
+    typedef TSnake<Point> Snake;
 
 
-class Control;
-class Rabbit;
 
+    class CursesView : public IView
+    {
+    public:
+        CursesView();
+        ~CursesView();
 
-class CursesView : virtual public View 
-{
-public:
-    CursesView();
-    ~CursesView();
+        virtual void setSnake(ISnake * _snake);
 
-	int getHieghtField();
-	int getWidthField();
+        int getHieghtField();
+        int getWidthField();
 
-	void setHieght(int);
-	void setWigth(int);
+        void setHieght(int);
+        void setWigth(int);
 
-	int getSystemHieght();
-	int getSystemWigth();
+        int getSystemHieght();
+        int getSystemWigth();
 
-	void getCommands();
+        void getCommands();
 
-	void beforeGame();
-	void endGame(int);
+        void beforeGame();
+        void endGame(int);
 
-    virtual void paint();
-    virtual void changeScore(int _score);
+        virtual void paint();
+        virtual void changeScore(int _score);
 
-private:
-	typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
-	typedef enum {FRAME = Draw::POINT+1, DIALOG} Color;
+    private:
+        typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
+        typedef enum {FRAME = Draw::POINT+1, DIALOG} Color;
 
-    void drawDraw(Point &, Draw);
+        void drawDraw(Point &, Draw);
 
-	void initColors();
+        void initColors();
 
-	int m_hieght;
-    int m_width;
-    int m_score;
+        int m_hieght;
+        int m_width;
+        int m_score;
+        Snake * m_snake;
 
-protected:
-    void beforePaintField();
-    void afterPaintField(); 
-    void paintWay();
-    void paintSnake();
-    void paintRabbit(Rabbit &);
-    
-};
+    protected:
+        void beforePaintField();
+        void afterPaintField();
+        void paintWay();
+        void paintSnake();
+        void paintRabbit(Rabbit &);
+
+    };
+
+}

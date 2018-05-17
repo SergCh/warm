@@ -2,58 +2,43 @@
 
 #include "Way.h"
 
-class View;
+#include "IControl.h"
 
-#include "TModel.h"
-#include "Config.h"
+#include "IModel.h"
+#include "IView.h"
 
-// контроллер между View и Model
+namespace SNAKE_MODEL {
 
-class Control
-{
-public:
-    Control(View&, Model&);
-	virtual ~Control(void);
+    // контроллер между View и Model
 
-    inline Model & getModel() const {return m_model;}
+    class Control : public IControl
+    {
+    public:
+        Control(IView &, IModel&);
+        virtual ~Control(void);
 
-	// поменять направление
-	virtual void changeWay(Way);
+        inline IModel & getModel() const {return m_model;}
 
-    inline bool isPause() const {return m_pause;}
+        // поменять направление
+        virtual void changeWay(Way);
 
-    // метод для View, вызывается, когда клиент хочет выйти.
-    inline void quit() {m_quit = true;}
+        // перезапуск игры
+        virtual void restart();
 
-	// геттер для m_quit
-    inline bool isQuit() const {return m_quit;}
+        // следующий шаг
+        virtual void nextStep();
 
-	// перезапуск игры
-	virtual void restart();
+        // инициализация
+        virtual void init();
 
-    // следующий шаг
-    virtual void nextStep();
+    protected:
 
-	// инициализация 
-	virtual void init();
+        enum {BEGIN_STEP = 20, NEXT_STEP = 50};
 
-    unsigned int getCountRubbits() const {return m_model.getRabbitFactory()->size();}
+        IModel &m_model;
+        IView &m_view;
 
-    std::vector<Rabbit>::iterator beginRabbit() const {return m_model.getRabbitFactory()->begin();}
-    std::vector<Rabbit>::iterator endRabbit() const {return m_model.getRabbitFactory()->end();}
+        int steps4nextRabbit;   //steps for next rabbit
+    };
 
-private:
-	
-    const int BEGIN_STEP = 20;
-    const int NEXT_STEP = 50;
-
-    Model &m_model;
-	View &m_view;
-
-	// флаг выхода 
-	bool m_quit;
-    // флаг паузы
-    bool m_pause;
-    // кол-во шагов до нового кролика
-    int steps4nextRabbit;   //steps for next rabbit
-};
+}

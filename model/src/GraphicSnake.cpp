@@ -6,6 +6,9 @@
  *
  *
  */
+
 #include "GraphicSnake.h"
+
+using namespace SNAKE_MODEL;
 
 

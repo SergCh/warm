@@ -2,13 +2,13 @@
 #include <QApplication>
 #include <ctime>
 
+#include "GraphicSnake.h"
 
 #include "Qt5View.h"
-#include "View.h"
+#include "IView.h"
 #include "Control.h"
-#include "TModel.h"
+#include "Model.h"
 #include "RabbitFactory.h"
-#include "Config.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
 
     Qt5View view;
 
-    Model model(Point(view.getWidthField(), view.getHieghtField()));
+    GraphicSnake snake;
+
+    Model model(Point(view.getWidthField(), view.getHieghtField()), snake);
 
     Control control(view, model);
     std::srand(unsigned(std::time(0)));

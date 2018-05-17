@@ -6,12 +6,15 @@
 
 #include <vector>
 
-#include "View.h"
+#include "IView.h"
 #include "Way.h"
 #include "Point.h"
 #include "GraphicPoint.h"
+#include "GraphicSnake.h"
 
-class Qt5View : public QFrame, public View
+using namespace SNAKE_MODEL;
+
+class Qt5View : public QFrame, public IView
 {
 
     Q_OBJECT
@@ -22,6 +25,7 @@ public:
 
     virtual int getHieghtField();
     virtual int getWidthField();
+    virtual void setSnake(ISnake * _snake);
 
     virtual void beforeGame();
     virtual void paint();
@@ -50,6 +54,8 @@ private:
 
     QSize getSquareSize();
     inline int timeoutTime() const { return 100; }
+    GraphicSnake * m_snake;
+
 
     QBasicTimer timer;
 
