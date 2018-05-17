@@ -10,9 +10,8 @@
 #include "RabbitFactory.h"
 #include "Config.h"
 #include "TSnake.h"
-#include "TSnake.tcc"
 
-//m_rabbitFactorytypedef TSnake<Point> Snake;
+using namespace SNAKE_MODEL;
 
 int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {

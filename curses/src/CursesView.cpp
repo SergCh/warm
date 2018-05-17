@@ -17,6 +17,8 @@
 
 #include "TSnake.h"
 
+using namespace SNAKE_MODEL;
+
 CursesView::CursesView() : IView() {
 	initscr();
 	keypad(stdscr, TRUE);

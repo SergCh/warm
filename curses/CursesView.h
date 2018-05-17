@@ -10,56 +10,63 @@
 
 #include "IView.h"
 #include "Point.h"
+//#include "Rabbit.h"
 
-class Control;
-class Rabbit;
-template <class T_Point> class TSnake;
+namespace SNAKE_MODEL {
 
-typedef TSnake<Point> Snake;
+    class Control;
+    class Rabbit;
+    template <class T_Point> class TSnake;
 
-class CursesView : virtual public IView 
-{
-public:
-    CursesView();
-    ~CursesView();
+    typedef TSnake<Point> Snake;
 
-    virtual void setSnake(ISnake * _snake);
 
-	int getHieghtField();
-	int getWidthField();
 
-	void setHieght(int);
-	void setWigth(int);
+    class CursesView : public IView
+    {
+    public:
+        CursesView();
+        ~CursesView();
 
-	int getSystemHieght();
-	int getSystemWigth();
+        virtual void setSnake(ISnake * _snake);
 
-	void getCommands();
+        int getHieghtField();
+        int getWidthField();
 
-	void beforeGame();
-	void endGame(int);
+        void setHieght(int);
+        void setWigth(int);
 
-    virtual void paint();
-    virtual void changeScore(int _score);
+        int getSystemHieght();
+        int getSystemWigth();
 
-private:
-	typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
-	typedef enum {FRAME = Draw::POINT+1, DIALOG} Color;
+        void getCommands();
 
-    void drawDraw(Point &, Draw);
+        void beforeGame();
+        void endGame(int);
 
-	void initColors();
+        virtual void paint();
+        virtual void changeScore(int _score);
 
-	int m_hieght;
-    int m_width;
-    int m_score;
-    TSnake<Point> * m_snake;
+    private:
+        typedef enum {EMPTY = 1, HEAD, BODY, BODY2, RABBIT, POINT} Draw;	//TODO: не удачное название Draw
+        typedef enum {FRAME = Draw::POINT+1, DIALOG} Color;
 
-protected:
-    void beforePaintField();
-    void afterPaintField(); 
-    void paintWay();
-    void paintSnake();
-    void paintRabbit(Rabbit &);
-    
-};
+        void drawDraw(Point &, Draw);
+
+        void initColors();
+
+        int m_hieght;
+        int m_width;
+        int m_score;
+        Snake * m_snake;
+
+    protected:
+        void beforePaintField();
+        void afterPaintField();
+        void paintWay();
+        void paintSnake();
+        void paintRabbit(Rabbit &);
+
+    };
+
+}

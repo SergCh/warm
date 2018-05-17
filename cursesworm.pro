@@ -30,7 +30,6 @@ HEADERS  += \
     model/Way.h \
     model/ISnake.h \
     model/TSnake.h \
-    model/TSnake.tcc \
     model/IModel.h \
     model/Model.h \
     model/IControl.h \
