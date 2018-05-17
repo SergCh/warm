@@ -56,5 +56,6 @@ HEADERS  += \
     qt5/Qt5Version.h \
     qt5/Config.h \
     model/ISnake.h \
-    model/IModel.h
+    model/IModel.h \
+    model/IControl.h
 

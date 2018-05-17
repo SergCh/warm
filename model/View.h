@@ -14,10 +14,10 @@
 
 #include "Point.h"
 #include "Way.h"
-#include "Config.h"
 #include "ISnake.h"
 
-template <class T_Snake> class Control;
+class IControl;
+//template <class T_Snake> class Control;
 class Rabbit;
 class RabbitFactory;
 
@@ -39,7 +39,7 @@ public:
      * @brief setControl установка указателя на контроллер
      * @param[in] _control Указатель на котроллер
      */
-    virtual void setControl(Control<T_Snake>* _control) {
+    virtual void setControl(IControl * _control) {
         m_control = _control;
     }
 
@@ -108,7 +108,7 @@ private:
     
 protected:
 
-    Control<T_Snake> *m_control;
+    IControl *m_control;
     RabbitFactory * m_rf;
     Way m_way;
 };

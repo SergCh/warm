@@ -5,12 +5,12 @@
 template <class T_Snake> class View;
 
 #include "TModel.h"
-#include "Config.h"
+#include "IControl.h"
 
 // контроллер между View и Model
 
 template <class T_Snake>
-class Control
+class Control : public IControl
 {
 public:
     Control(IView<T_Snake> &, TModel<T_Snake>&);
@@ -21,16 +21,16 @@ public:
 	// поменять направление
 	virtual void changeWay(Way);
 
-    inline bool isPause() const {return m_pause;}
+//    inline bool isPause() const {return m_pause;}
 
     // метод для View, вызывается, когда клиент хочет выйти.
-    inline void quit() {m_quit = true;}
+//    inline void quit() {m_quit = true;}
 
 	// геттер для m_quit
-    inline bool isQuit() const {return m_quit;}
+//    inline bool isQuit() const {return m_quit;}
 
 	// перезапуск игры
-	virtual void restart();
+    virtual void restart();
 
     // следующий шаг
     virtual void nextStep();
@@ -53,9 +53,9 @@ private:
     IView<T_Snake> &m_view;
 
 	// флаг выхода 
-	bool m_quit;
+//	bool m_quit;
     // флаг паузы
-    bool m_pause;
+//    bool m_pause;
     // кол-во шагов до нового кролика
     int steps4nextRabbit;   //steps for next rabbit
 };

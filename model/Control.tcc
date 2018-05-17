@@ -33,7 +33,6 @@ void Control<T_Snake>::restart() {
 
 template <class T_Snake>
 void Control<T_Snake>::nextStep() {
-//    std::pair<Model::StateGame, Model::StateSnake> state(Model::GOOD, Model::NOT_CHANGED);
       std::pair<IModel::StateGame, IModel::StateSnake> state(IModel::GOOD, IModel::NOT_CHANGED);
     if (!m_pause)  {
         state = m_model.move();
