@@ -10,7 +10,7 @@
 
 #include "IView.h"
 #include "Point.h"
-//#include "Rabbit.h"
+
 
 namespace SNAKE_MODEL {
 
@@ -19,8 +19,6 @@ namespace SNAKE_MODEL {
     template <class T_Point> class TSnake;
 
     typedef TSnake<Point> Snake;
-
-
 
     class CursesView : public IView
     {
