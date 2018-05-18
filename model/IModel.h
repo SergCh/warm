@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @file imodel
+ * @file Imodel.h
  * @brief %{Cpp:License:ClassName}
  * @author Чугайнов С.В.
  * @date 17.05.2018

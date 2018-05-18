@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file Rabbit.h
  *      @brief Класс кролик
  *      @author Чугайнов С.В.
  *      @date 09.05.2018

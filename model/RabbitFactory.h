@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file RabbitFactory.h
  *      @brief Фабрика кроликов
  *      @author Чугайнов С.В.
  *      @date 09.05.2018

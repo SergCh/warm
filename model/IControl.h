@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @file icontrol
+ * @file IControl.h
  * @brief %{Cpp:License:ClassName}
  * @author Чугайнов С.В.
  * @date 17.05.2018
