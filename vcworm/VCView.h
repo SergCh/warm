@@ -3,6 +3,7 @@
 #include "IView.h"
 #include "GraphicSnake.h"
 #include "RabbitFactory.h"
+#include "Way.h"
 
 namespace SNAKE_MODEL {
 
@@ -21,9 +22,11 @@ public:
     virtual void beforeGame();
     virtual void paint();
     virtual void changeScore(int _score);
+	
     void nextStep();
 	void setHieght(int);
 	void setWigth(int);
+	void changeWay(Way _way);
 
 	GraphicSnake * getSnake() {return m_snake;}
 	RabbitFactory * getRabbitFactory() {return m_rabbitFactory;}

@@ -53,8 +53,19 @@ void VCView::changeScore(int _score)
 {
 }
 
+void VCView::changeWay(Way _way) 
+{
+	if (m_control == 0) 
+		return ;
+	m_control->changeWay(_way);
+}
+
+
 void VCView::nextStep()
 {
+	if (m_control == 0) 
+		return ;
+	return m_control->nextStep();
 }
 
 void VCView::setHieght(int){}

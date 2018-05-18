@@ -1,6 +1,7 @@
 #pragma once
-
 #include "VCView.h"
+#include "GraphicSnake.h"
+#include "Way.h"
 
 namespace vcworm {
 
@@ -50,14 +51,11 @@ namespace vcworm {
 	private: System::Windows::Forms::Label^  labelScore;
 
 
-
-	protected: 
-
 	private:
 		/// <summary>
 		SNAKE_MODEL::VCView * m_view;
 	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::Panel^  panelField;
+
 
 	private: System::ComponentModel::IContainer^  components;
 			 /// Требуется переменная конструктора.
@@ -78,7 +76,6 @@ namespace vcworm {
 			this->buttonStart = (gcnew System::Windows::Forms::Button());
 			this->labelScore = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->panelField = (gcnew System::Windows::Forms::Panel());
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -107,6 +104,7 @@ namespace vcworm {
 			// 
 			// buttonQuit
 			// 
+			this->buttonQuit->DialogResult = System::Windows::Forms::DialogResult::Cancel;
 			this->buttonQuit->Location = System::Drawing::Point(16, 98);
 			this->buttonQuit->Name = L"buttonQuit";
 			this->buttonQuit->Size = System::Drawing::Size(75, 23);
@@ -140,27 +138,18 @@ namespace vcworm {
 			// 
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
-			// panelField
-			// 
-			this->panelField->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
-				| System::Windows::Forms::AnchorStyles::Left) 
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->panelField->AutoSize = true;
-			this->panelField->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->panelField->Location = System::Drawing::Point(12, 12);
-			this->panelField->Name = L"panelField";
-			this->panelField->Size = System::Drawing::Size(292, 301);
-			this->panelField->TabIndex = 2;
-			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->CancelButton = this->buttonQuit;
 			this->ClientSize = System::Drawing::Size(416, 317);
-			this->Controls->Add(this->panelField);
 			this->Controls->Add(this->panel1);
+			this->KeyPreview = true;
 			this->Name = L"Form1";
 			this->Text = L"Form1";
+			this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::Form1_Paint);
+			this->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Form1::Form1_KeyPress);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
@@ -180,10 +169,60 @@ namespace vcworm {
 				timer1->Enabled = false;
 				m_view->nextStep();
 				labelScore->Text = "" + m_view->getSnake()->size();
-					//repaint();
+				Invalidate();
 				if (!m_view->isPause())
 					timer1->Enabled = true;
 				}
-	};
+	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+				SNAKE_MODEL::GraphicSnake * snake = m_view->getSnake();
+				SNAKE_MODEL::RabbitFactory * rabbits = m_view->getRabbitFactory();
+				Graphics^ g = e->Graphics;
+				Pen^ blackPen = gcnew Pen( Color::Black,3.0f );
+//				g->DrawLine( System::Drawing::Pens::Red,0,0,10,10);
+//				g->DrawLine( System::Drawing::Pens::Red, pictureBox1->Left, pictureBox1->Top,
+//				pictureBox1->Right, pictureBox1->Bottom );
+				for (std::vector<SNAKE_MODEL::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
+					Rectangle rect = Rectangle(iter->getX()*10, iter->getY() * 10,10,10);
+					g->DrawRectangle( blackPen, rect );
+				}
+
+				for (std::vector<SNAKE_MODEL::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
+					Rectangle rect = Rectangle(iter->getX()*10, iter->getY() * 10,10,10);
+					g->DrawRectangle( blackPen, rect );
+				}
+
+ //Pen^ blackPen = gcnew Pen( Color::Black,3.0f );
+
+      // Create rectangle.
+//      Rectangle rect = Rectangle(0,0,200,200);
+
+      // Draw rectangle to screen.
+      //e->Graphics->DrawRectangle( blackPen, rect );
+			 }
+private: System::Void Form1_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
+			 switch (e->KeyChar) {
+//				 case Keys::Left:
+				 case '4':
+					 m_view->changeWay(SNAKE_MODEL::Way::LEFT);
+					e->Handled = true;
+					break;
+//				 case Keys::Right:
+				 case '6':
+					 m_view->changeWay(SNAKE_MODEL::Way::RIGHT);
+					e->Handled = true;
+					break;
+//				 case Keys::Up:
+				 case '8':
+					 m_view->changeWay(SNAKE_MODEL::Way::UP);
+					e->Handled = true;
+					break;
+//				 case Keys::Down:
+				 case '2':
+					 m_view->changeWay(SNAKE_MODEL::Way::DOWN);
+					e->Handled = true;
+					break;
+			 }
+		 }
+};
 }
 
