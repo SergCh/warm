@@ -20,8 +20,7 @@ namespace SNAKE_MODEL {
 
     public:
         // передача параметров ширины и высоты поля
-        IModel(Point _size)
-        : m_size(_size), m_stateGame(DEAD) {}
+        IModel(){}
 
         // состояние змея
         typedef enum {
@@ -50,22 +49,13 @@ namespace SNAKE_MODEL {
         // добавить кролика (на поле может быть несколько кроликов)
         virtual void addRabbit() = 0;
 
-        RabbitFactory * getRabbitFactory() {return & m_rabbits;}
+        virtual RabbitFactory * getRabbitFactory() = 0;
 
         // сделать шаг (Выдача состояние модели)
         virtual std::pair<typename IModel::StateGame, typename IModel::StateSnake> move() = 0;
 
-        inline IModel::StateGame getStateGame() const {return m_stateGame;}
+        virtual IModel::StateGame getStateGame() const = 0;
 
-
-    protected:
-        // размеры поля
-        Point m_size;
-
-        // целая фабрика для кроликов
-        RabbitFactory m_rabbits;
-
-        StateGame m_stateGame;
     };
 
 }
