@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     Model model(Point(view.getWidthField(), view.getHieghtField()), snake);
 
     Control control(view, model);
-    std::srand(unsigned(std::time(0)));
 
     control.init();
 

@@ -31,8 +31,7 @@ namespace SNAKE_MODEL {
          */
         IView(void)
         : m_control(0){
-            m_way = Way::LEFT;
-            m_rabbitFactory = 0;
+             m_rabbitFactory = 0;
         }
 
         /**
@@ -110,7 +109,6 @@ namespace SNAKE_MODEL {
 
         IControl *m_control;
         RabbitFactory * m_rabbitFactory;
-        Way m_way;
     };
 
 }
