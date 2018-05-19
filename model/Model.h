@@ -24,7 +24,7 @@ namespace SNAKE_MODEL {
     public:
         // передача параметров ширины и высоты поля
         Model(Point _size, ISnake & _snake)
-        : IModel(), m_size(_size), m_snake(_snake), m_stateGame(DEAD) {}
+        : IModel(), m_snake(_snake), m_size(_size), m_stateGame(DEAD) {}
 
 
         // начало игры
