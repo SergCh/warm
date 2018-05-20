@@ -21,18 +21,7 @@ namespace vcworm {
 	///          конструкторы не смогут правильно работать с локализованными
 	///          ресурсами, сопоставленными данной форме.
 	/// </summary>
-
-	public ref class MyButton : public System::Windows::Forms::Button
-	{
-	protected:
-		virtual bool IsInputKey (System::Windows::Forms::Keys ketDate) override
-		{
-			return true;
-		}
-	};
-
-
-
+	
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
@@ -87,8 +76,8 @@ namespace vcworm {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->buttonQuit = (gcnew MyButton());
-			this->buttonStart = (gcnew MyButton());
+			this->buttonQuit = (gcnew System::Windows::Forms::Button());
+			this->buttonStart = (gcnew System::Windows::Forms::Button());
 			this->labelScore = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -115,9 +104,9 @@ namespace vcworm {
 			this->panel1->Controls->Add(this->labelScore);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Right;
-			this->panel1->Location = System::Drawing::Point(322, 0);
+			this->panel1->Location = System::Drawing::Point(498, 0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(94, 317);
+			this->panel1->Size = System::Drawing::Size(94, 466);
 			this->panel1->TabIndex = 1;
 			// 
 			// buttonQuit
@@ -131,6 +120,7 @@ namespace vcworm {
 			this->buttonQuit->TabStop = false;
 			this->buttonQuit->Text = L"Quit";
 			this->buttonQuit->UseVisualStyleBackColor = true;
+			this->buttonQuit->PreviewKeyDown += gcnew System::Windows::Forms::PreviewKeyDownEventHandler(this, &Form1::buttonStart_PreviewKeyDown);
 			this->buttonQuit->Click += gcnew System::EventHandler(this, &Form1::buttonQuit_Click);
 			// 
 			// buttonStart
@@ -143,6 +133,7 @@ namespace vcworm {
 			this->buttonStart->TabStop = false;
 			this->buttonStart->Text = L"Start";
 			this->buttonStart->UseVisualStyleBackColor = true;
+			this->buttonStart->PreviewKeyDown += gcnew System::Windows::Forms::PreviewKeyDownEventHandler(this, &Form1::buttonStart_PreviewKeyDown);
 			this->buttonStart->Click += gcnew System::EventHandler(this, &Form1::buttonStart_Click);
 			// 
 			// labelScore
@@ -167,7 +158,7 @@ namespace vcworm {
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(322, 317);
+			this->pictureBox1->Size = System::Drawing::Size(498, 466);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
 			this->pictureBox1->TabIndex = 2;
 			this->pictureBox1->TabStop = false;
@@ -178,10 +169,11 @@ namespace vcworm {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(416, 317);
+			this->ClientSize = System::Drawing::Size(592, 466);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->panel1);
 			this->KeyPreview = true;
+			this->MinimumSize = System::Drawing::Size(600, 500);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
@@ -315,6 +307,9 @@ private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, S
 					e->Handled = true;
 					break;
 			 }
+		 }
+private: System::Void buttonStart_PreviewKeyDown(System::Object^  sender, System::Windows::Forms::PreviewKeyDownEventArgs^  e) {
+			 e->IsInputKey = true;
 		 }
 };
 }
