@@ -21,6 +21,18 @@ namespace vcworm {
 	///          конструкторы не смогут правильно работать с локализованными
 	///          ресурсами, сопоставленными данной форме.
 	/// </summary>
+
+	public ref class MyButton : public System::Windows::Forms::Button
+	{
+	protected:
+		virtual bool IsInputKey (System::Windows::Forms::Keys ketDate) override
+		{
+			return true;
+		}
+	};
+
+
+
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
@@ -46,8 +58,8 @@ namespace vcworm {
 		}
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Panel^  panel1;
-	private: System::Windows::Forms::Button^  buttonQuit;
-	private: System::Windows::Forms::Button^  buttonStart;
+
+
 	private: System::Windows::Forms::Label^  labelScore;
 
 
@@ -56,6 +68,8 @@ namespace vcworm {
 		Snake::VCView * m_view;
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::Button^  buttonQuit;
+	private: System::Windows::Forms::Button^  buttonStart;
 
 
 	private: System::ComponentModel::IContainer^  components;
@@ -73,8 +87,8 @@ namespace vcworm {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->buttonQuit = (gcnew System::Windows::Forms::Button());
-			this->buttonStart = (gcnew System::Windows::Forms::Button());
+			this->buttonQuit = (gcnew MyButton());
+			this->buttonStart = (gcnew MyButton());
 			this->labelScore = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -109,20 +123,24 @@ namespace vcworm {
 			// buttonQuit
 			// 
 			this->buttonQuit->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+			this->buttonQuit->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->buttonQuit->Location = System::Drawing::Point(16, 98);
 			this->buttonQuit->Name = L"buttonQuit";
 			this->buttonQuit->Size = System::Drawing::Size(75, 23);
 			this->buttonQuit->TabIndex = 4;
+			this->buttonQuit->TabStop = false;
 			this->buttonQuit->Text = L"Quit";
 			this->buttonQuit->UseVisualStyleBackColor = true;
 			this->buttonQuit->Click += gcnew System::EventHandler(this, &Form1::buttonQuit_Click);
 			// 
 			// buttonStart
 			// 
+			this->buttonStart->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->buttonStart->Location = System::Drawing::Point(16, 69);
 			this->buttonStart->Name = L"buttonStart";
 			this->buttonStart->Size = System::Drawing::Size(75, 23);
 			this->buttonStart->TabIndex = 3;
+			this->buttonStart->TabStop = false;
 			this->buttonStart->Text = L"Start";
 			this->buttonStart->UseVisualStyleBackColor = true;
 			this->buttonStart->Click += gcnew System::EventHandler(this, &Form1::buttonStart_Click);
@@ -145,6 +163,7 @@ namespace vcworm {
 			// pictureBox1
 			// 
 			this->pictureBox1->BackColor = System::Drawing::SystemColors::Control;
+			this->pictureBox1->Cursor = System::Windows::Forms::Cursors::Default;
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
@@ -159,14 +178,13 @@ namespace vcworm {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->CancelButton = this->buttonQuit;
 			this->ClientSize = System::Drawing::Size(416, 317);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->panel1);
 			this->KeyPreview = true;
 			this->Name = L"Form1";
 			this->Text = L"Form1";
-			this->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Form1::Form1_KeyPress);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
@@ -176,6 +194,7 @@ namespace vcworm {
 		}
 #pragma endregion
 	private: System::Void buttonQuit_Click(System::Object^  sender, System::EventArgs^  e) {
+				 this->Close();
 			 }
 	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e) {
 				timer1->Enabled = false;
@@ -191,31 +210,8 @@ namespace vcworm {
 				if (!m_view->isPause())
 					timer1->Enabled = true;
 				}
-private: System::Void Form1_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
-			 switch (e->KeyChar) {
-//				 case Keys::Left:
-				 case '4':
-					 m_view->changeWay(Snake::Way::LEFT);
-					e->Handled = true;
-					break;
-//				 case Keys::Right:
-				 case '6':
-					 m_view->changeWay(Snake::Way::RIGHT);
-					e->Handled = true;
-					break;
-//				 case Keys::Up:
-				 case '8':
-					 m_view->changeWay(Snake::Way::UP);
-					e->Handled = true;
-					break;
-//				 case Keys::Down:
-				 case '2':
-					 m_view->changeWay(Snake::Way::DOWN);
-					e->Handled = true;
-					break;
-			 }
-		 }
-private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+
+	private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 			Snake::GraphicSnake * snake = m_view->getSnake();
 			Snake::RabbitFactory * rabbits = m_view->getRabbitFactory();
 			Graphics^ g = e->Graphics;
@@ -252,7 +248,7 @@ private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows
 			}
 
 		 }
-private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
 			pictureBox1->Invalidate();
 		 }
 
@@ -300,6 +296,26 @@ private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, S
     }
 	}
 
+	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+				 switch (e->KeyCode) {
+				 case Keys::Left:
+					 m_view->changeWay(Snake::Way::LEFT);
+					e->Handled = true;
+					break;
+				 case Keys::Right:
+					 m_view->changeWay(Snake::Way::RIGHT);
+					e->Handled = true;
+					break;
+				 case Keys::Up:
+					 m_view->changeWay(Snake::Way::UP);
+					e->Handled = true;
+					break;
+				 case Keys::Down:
+					 m_view->changeWay(Snake::Way::DOWN);
+					e->Handled = true;
+					break;
+			 }
+		 }
 };
 }
 
