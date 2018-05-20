@@ -14,10 +14,10 @@ int main(array<System::String ^> ^args)
 {
 //    std::srand(unsigned(std::time(0)));
 	
-	SNAKE_MODEL::VCView view;
-    SNAKE_MODEL::GraphicSnake snake;
-	SNAKE_MODEL::Model model(SNAKE_MODEL::Point(view.getWidthField(), view.getHieghtField()), snake);
-    SNAKE_MODEL::Control control(view, model);
+	Snake::VCView view;
+    Snake::GraphicSnake snake;
+	Snake::Model model(Snake::Point(view.getWidthField(), view.getHieghtField()), snake);
+    Snake::Control control(view, model);
     control.init();
 
 //    MainWindow w(&view);

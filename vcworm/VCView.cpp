@@ -1,7 +1,7 @@
 #include "VCView.h"
 #include "IControl.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 VCView::VCView(void)
 {

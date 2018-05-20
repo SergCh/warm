@@ -24,7 +24,7 @@ namespace vcworm {
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	public:
-		Form1(SNAKE_MODEL::VCView * _view)
+		Form1(Snake::VCView * _view)
 		{
 			InitializeComponent();
 			//
@@ -53,7 +53,7 @@ namespace vcworm {
 
 	private:
 		/// <summary>
-		SNAKE_MODEL::VCView * m_view;
+		Snake::VCView * m_view;
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
@@ -195,29 +195,29 @@ private: System::Void Form1_KeyPress(System::Object^  sender, System::Windows::F
 			 switch (e->KeyChar) {
 //				 case Keys::Left:
 				 case '4':
-					 m_view->changeWay(SNAKE_MODEL::Way::LEFT);
+					 m_view->changeWay(Snake::Way::LEFT);
 					e->Handled = true;
 					break;
 //				 case Keys::Right:
 				 case '6':
-					 m_view->changeWay(SNAKE_MODEL::Way::RIGHT);
+					 m_view->changeWay(Snake::Way::RIGHT);
 					e->Handled = true;
 					break;
 //				 case Keys::Up:
 				 case '8':
-					 m_view->changeWay(SNAKE_MODEL::Way::UP);
+					 m_view->changeWay(Snake::Way::UP);
 					e->Handled = true;
 					break;
 //				 case Keys::Down:
 				 case '2':
-					 m_view->changeWay(SNAKE_MODEL::Way::DOWN);
+					 m_view->changeWay(Snake::Way::DOWN);
 					e->Handled = true;
 					break;
 			 }
 		 }
 private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-			SNAKE_MODEL::GraphicSnake * snake = m_view->getSnake();
-			SNAKE_MODEL::RabbitFactory * rabbits = m_view->getRabbitFactory();
+			Snake::GraphicSnake * snake = m_view->getSnake();
+			Snake::RabbitFactory * rabbits = m_view->getRabbitFactory();
 			Graphics^ g = e->Graphics;
 
 			const int bh = m_view->getHieghtField();
@@ -241,12 +241,12 @@ private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows
 
 			Pen^ blackPen = gcnew Pen( Color::Black,3.0f );
 //				g->DrawLine( System::Drawing::Pens::Red,0,0,10,10);
-			for (std::vector<SNAKE_MODEL::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
+			for (std::vector<Snake::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
 	            SolidBrush^ color = (iter - snake->begin()) % 5 == 3 ? yellowBrush: redBrush;
 		        drawSnake(g, &*iter, w, h, color);
 			}
 
-			for (std::vector<SNAKE_MODEL::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
+			for (std::vector<Snake::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
 				Rectangle rect = Rectangle(iter->getX()*w + 1, iter->getY()*h + 1, w - 2, h - 2);
 				g->FillRectangle(greenBrush, rect);
 			}
@@ -256,30 +256,30 @@ private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::E
 			pictureBox1->Invalidate();
 		 }
 
-private: void drawSnake(Graphics^ g, SNAKE_MODEL::GraphicPoint *point, int w, int h, SolidBrush^ brush) {
+private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, SolidBrush^ brush) {
     Rectangle body1(point->getX() * w, point->getY() * h, w, h);
 
     int ddx = w / 5, ddx2 = ddx + ddx;
     int ddy = h / 5, ddy2 = ddy + ddy;
 
     switch (point->getType()) {
-    case SNAKE_MODEL::GraphicPoint::HEAD:
+    case Snake::GraphicPoint::HEAD:
         g->FillRectangle(brush, body1);
         return;
 
-    case SNAKE_MODEL::GraphicPoint::HORISONTAL:
+    case Snake::GraphicPoint::HORISONTAL:
 		body1.Y += ddy * point->getPosition();
 		body1.Height = w - ddy2;
         g->FillRectangle(brush, body1);
         return;
 
-    case SNAKE_MODEL::GraphicPoint::VERTICAL:
+    case Snake::GraphicPoint::VERTICAL:
 		body1.X += ddx * point->getPosition();
 		body1.Width = h - ddx2;
         g->FillRectangle(brush, body1);
         break;
 
-    case SNAKE_MODEL::GraphicPoint::CORNER:
+    case Snake::GraphicPoint::CORNER:
 		body1.Width = h - ddx2;
 		body1.Height = w - ddy2;
         if (point->getPosition()) {
