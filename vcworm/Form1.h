@@ -206,6 +206,10 @@ namespace vcworm {
 	private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 			Snake::GraphicSnake * snake = m_view->getSnake();
 			Snake::RabbitFactory * rabbits = m_view->getRabbitFactory();
+
+			if (snake == 0 || snake->size()==0)
+				return;
+
 			Graphics^ g = e->Graphics;
 
 			const int bh = m_view->getHieghtField();
@@ -218,7 +222,7 @@ namespace vcworm {
 			else 
 				h = w;
 
-			SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
+			//SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
 			SolidBrush^ greenBrush = gcnew SolidBrush( Color::Green );
 			SolidBrush^ redBrush = gcnew SolidBrush( Color::Red );
 			SolidBrush^ yellowBrush = gcnew SolidBrush( Color::Yellow );
@@ -227,8 +231,36 @@ namespace vcworm {
 			g->FillRectangle(gcnew SolidBrush(System::Drawing::SystemColors::ControlDark),
 				0, 0, w * bw, h * bh);
 
-			Pen^ blackPen = gcnew Pen( Color::Black,3.0f );
-//				g->DrawLine( System::Drawing::Pens::Red,0,0,10,10);
+			{
+				int i = (m_view->getMaxPath() - snake->sizePath())*4;
+				for (std::vector<Snake::GraphicPoint>::reverse_iterator iter = snake->rbeginPath(); iter!= snake->rendPath(); iter++) {
+					if (i<0) i = 0;
+					if (i>255) i = 255;
+					Color c2 = Color::FromArgb(i, System::Drawing::SystemColors::Control);
+					SolidBrush^ pathBrush = gcnew SolidBrush( c2 );
+					drawSnake(g, &*iter, w, h, pathBrush);
+					i+=4;
+				}
+			}
+
+			{
+				Pen ^ bluePen = gcnew Pen(Color::Cyan, 1.0F);
+				bluePen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
+				const Snake::Point head = snake->front();
+				int x1 = head.getX() * w + w/2;
+				int y1 = head.getY() * h + h/2;
+				int x2 = x1;
+				int y2 = y1;
+				switch (snake->getWay()) {
+				case Snake::Way::LEFT:		x2 = 0; break;
+				case Snake::Way::RIGHT:		x2 = w * bw; break;
+				case Snake::Way::UP:		y2 = 0; break;
+				case Snake::Way::DOWN:		y2 = h * bh; break;
+				default: break;
+				}
+				g->DrawLine(bluePen, x1, y1, x2, y2);
+			}
+
 			for (std::vector<Snake::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
 	            SolidBrush^ color = (iter - snake->begin()) % 5 == 3 ? yellowBrush: redBrush;
 		        drawSnake(g, &*iter, w, h, color);

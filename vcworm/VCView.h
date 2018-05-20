@@ -18,6 +18,7 @@ public:
     virtual int getHieghtField();
     virtual int getWidthField();
     virtual void setSnake(ISnake * _snake);
+	virtual int getMaxPath() const {return MAX_PATH;}
 
     virtual void beforeGame();
     virtual void paint();
