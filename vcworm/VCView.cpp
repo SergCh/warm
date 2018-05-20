@@ -43,6 +43,9 @@ bool VCView::isPause()
 
 void VCView::beforeGame()
 {
+	if (m_snake == 0) 
+		return ;
+	return m_snake->setMaxPath(MAX_PATH);
 }
 
 void VCView::paint()
