@@ -1,2 +1,7 @@
 *.user
 *.autosave
+*.ncb
+*.sln
+*.suo
+*.user
+Debug/
