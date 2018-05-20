@@ -17,7 +17,7 @@
 
 #include "TSnake.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 CursesView::CursesView() : IView() {
 	initscr();
@@ -34,6 +34,7 @@ CursesView::CursesView() : IView() {
 	curs_set(0);
     m_score = 0;
     m_snake = 0;
+    m_way = Way::LEFT;
 }
 
 void CursesView::setSnake(ISnake * _snake){

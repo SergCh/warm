@@ -15,7 +15,7 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class ISnake;
 

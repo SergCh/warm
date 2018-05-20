@@ -12,7 +12,7 @@
 #include "GraphicPoint.h"
 #include "TSnake.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class GraphicSnake : public TSnake<GraphicPoint>
     {

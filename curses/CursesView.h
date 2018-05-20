@@ -12,7 +12,7 @@
 #include "Point.h"
 
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Control;
     class Rabbit;
@@ -57,6 +57,7 @@ namespace SNAKE_MODEL {
         int m_width;
         int m_score;
         Snake * m_snake;
+        Way m_way;
 
     protected:
         void beforePaintField();

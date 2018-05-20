@@ -24,7 +24,7 @@
 #include "RabbitFactory.h"
 #include "Rabbit.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 Control::Control(IView& _view, IModel& _model): IControl(), m_model(_model) , m_view(_view) {
 	m_quit = false;

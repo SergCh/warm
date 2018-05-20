@@ -9,7 +9,7 @@
 
 #include "GraphicSnake.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 
 

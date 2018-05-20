@@ -7,7 +7,7 @@
 #include "IModel.h"
 #include "IView.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     // контроллер между View и Model
 

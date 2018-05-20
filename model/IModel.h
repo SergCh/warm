@@ -14,7 +14,7 @@
 #include "Way.h"
 #include "RabbitFactory.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class IModel {
 

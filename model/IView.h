@@ -16,7 +16,7 @@
 #include "Way.h"
 #include "ISnake.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class IControl;
     class Rabbit;

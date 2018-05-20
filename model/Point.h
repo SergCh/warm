@@ -14,7 +14,7 @@
 
 #include <utility>
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Point: public std::pair<int, int> {
 
