@@ -9,7 +9,7 @@
 
 #include "Model.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 void Model::init() {
 

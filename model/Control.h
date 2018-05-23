@@ -7,7 +7,7 @@
 #include "IModel.h"
 #include "IView.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     // контроллер между View и Model
 
@@ -31,6 +31,14 @@ namespace SNAKE_MODEL {
         // инициализация
         virtual void init();
 
+        inline bool isPause() const {return m_pause;}
+        // метод для View, вызывается, когда клиент хочет выйти.
+        inline void quit() {m_quit = true;}
+
+        // геттер для m_quit
+        inline bool isQuit() const {return m_quit;}
+
+
     protected:
 
         enum {BEGIN_STEP = 20, NEXT_STEP = 50};
@@ -39,6 +47,12 @@ namespace SNAKE_MODEL {
         IView &m_view;
 
         int steps4nextRabbit;   //steps for next rabbit
+
+        // флаг выхода
+        bool m_quit;
+        // флаг паузы
+        bool m_pause;
+
     };
 
 }

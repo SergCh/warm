@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file Rabbit.h
  *      @brief Класс кролик
  *      @author Чугайнов С.В.
  *      @date 09.05.2018
@@ -15,7 +15,7 @@
 
 #include "Point.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Rabbit : public Point
     {

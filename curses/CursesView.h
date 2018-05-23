@@ -10,17 +10,15 @@
 
 #include "IView.h"
 #include "Point.h"
-//#include "Rabbit.h"
 
-namespace SNAKE_MODEL {
+
+namespace Snake {
 
     class Control;
     class Rabbit;
     template <class T_Point> class TSnake;
 
     typedef TSnake<Point> Snake;
-
-
 
     class CursesView : public IView
     {
@@ -59,6 +57,7 @@ namespace SNAKE_MODEL {
         int m_width;
         int m_score;
         Snake * m_snake;
+        Way m_way;
 
     protected:
         void beforePaintField();

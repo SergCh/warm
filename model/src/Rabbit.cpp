@@ -1,6 +1,6 @@
 #include "Rabbit.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 
 void Rabbit::eat(const Point & _head) {

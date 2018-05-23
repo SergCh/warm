@@ -17,7 +17,7 @@
 
 #include "ISnake.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Model;
 

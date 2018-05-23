@@ -11,18 +11,18 @@
 #include "Config.h"
 #include "TSnake.h"
 
-using namespace SNAKE_MODEL;
+//using namespace Snake;
 
 int main(int /*argc*/, char* /*argv*/[]) {
 //int _tmain(int argc, _TCHAR* argv[]) {
 
     std::srand(unsigned(std::time(0)));
-	CursesView view;
-    Snake snake;
+    Snake::CursesView view;
+    Snake::TSnake<Snake::Point> snake;
 
-    Model model(Point(view.getWidthField(), view.getHieghtField()), snake);
+    Snake::Model model(Snake::Point(view.getWidthField(), view.getHieghtField()), snake);
 
-	Control control(view, model);
+    Snake::Control control(view, model);
 
 	control.init();
 

@@ -10,7 +10,7 @@
 
 #include "Point.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Way {
     public:

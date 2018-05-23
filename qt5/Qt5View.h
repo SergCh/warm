@@ -12,7 +12,7 @@
 #include "GraphicPoint.h"
 #include "GraphicSnake.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 class Qt5View : public QFrame, public IView
 {

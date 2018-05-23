@@ -15,7 +15,7 @@
 #include "Rabbit.h"
 #include "RabbitFactory.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class ISnake;
 
@@ -24,7 +24,7 @@ namespace SNAKE_MODEL {
     public:
         // передача параметров ширины и высоты поля
         Model(Point _size, ISnake & _snake)
-        : IModel(_size), m_snake(_snake) {}
+        : IModel(), m_snake(_snake), m_size(_size), m_stateGame(DEAD) {}
 
 
         // начало игры
@@ -45,6 +45,9 @@ namespace SNAKE_MODEL {
 
         // сделать шаг (Выдача состояние модели)
         std::pair<IModel::StateGame, IModel::StateSnake> move();
+        inline IModel::StateGame getStateGame() const {return m_stateGame;}
+        RabbitFactory * getRabbitFactory() {return & m_rabbits;}
+
 
     protected:
 
@@ -52,7 +55,13 @@ namespace SNAKE_MODEL {
 
         // добавляемая длина при поедании кролика
         int m_length;
+        // размеры поля
+        Point m_size;
 
+        // целая фабрика для кроликов
+        RabbitFactory m_rabbits;
+
+        StateGame m_stateGame;
     };
 
 }

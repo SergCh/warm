@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- *      @file
+ *      @file Point.h
  *      @brief Класс координаты отображаемых элементов
  *      @author Чугайнов С.В.
  *      @date 09.05.2018
@@ -14,7 +14,7 @@
 
 #include <utility>
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class Point: public std::pair<int, int> {
 

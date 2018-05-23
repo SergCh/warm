@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @file isnake
+ * @file ISnake.h
  * @brief %{Cpp:License:ClassName}
  * @author Чугайнов С.В.
  * @date 17.05.2018
@@ -11,7 +11,7 @@
 #include "Point.h"
 #include "Way.h"
 
-namespace SNAKE_MODEL {
+namespace Snake {
 
     class ISnake
     {

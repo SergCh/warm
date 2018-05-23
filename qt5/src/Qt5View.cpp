@@ -13,7 +13,7 @@
 
 #include "GraphicPoint.h"
 
-using namespace SNAKE_MODEL;
+using namespace Snake;
 
 Qt5View::Qt5View(QWidget *parent) : QFrame(parent) {
     m_snake = 0;
