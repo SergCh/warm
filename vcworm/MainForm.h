@@ -57,7 +57,8 @@ namespace vcworm {
 		/// <summary>
 		Snake::VCView * m_view;
 	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::PictureBox^  pictureBoxField;
+
 	private: System::Windows::Forms::Button^  buttonQuit;
 	private: System::Windows::Forms::Button^  buttonStart;
 
@@ -81,9 +82,9 @@ namespace vcworm {
 			this->buttonStart = (gcnew System::Windows::Forms::Button());
 			this->labelScore = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBoxField = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxField))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -152,26 +153,26 @@ namespace vcworm {
 			// 
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
-			// pictureBox1
+			// pictureBoxField
 			// 
-			this->pictureBox1->BackColor = System::Drawing::SystemColors::Control;
-			this->pictureBox1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(498, 466);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-			this->pictureBox1->TabIndex = 2;
-			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::pictureBox1_Paint);
-			this->pictureBox1->SizeChanged += gcnew System::EventHandler(this, &Form1::pictureBox1_SizeChanged);
+			this->pictureBoxField->BackColor = System::Drawing::SystemColors::Control;
+			this->pictureBoxField->Cursor = System::Windows::Forms::Cursors::Default;
+			this->pictureBoxField->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->pictureBoxField->Location = System::Drawing::Point(0, 0);
+			this->pictureBoxField->Name = L"pictureBoxField";
+			this->pictureBoxField->Size = System::Drawing::Size(498, 466);
+			this->pictureBoxField->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBoxField->TabIndex = 2;
+			this->pictureBoxField->TabStop = false;
+			this->pictureBoxField->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::pictureBox1_Paint);
+			this->pictureBoxField->SizeChanged += gcnew System::EventHandler(this, &Form1::pictureBox1_SizeChanged);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(592, 466);
-			this->Controls->Add(this->pictureBox1);
+			this->Controls->Add(this->pictureBoxField);
 			this->Controls->Add(this->panel1);
 			this->KeyPreview = true;
 			this->MinimumSize = System::Drawing::Size(600, 500);
@@ -180,7 +181,7 @@ namespace vcworm {
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxField))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

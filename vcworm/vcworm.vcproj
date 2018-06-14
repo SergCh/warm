@@ -251,16 +251,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Form1.h"
-				FileType="3"
-				>
-				<File
-					RelativePath=".\Form1.resX"
-					SubType="Designer"
-					>
-				</File>
-			</File>
-			<File
 				RelativePath="..\model\GraphicPoint.h"
 				>
 			</File>
@@ -283,6 +273,16 @@
 			<File
 				RelativePath="..\model\IView.h"
 				>
+			</File>
+			<File
+				RelativePath=".\MainForm.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\MainForm.resX"
+					SubType="Designer"
+					>
+				</File>
 			</File>
 			<File
 				RelativePath="..\model\Model.h"
