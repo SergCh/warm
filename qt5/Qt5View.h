@@ -24,10 +24,6 @@ class Qt5View : public QFrame, public TGraphicView<Qt5View>
 public:
     Qt5View(QWidget *parent = 0);
 
-//    virtual int getHieghtField();
-//    virtual int getWidthField();
-//    virtual void setSnake(ISnake * _snake);
-
     virtual void beforeGame();
     virtual void paint();
     virtual void changeScore(int _score);
@@ -45,23 +41,17 @@ protected:
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
-
 public:
     void fillRectangle(int _x, int _y, int _w, int _h, int _c);
     void drawLine(int _x1, int _y1, int _x2, int _y2, int _c);
     void drawTextPause();
     int getSquareSize();
 
-
-
 private:
-
-//    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, QColor _color);
 
     QColor getColor(unsigned int _c);
 
-    QPainter  * m_painter;  // save for paintEvent
-
+    QPainter  * m_painter;  // save in paintEvent for draw primitives
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
