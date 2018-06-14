@@ -3,6 +3,7 @@
 #include "GraphicSnake.h"
 #include "Way.h"
 
+
 namespace vcworm {
 
 	using namespace System;
@@ -214,22 +215,63 @@ namespace vcworm {
 
 			const int bh = m_view->getHieghtField();
 			const int bw = m_view->getWidthField();
-			int h = pictureBox1->Height/bh;
-			int w = pictureBox1->Width/bw;
 
-			if (h < w) 
-				w = h;
-			else 
-				h = w;
+			const int s = std::min(pictureBox1->Height/bh, pictureBox1->Width/bw);
 
-			//SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
-			SolidBrush^ greenBrush = gcnew SolidBrush( Color::Green );
-			SolidBrush^ redBrush = gcnew SolidBrush( Color::Red );
-			SolidBrush^ yellowBrush = gcnew SolidBrush( Color::Yellow );
+			m_view->initDraw(s);
+			m_view->paintGame();
+			const std::vector<int> &  primetives = m_view->getPrimitives();
 
 			g->Clear(System::Drawing::SystemColors::Control);
-			g->FillRectangle(gcnew SolidBrush(System::Drawing::SystemColors::ControlDark),
-				0, 0, w * bw, h * bh);
+
+			unsigned int i=0;
+			while (i < primetives.size()) {
+				switch(primetives[i++]) {
+				case Snake::VCView::RECTANGLE:
+					{
+						int x = primetives.at(i++);
+						int y = primetives.at(i++);
+						int w = primetives.at(i++);
+						int h = primetives.at(i++);
+						Color c = getColor(primetives.at(i++));
+
+						SolidBrush^ brush = gcnew SolidBrush(c);
+						g->FillRectangle(brush, x, y, w, h);
+					}
+					break;
+				case Snake::VCView::LINE:
+					{
+						int x1 = primetives.at(i++);
+						int y1 = primetives.at(i++);
+						int x2 = primetives.at(i++);
+						int y2 = primetives.at(i++);
+						Color c = getColor(primetives.at(i++));
+	
+						Pen ^ pen = gcnew Pen(c, 1.0F);
+						pen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
+						g->DrawLine(pen, x1, y1, x2, y2);
+					}
+					break;
+				case Snake::VCView::TEXT:
+					{
+					}
+				}
+			}
+			
+
+
+
+			//SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
+//			SolidBrush^ greenBrush = gcnew SolidBrush( Color::Green );
+//			SolidBrush^ redBrush = gcnew SolidBrush( Color::Red );
+//			SolidBrush^ yellowBrush = gcnew SolidBrush( Color::Yellow );
+
+//			g->Clear(System::Drawing::SystemColors::Control);
+
+
+
+/*			g->FillRectangle(gcnew SolidBrush(System::Drawing::SystemColors::ControlDark),
+				0, 0, s * bw, s * bh);
 
 			{
 				int i = (m_view->getMaxPath() - snake->sizePath())*4;
@@ -238,7 +280,7 @@ namespace vcworm {
 					if (i>255) i = 255;
 					Color c2 = Color::FromArgb(i, System::Drawing::SystemColors::Control);
 					SolidBrush^ pathBrush = gcnew SolidBrush( c2 );
-					drawSnake(g, &*iter, w, h, pathBrush);
+					drawSnake(g, &*iter, s, s, pathBrush);
 					i+=4;
 				}
 			}
@@ -247,15 +289,15 @@ namespace vcworm {
 				Pen ^ bluePen = gcnew Pen(Color::Cyan, 1.0F);
 				bluePen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
 				const Snake::Point head = snake->front();
-				int x1 = head.getX() * w + w/2;
-				int y1 = head.getY() * h + h/2;
+				int x1 = head.getX() * s + s/2;
+				int y1 = head.getY() * s + s/2;
 				int x2 = x1;
 				int y2 = y1;
 				switch (snake->getWay()) {
 				case Snake::Way::LEFT:		x2 = 0; break;
-				case Snake::Way::RIGHT:		x2 = w * bw; break;
+				case Snake::Way::RIGHT:		x2 = s * bw; break;
 				case Snake::Way::UP:		y2 = 0; break;
-				case Snake::Way::DOWN:		y2 = h * bh; break;
+				case Snake::Way::DOWN:		y2 = s * bh; break;
 				default: break;
 				}
 				g->DrawLine(bluePen, x1, y1, x2, y2);
@@ -263,19 +305,37 @@ namespace vcworm {
 
 			for (std::vector<Snake::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
 	            SolidBrush^ color = (iter - snake->begin()) % 5 == 3 ? yellowBrush: redBrush;
-		        drawSnake(g, &*iter, w, h, color);
+		        drawSnake(g, &*iter, s, s, color);
 			}
 
 			for (std::vector<Snake::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
-				Rectangle rect = Rectangle(iter->getX()*w + 1, iter->getY()*h + 1, w - 2, h - 2);
+				Rectangle rect = Rectangle(iter->getX()*s + 1, iter->getY()*s + 1, s - 2, s - 2);
 				g->FillRectangle(greenBrush, rect);
 			}
-
+*/
 		 }
 	private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
 			pictureBox1->Invalidate();
 		 }
 
+private: Color getColor(int _c) 
+		 {
+			 switch (_c) {
+				 case Snake::VCView::COLOR_FIELD:  return Color::DarkGray;
+				 case Snake::VCView::COLOR_RABBIT: return Color::Green;
+				 case Snake::VCView::COLOR_SNAKE0: return Color::Red;
+				 case Snake::VCView::COLOR_SNAKE1: return Color::Yellow;
+				 case Snake::VCView::COLOR_PATH:   return Color::Cyan;
+				 default: break;
+			 }
+			 if (_c >= Snake::VCView::COLOR_TAIL) {
+				 Color color = Color::FromArgb((_c - Snake::VCView::COLOR_TAIL) * 4, Color::Gray);
+				 return color;
+			 }
+			 return Color::DarkGray;
+		 }
+
+/*
 private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, SolidBrush^ brush) {
     Rectangle body1(point->getX() * w, point->getY() * h, w, h);
 
@@ -320,6 +380,7 @@ private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, S
     }
 	}
 
+	*/
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 switch (e->KeyCode) {
 				 case Keys::Left:

@@ -63,7 +63,7 @@ namespace Snake {
                 // draw path
                 {
                     int i = MAX_PATH - m_snake->sizePath();
-                    for (auto iter = m_snake->rbeginPath(); iter != m_snake->rendPath(); ++iter, ++i) {
+                    for (std::vector<GraphicPoint>::reverse_iterator iter = m_snake->rbeginPath(); iter != m_snake->rendPath(); ++iter, ++i) {
                         static_cast<GVI*>(this) -> drawSnake(&*iter, COLOR_TAIL + i);
                     }
                 }
@@ -88,14 +88,14 @@ namespace Snake {
                 }
 
                 // draw snake
-                for (auto iter = m_snake->begin(); iter != m_snake->end(); ++iter) {
+                for (std::vector<GraphicPoint>::iterator iter = m_snake->begin(); iter != m_snake->end(); ++iter) {
                     const unsigned int color = (iter - m_snake->begin()) % 5 == 3 ? COLOR_SNAKE1: COLOR_SNAKE0;
                     drawSnake(&*iter, color);
                 }
             }
 
             // draw rabbits
-            for (auto iter = m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); iter++) {
+            for (std::vector<Rabbit>::iterator  iter = m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); iter++) {
                 static_cast<GVI*>(this) -> fillRectangle(iter->getX() * squareSize + 1,
                                                          iter->getY() * squareSize + 1,
                                                          squareSize - 2, squareSize - 2 , COLOR_RABBIT);

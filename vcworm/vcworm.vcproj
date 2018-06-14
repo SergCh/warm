@@ -305,6 +305,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\model\TGraphicView.h"
+				>
+			</File>
+			<File
 				RelativePath="..\model\TSnake.h"
 				>
 			</File>
