@@ -12,7 +12,7 @@
  */
 
 
-#define VERSION "0.0.5"
-#define VERSION_MODEL "0.3"
+#define VERSION "0.0.6"
+#define VERSION_MODEL "0.4"
 
 

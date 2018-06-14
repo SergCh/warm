@@ -67,11 +67,11 @@ namespace Snake {
         virtual bool empty() const {return m_snake.empty();}
         virtual void clear() {m_snake.clear();}
 
-        inline typename std::vector<T_Point>::reverse_iterator rbegin() {return m_snake.rbegin();}
-        inline typename std::vector<T_Point>::reverse_iterator rend() {return m_snake.rend();}
+        typename std::vector<T_Point>::reverse_iterator rbegin() {return m_snake.rbegin();}
+        typename std::vector<T_Point>::reverse_iterator rend() {return m_snake.rend();}
 
-        inline typename std::vector<T_Point>::iterator begin() {return m_snake.begin();}
-        inline typename std::vector<T_Point>::iterator end() {return m_snake.end();}
+        typename std::vector<T_Point>::iterator begin() {return m_snake.begin();}
+        typename std::vector<T_Point>::iterator end() {return m_snake.end();}
 
         virtual T_Point & front() {return m_snake.front();}
 

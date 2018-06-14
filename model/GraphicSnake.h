@@ -24,11 +24,11 @@ namespace Snake {
 
         virtual void removeTail(int _count);
 
-        inline std::vector<GraphicPoint>::iterator beginPath() {return m_path.begin();}
-        inline std::vector<GraphicPoint>::iterator endPath() {return m_path.end();}
-        inline std::vector<GraphicPoint>::reverse_iterator rbeginPath() {return m_path.rbegin();}
-        inline std::vector<GraphicPoint>::reverse_iterator rendPath() {return m_path.rend();}
-        inline int sizePath() const {return m_path.size();}
+        std::vector<GraphicPoint>::iterator beginPath() {return m_path.begin();}
+        std::vector<GraphicPoint>::iterator endPath() {return m_path.end();}
+        std::vector<GraphicPoint>::reverse_iterator rbeginPath() {return m_path.rbegin();}
+        std::vector<GraphicPoint>::reverse_iterator rendPath() {return m_path.rend();}
+        int sizePath() const {return m_path.size();}
 
         virtual void start(Point _sizeField);
 

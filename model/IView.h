@@ -81,29 +81,12 @@ namespace Snake {
         virtual int getWidthField() = 0;
 
         /**
-         * @brief setHieght Установка высоты
-         * @todo возможно надо избавляться
-         */
-        void setHieght(int);
-
-        /**
-         * @brief setWigth Установка ширины
-         * @todo возможно надо избавляться
-         */
-        void setWigth(int);
-
-        /**
          * @brief beforeGame Метод вызывается контроллером перед началом игры
          *
          * Метод вызывается контроллером перед началом игры.
          * Возможно необходимо сделать иницыализирующие дествия перед началом игры.
          */
         virtual void beforeGame() = 0;
-
-    private:
-
-        int m_hieght;   /// @todo надо избавляться
-        int m_wigth;    /// @todo надо избавляться
 
     protected:
 

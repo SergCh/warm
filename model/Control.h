@@ -17,7 +17,7 @@ namespace Snake {
         Control(IView &, IModel&);
         virtual ~Control(void);
 
-        inline IModel & getModel() const {return m_model;}
+        IModel & getModel() const {return m_model;}
 
         // поменять направление
         virtual void changeWay(Way);
@@ -31,12 +31,12 @@ namespace Snake {
         // инициализация
         virtual void init();
 
-        inline bool isPause() const {return m_pause;}
+        bool isPause() const {return m_pause;}
         // метод для View, вызывается, когда клиент хочет выйти.
-        inline void quit() {m_quit = true;}
+        void quit() {m_quit = true;}
 
         // геттер для m_quit
-        inline bool isQuit() const {return m_quit;}
+        bool isQuit() const {return m_quit;}
 
 
     protected:

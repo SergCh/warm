@@ -23,19 +23,19 @@ namespace Snake {
             m_step = _step;
         }
 
-        inline void setPosition(int _position, bool _toLeft = true, bool _toUp = true) {
+        void setPosition(int _position, bool _toLeft = true, bool _toUp = true) {
             m_position = _position; m_toLeft = _toLeft; m_toUp = _toUp;
         }
 
-        inline int getStep() const {return m_step;}
+        int getStep() const {return m_step;}
 
-        inline void setStep(int _step) {m_step = _step;}
+        void setStep(int _step) {m_step = _step;}
 
-        inline int getPosition() const {return m_position;}
+        int getPosition() const {return m_position;}
 
-        inline Type getType() const {return m_type;}
-        inline bool getToLeft() const {return m_toLeft;}
-        inline bool getToUp() const {return m_toUp;}
+        Type getType() const {return m_type;}
+        bool getToLeft() const {return m_toLeft;}
+        bool getToUp() const {return m_toUp;}
 
         void changeToHorisontal();
 
