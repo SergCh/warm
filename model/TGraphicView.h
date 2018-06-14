@@ -95,7 +95,7 @@ namespace Snake {
             }
 
             // draw rabbits
-            for (auto iter = m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); iter++) {
+            for (auto iter = m_rabbitFactory->begin(); iter != m_rabbitFactory->end(); ++iter) {
                 static_cast<GVI*>(this) -> fillRectangle(iter->getX() * squareSize + 1,
                                                          iter->getY() * squareSize + 1,
                                                          squareSize - 2, squareSize - 2 , COLOR_RABBIT);
