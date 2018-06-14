@@ -25,12 +25,13 @@ public:
     virtual void changeScore(int _score);
 	
     void nextStep();
-//	void setHieght(int);
-//	void setWigth(int);
 	void changeWay(Way _way);
 
-	GraphicSnake * getSnake() {return m_snake;}
-	RabbitFactory * getRabbitFactory() {return m_rabbitFactory;}
+	int getScore() 
+	{
+		if (m_snake == 0) return 0;	
+		return m_snake->size();
+	}
 
 	void start();
 	bool isPause();
@@ -39,6 +40,7 @@ public:
     void drawLine(int _x1, int _y1, int _x2, int _y2, int _c);
     void drawTextPause();
     int getSquareSize();
+
 	void initDraw(int _squareSize)
 	{
 		m_squareSize = _squareSize;
@@ -49,7 +51,6 @@ public:
 	{
 		return m_primitives;
 	}
-
 
 	enum {RECTANGLE, LINE, TEXT};
 

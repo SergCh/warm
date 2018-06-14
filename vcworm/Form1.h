@@ -192,25 +192,19 @@ namespace vcworm {
 	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e) {
 				timer1->Enabled = false;
 				m_view->start();
-				labelScore->Text = "" + m_view->getSnake()->size();
+				labelScore->Text = "" + m_view->getScore();
 				timer1->Enabled = true;
 			}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
 				timer1->Enabled = false;
 				m_view->nextStep();
-				labelScore->Text = "" + m_view->getSnake()->size();
+				labelScore->Text = "" + m_view->getScore();
 				pictureBox1->Invalidate();
 				if (!m_view->isPause())
 					timer1->Enabled = true;
 				}
 
 	private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-			Snake::GraphicSnake * snake = m_view->getSnake();
-			Snake::RabbitFactory * rabbits = m_view->getRabbitFactory();
-
-			if (snake == 0 || snake->size()==0)
-				return;
-
 			Graphics^ g = e->Graphics;
 
 			const int bh = m_view->getHieghtField();
