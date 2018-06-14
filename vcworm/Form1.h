@@ -257,64 +257,9 @@ namespace vcworm {
 					}
 				}
 			}
-			
-
-
-
-			//SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
-//			SolidBrush^ greenBrush = gcnew SolidBrush( Color::Green );
-//			SolidBrush^ redBrush = gcnew SolidBrush( Color::Red );
-//			SolidBrush^ yellowBrush = gcnew SolidBrush( Color::Yellow );
-
-//			g->Clear(System::Drawing::SystemColors::Control);
-
-
-
-/*			g->FillRectangle(gcnew SolidBrush(System::Drawing::SystemColors::ControlDark),
-				0, 0, s * bw, s * bh);
-
-			{
-				int i = (m_view->getMaxPath() - snake->sizePath())*4;
-				for (std::vector<Snake::GraphicPoint>::reverse_iterator iter = snake->rbeginPath(); iter!= snake->rendPath(); iter++) {
-					if (i<0) i = 0;
-					if (i>255) i = 255;
-					Color c2 = Color::FromArgb(i, System::Drawing::SystemColors::Control);
-					SolidBrush^ pathBrush = gcnew SolidBrush( c2 );
-					drawSnake(g, &*iter, s, s, pathBrush);
-					i+=4;
-				}
-			}
-
-			{
-				Pen ^ bluePen = gcnew Pen(Color::Cyan, 1.0F);
-				bluePen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
-				const Snake::Point head = snake->front();
-				int x1 = head.getX() * s + s/2;
-				int y1 = head.getY() * s + s/2;
-				int x2 = x1;
-				int y2 = y1;
-				switch (snake->getWay()) {
-				case Snake::Way::LEFT:		x2 = 0; break;
-				case Snake::Way::RIGHT:		x2 = s * bw; break;
-				case Snake::Way::UP:		y2 = 0; break;
-				case Snake::Way::DOWN:		y2 = s * bh; break;
-				default: break;
-				}
-				g->DrawLine(bluePen, x1, y1, x2, y2);
-			}
-
-			for (std::vector<Snake::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
-	            SolidBrush^ color = (iter - snake->begin()) % 5 == 3 ? yellowBrush: redBrush;
-		        drawSnake(g, &*iter, s, s, color);
-			}
-
-			for (std::vector<Snake::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
-				Rectangle rect = Rectangle(iter->getX()*s + 1, iter->getY()*s + 1, s - 2, s - 2);
-				g->FillRectangle(greenBrush, rect);
-			}
-*/
 		 }
-	private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
+
+private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
 			pictureBox1->Invalidate();
 		 }
 
@@ -335,53 +280,7 @@ private: Color getColor(int _c)
 			 return Color::DarkGray;
 		 }
 
-/*
-private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, SolidBrush^ brush) {
-    Rectangle body1(point->getX() * w, point->getY() * h, w, h);
-
-    int ddx = w / 5, ddx2 = ddx + ddx;
-    int ddy = h / 5, ddy2 = ddy + ddy;
-
-    switch (point->getType()) {
-    case Snake::GraphicPoint::HEAD:
-        g->FillRectangle(brush, body1);
-        return;
-
-    case Snake::GraphicPoint::HORISONTAL:
-		body1.Y += ddy * point->getPosition();
-		body1.Height = w - ddy2;
-        g->FillRectangle(brush, body1);
-        return;
-
-    case Snake::GraphicPoint::VERTICAL:
-		body1.X += ddx * point->getPosition();
-		body1.Width = h - ddx2;
-        g->FillRectangle(brush, body1);
-        break;
-
-    case Snake::GraphicPoint::CORNER:
-		body1.Width = h - ddx2;
-		body1.Height = w - ddy2;
-        if (point->getPosition()) {
-			Rectangle body2 = body1;
-			body2.X += point->getToLeft() ? 0 : ddx2;
-			body2.Y += ddy;
-			g->FillRectangle(brush, body2);
-
-			body1.X += ddx; 
-			body1.Y += point->getToUp() ? 0:ddy2;
-		
-			g->FillRectangle(brush, body1);
-		} else {
-			body1.X += point->getToLeft() ? 0 : ddx2;
-			body1.Y += point->getToUp() ? 0 : ddy2;
-			g->FillRectangle(brush, body1);
-		}
-    }
-	}
-
-	*/
-	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 switch (e->KeyCode) {
 				 case Keys::Left:
 					 m_view->changeWay(Snake::Way::LEFT);
