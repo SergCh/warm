@@ -12,13 +12,14 @@
 #include "GraphicPoint.h"
 #include "IView.h"
 #include "GraphicSnake.h"
-
+#include "IControl.h"
+#include "RabbitFactory.h"
 
 
 namespace Snake {
 
 
-    template <GVI>
+    template <class GVI>
     class TGraphicView : public IView
     {
     public:
@@ -28,7 +29,7 @@ namespace Snake {
          * @brief getHieghtField Возвращает высоту игроого поля
          * @return Высоту игрового поля
          */
-        int getHieghtField() {
+        virtual int getHieghtField() {
             return BOARD_HEIGHT;
         }
 
@@ -36,7 +37,7 @@ namespace Snake {
          * @brief getWidthField Возвращает ширину игрового поля
          * @return Ширину игрового поля
          */
-        int getWidthField() {
+        virtual int getWidthField() {
             return BOARD_WIDTH;
         }
 
@@ -47,13 +48,15 @@ namespace Snake {
         }
 
         virtual void paintGame() {
-            if (m_control==0)
-                return;
 
             const unsigned int squareSize = static_cast<GVI*>(this) -> getSquareSize();
-            const Point boardSize(squareSize * width-1, squareSize * height-1);
+            const Point boardSize(squareSize * BOARD_WIDTH, squareSize * BOARD_HEIGHT);
 
-            static_cast<GVI*>(this) -> fillRectangle(0, 0, boardSize.width()+1, boardSize.height()+1, COLOR_FIELD);
+            static_cast<GVI*>(this) -> fillRectangle(0, 0, boardSize.getX(), boardSize.getY(), COLOR_FIELD);
+
+            if (m_control == 0)
+                return;
+
 
             if (m_snake->size() > 0) {
 
@@ -68,19 +71,20 @@ namespace Snake {
                 // draw way
                 {
                     const Point head = m_snake->front();
-                    const Point pHead(head.getX() * squareSize + squareSize / 2,
-                                      head.getY() * squareSize + squareSize / 2);
-                    Point pBorder(pHead);
+                    int x1 = head.getX() * squareSize + squareSize / 2;
+                    int y1 = head.getY() * squareSize + squareSize / 2;
+                    int x2 = x1;
+                    int y2 = y1;
 
                     switch (m_snake->getWay()) {
-                        case Way::LEFT:  pBorder.setX(0);                break;
-                        case Way::RIGHT: pBorder.setX(boardSize.getX()); break;
-                        case Way::UP:    pBorder.setY(0);                break;
-                        case Way::DOWN:  pBorder.setY(boardSize.getY()); break;
-                        default: break;
+                    case Way::LEFT:  x2 = 0;                break;
+                    case Way::RIGHT: x2 = boardSize.getX(); break;
+                    case Way::UP:    y2 = 0;                break;
+                    case Way::DOWN:  y2 = boardSize.getY(); break;
+                    default: break;
                     }
 
-                    static_cast<GVI*>(this) -> paintLine(pHead, pBorder, COLOR_PATH);
+                    static_cast<GVI*>(this) -> drawLine(x1, y1, x2, y2, COLOR_PATH);
                 }
 
                 // draw snake
@@ -98,7 +102,7 @@ namespace Snake {
             }
 
             if (m_control->isPause()) {
-                static_cast<GVI*>(this) -> drawText("Pause");
+                static_cast<GVI*>(this) -> drawTextPause();
             }
 
         }

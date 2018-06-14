@@ -11,10 +11,11 @@
 #include "Point.h"
 #include "GraphicPoint.h"
 #include "GraphicSnake.h"
+#include "TGraphicView.h"
 
 using namespace Snake;
 
-class Qt5View : public QFrame, public IView
+class Qt5View : public QFrame, public TGraphicView<Qt5View>
 {
 
     Q_OBJECT
@@ -23,9 +24,9 @@ class Qt5View : public QFrame, public IView
 public:
     Qt5View(QWidget *parent = 0);
 
-    virtual int getHieghtField();
-    virtual int getWidthField();
-    virtual void setSnake(ISnake * _snake);
+//    virtual int getHieghtField();
+//    virtual int getWidthField();
+//    virtual void setSnake(ISnake * _snake);
 
     virtual void beforeGame();
     virtual void paint();
@@ -44,18 +45,26 @@ protected:
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
-private:
-    enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50, MAX_PATH = 10 };
 
-    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, QColor _color);
+public:
+    void fillRectangle(int _x, int _y, int _w, int _h, int _c);
+    void drawLine(int _x1, int _y1, int _x2, int _y2, int _c);
+    void drawTextPause();
+    int getSquareSize();
+
+
+
+private:
+
+//    void drawSnake(GraphicPoint* _point, const QSize & _squareSize, QPainter * _painter, QColor _color);
+
+    QColor getColor(unsigned int _c);
+
+    QPainter  * m_painter;  // save for paintEvent
+
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
-
-    QSize getSquareSize();
-    inline int timeoutTime() const { return 100; }
-    GraphicSnake * m_snake;
-
 
     QBasicTimer timer;
 
