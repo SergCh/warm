@@ -39,16 +39,28 @@ namespace Snake {
         void setXY(int _x, int _y);
 
         /**
+         * @brief setXY Установка координаты X
+         * @param _x Координата X
+         */
+        void setX(int _x) {first = _x;}
+
+        /**
+         * @brief setY Установка координаты Y
+         * @param _y Координата Y
+         */
+        void setY(int _y) {second = _y;}
+
+        /**
          * @brief getX Получить координату X
          * @return  Координату X
          */
-        inline int getX() const {return first;}
+        int getX() const {return first;}
 
         /**
          * @brief getY Получить координату Y
          * @return Координту Y
          */
-        inline int getY() const {return second;}
+        int getY() const {return second;}
 
         /**
          * @brief between Проверяет находится ли точна между точками (НЕ ВКЛЮЧИТЕЛЬНО)

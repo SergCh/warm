@@ -1,23 +1,23 @@
 #pragma once
 
+#include <vector>
+
 #include "IView.h"
 #include "GraphicSnake.h"
 #include "RabbitFactory.h"
 #include "Way.h"
+#include "TGraphicView.h"
 
 namespace Snake {
 
 class VCView :
-	public IView
+	public TGraphicView<VCView>
 {
 
 public:
 	VCView(void);
 	~VCView(void);
 
-    virtual int getHieghtField();
-    virtual int getWidthField();
-    virtual void setSnake(ISnake * _snake);
 	virtual int getMaxPath() const {return MAX_PATH;}
 
     virtual void beforeGame();
@@ -25,20 +25,39 @@ public:
     virtual void changeScore(int _score);
 	
     void nextStep();
-	void setHieght(int);
-	void setWigth(int);
 	void changeWay(Way _way);
 
-	GraphicSnake * getSnake() {return m_snake;}
-	RabbitFactory * getRabbitFactory() {return m_rabbitFactory;}
+	int getScore() 
+	{
+		if (m_snake == 0) return 0;	
+		return m_snake->size();
+	}
 
 	void start();
 	bool isPause();
 
-private:
-	enum { BOARD_WIDTH = 50, BOARD_HEIGHT = 50, MAX_PATH = 10 };
-    GraphicSnake * m_snake;
+    void fillRectangle(int _x, int _y, int _w, int _h, int _c);
+    void drawLine(int _x1, int _y1, int _x2, int _y2, int _c);
+    void drawTextPause();
+    int getSquareSize();
 
+	void initDraw(int _squareSize)
+	{
+		m_squareSize = _squareSize;
+		m_primitives.clear();
+	}
+
+	std::vector<int> & getPrimitives()
+	{
+		return m_primitives;
+	}
+
+	enum {RECTANGLE, LINE, TEXT};
+
+private:
+
+	int m_squareSize;
+	std::vector<int> m_primitives;
 };
 
 }

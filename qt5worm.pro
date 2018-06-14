@@ -54,4 +54,5 @@ HEADERS  += \
     model/GraphicSnake.h \
     qt5/Qt5View.h \
     qt5/MainWindow.h \
-    qt5/Qt5Version.h
+    qt5/Qt5Version.h \
+    model/TGraphicView.h

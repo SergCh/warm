@@ -33,10 +33,10 @@ namespace Snake {
         /// Константы для инкрементных операций при движении в направлении на еденицу
         static const Point POINTS_WAY[COUNT_WAYS];
 
-        inline EWay getWay() const {return m_way;}
-        inline void setWay(EWay _way) {m_way = _way;}
+        EWay getWay() const {return m_way;}
+        void setWay(EWay _way) {m_way = _way;}
 
-        inline operator int () const {return (int) m_way;}
+        operator unsigned int () const {return (unsigned int) m_way;}
 
         const Point & getPoint() const {
             return Way::POINTS_WAY[m_way];

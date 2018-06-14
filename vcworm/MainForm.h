@@ -3,6 +3,7 @@
 #include "GraphicSnake.h"
 #include "Way.h"
 
+
 namespace vcworm {
 
 	using namespace System;
@@ -56,7 +57,8 @@ namespace vcworm {
 		/// <summary>
 		Snake::VCView * m_view;
 	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::PictureBox^  pictureBoxField;
+
 	private: System::Windows::Forms::Button^  buttonQuit;
 	private: System::Windows::Forms::Button^  buttonStart;
 
@@ -80,9 +82,9 @@ namespace vcworm {
 			this->buttonStart = (gcnew System::Windows::Forms::Button());
 			this->labelScore = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBoxField = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxField))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -151,26 +153,26 @@ namespace vcworm {
 			// 
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
-			// pictureBox1
+			// pictureBoxField
 			// 
-			this->pictureBox1->BackColor = System::Drawing::SystemColors::Control;
-			this->pictureBox1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(498, 466);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-			this->pictureBox1->TabIndex = 2;
-			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::pictureBox1_Paint);
-			this->pictureBox1->SizeChanged += gcnew System::EventHandler(this, &Form1::pictureBox1_SizeChanged);
+			this->pictureBoxField->BackColor = System::Drawing::SystemColors::Control;
+			this->pictureBoxField->Cursor = System::Windows::Forms::Cursors::Default;
+			this->pictureBoxField->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->pictureBoxField->Location = System::Drawing::Point(0, 0);
+			this->pictureBoxField->Name = L"pictureBoxField";
+			this->pictureBoxField->Size = System::Drawing::Size(498, 466);
+			this->pictureBoxField->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBoxField->TabIndex = 2;
+			this->pictureBoxField->TabStop = false;
+			this->pictureBoxField->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::pictureBox1_Paint);
+			this->pictureBoxField->SizeChanged += gcnew System::EventHandler(this, &Form1::pictureBox1_SizeChanged);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(592, 466);
-			this->Controls->Add(this->pictureBox1);
+			this->Controls->Add(this->pictureBoxField);
 			this->Controls->Add(this->panel1);
 			this->KeyPreview = true;
 			this->MinimumSize = System::Drawing::Size(600, 500);
@@ -179,7 +181,7 @@ namespace vcworm {
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxField))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -191,136 +193,89 @@ namespace vcworm {
 	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e) {
 				timer1->Enabled = false;
 				m_view->start();
-				labelScore->Text = "" + m_view->getSnake()->size();
+				labelScore->Text = "" + m_view->getScore();
 				timer1->Enabled = true;
 			}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
 				timer1->Enabled = false;
 				m_view->nextStep();
-				labelScore->Text = "" + m_view->getSnake()->size();
+				labelScore->Text = "" + m_view->getScore();
 				pictureBox1->Invalidate();
 				if (!m_view->isPause())
 					timer1->Enabled = true;
 				}
 
 	private: System::Void pictureBox1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-			Snake::GraphicSnake * snake = m_view->getSnake();
-			Snake::RabbitFactory * rabbits = m_view->getRabbitFactory();
-
-			if (snake == 0 || snake->size()==0)
-				return;
-
 			Graphics^ g = e->Graphics;
 
 			const int bh = m_view->getHieghtField();
 			const int bw = m_view->getWidthField();
-			int h = pictureBox1->Height/bh;
-			int w = pictureBox1->Width/bw;
 
-			if (h < w) 
-				w = h;
-			else 
-				h = w;
+			const int s = std::min(pictureBox1->Height/bh, pictureBox1->Width/bw);
 
-			//SolidBrush^ blueBrush = gcnew SolidBrush( Color::Blue );
-			SolidBrush^ greenBrush = gcnew SolidBrush( Color::Green );
-			SolidBrush^ redBrush = gcnew SolidBrush( Color::Red );
-			SolidBrush^ yellowBrush = gcnew SolidBrush( Color::Yellow );
+			m_view->initDraw(s);
+			m_view->paintGame();
+			const std::vector<int> &  primetives = m_view->getPrimitives();
 
 			g->Clear(System::Drawing::SystemColors::Control);
-			g->FillRectangle(gcnew SolidBrush(System::Drawing::SystemColors::ControlDark),
-				0, 0, w * bw, h * bh);
 
-			{
-				int i = (m_view->getMaxPath() - snake->sizePath())*4;
-				for (std::vector<Snake::GraphicPoint>::reverse_iterator iter = snake->rbeginPath(); iter!= snake->rendPath(); iter++) {
-					if (i<0) i = 0;
-					if (i>255) i = 255;
-					Color c2 = Color::FromArgb(i, System::Drawing::SystemColors::Control);
-					SolidBrush^ pathBrush = gcnew SolidBrush( c2 );
-					drawSnake(g, &*iter, w, h, pathBrush);
-					i+=4;
+			unsigned int i=0;
+			while (i < primetives.size()) {
+				switch(primetives[i++]) {
+				case Snake::VCView::RECTANGLE:
+					{
+						int x = primetives.at(i++);
+						int y = primetives.at(i++);
+						int w = primetives.at(i++);
+						int h = primetives.at(i++);
+						Color c = getColor(primetives.at(i++));
+
+						SolidBrush^ brush = gcnew SolidBrush(c);
+						g->FillRectangle(brush, x, y, w, h);
+					}
+					break;
+				case Snake::VCView::LINE:
+					{
+						int x1 = primetives.at(i++);
+						int y1 = primetives.at(i++);
+						int x2 = primetives.at(i++);
+						int y2 = primetives.at(i++);
+						Color c = getColor(primetives.at(i++));
+	
+						Pen ^ pen = gcnew Pen(c, 1.0F);
+						pen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
+						g->DrawLine(pen, x1, y1, x2, y2);
+					}
+					break;
+				case Snake::VCView::TEXT:
+					{
+					}
 				}
 			}
-
-			{
-				Pen ^ bluePen = gcnew Pen(Color::Cyan, 1.0F);
-				bluePen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dot;
-				const Snake::Point head = snake->front();
-				int x1 = head.getX() * w + w/2;
-				int y1 = head.getY() * h + h/2;
-				int x2 = x1;
-				int y2 = y1;
-				switch (snake->getWay()) {
-				case Snake::Way::LEFT:		x2 = 0; break;
-				case Snake::Way::RIGHT:		x2 = w * bw; break;
-				case Snake::Way::UP:		y2 = 0; break;
-				case Snake::Way::DOWN:		y2 = h * bh; break;
-				default: break;
-				}
-				g->DrawLine(bluePen, x1, y1, x2, y2);
-			}
-
-			for (std::vector<Snake::GraphicPoint>::iterator iter = snake->begin(); iter != snake->end(); iter++) {
-	            SolidBrush^ color = (iter - snake->begin()) % 5 == 3 ? yellowBrush: redBrush;
-		        drawSnake(g, &*iter, w, h, color);
-			}
-
-			for (std::vector<Snake::Rabbit>::iterator iter = rabbits->begin(); iter != rabbits->end(); iter++) {
-				Rectangle rect = Rectangle(iter->getX()*w + 1, iter->getY()*h + 1, w - 2, h - 2);
-				g->FillRectangle(greenBrush, rect);
-			}
-
 		 }
-	private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
+
+private: System::Void pictureBox1_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
 			pictureBox1->Invalidate();
 		 }
 
-private: void drawSnake(Graphics^ g, Snake::GraphicPoint *point, int w, int h, SolidBrush^ brush) {
-    Rectangle body1(point->getX() * w, point->getY() * h, w, h);
+private: Color getColor(int _c) 
+		 {
+			 switch (_c) {
+				 case Snake::VCView::COLOR_FIELD:  return Color::DarkGray;
+				 case Snake::VCView::COLOR_RABBIT: return Color::Green;
+				 case Snake::VCView::COLOR_SNAKE0: return Color::Red;
+				 case Snake::VCView::COLOR_SNAKE1: return Color::Yellow;
+				 case Snake::VCView::COLOR_PATH:   return Color::Cyan;
+				 default: break;
+			 }
+			 if (_c >= Snake::VCView::COLOR_TAIL) {
+				 Color color = Color::FromArgb((_c - Snake::VCView::COLOR_TAIL) * 4, Color::Gray);
+				 return color;
+			 }
+			 return Color::DarkGray;
+		 }
 
-    int ddx = w / 5, ddx2 = ddx + ddx;
-    int ddy = h / 5, ddy2 = ddy + ddy;
-
-    switch (point->getType()) {
-    case Snake::GraphicPoint::HEAD:
-        g->FillRectangle(brush, body1);
-        return;
-
-    case Snake::GraphicPoint::HORISONTAL:
-		body1.Y += ddy * point->getPosition();
-		body1.Height = w - ddy2;
-        g->FillRectangle(brush, body1);
-        return;
-
-    case Snake::GraphicPoint::VERTICAL:
-		body1.X += ddx * point->getPosition();
-		body1.Width = h - ddx2;
-        g->FillRectangle(brush, body1);
-        break;
-
-    case Snake::GraphicPoint::CORNER:
-		body1.Width = h - ddx2;
-		body1.Height = w - ddy2;
-        if (point->getPosition()) {
-			Rectangle body2 = body1;
-			body2.X += point->getToLeft() ? 0 : ddx2;
-			body2.Y += ddy;
-			g->FillRectangle(brush, body2);
-
-			body1.X += ddx; 
-			body1.Y += point->getToUp() ? 0:ddy2;
-		
-			g->FillRectangle(brush, body1);
-		} else {
-			body1.X += point->getToLeft() ? 0 : ddx2;
-			body1.Y += point->getToUp() ? 0 : ddy2;
-			g->FillRectangle(brush, body1);
-		}
-    }
-	}
-
-	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 switch (e->KeyCode) {
 				 case Keys::Left:
 					 m_view->changeWay(Snake::Way::LEFT);
