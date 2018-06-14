@@ -27,7 +27,7 @@ namespace Snake {
 
         virtual bool checkPoint(Point & _point) = 0;
 
-        inline Way getWay() const {return m_way;}
+        Way getWay() const {return m_way;}
 
         virtual void clear() = 0;
 
