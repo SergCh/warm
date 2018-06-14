@@ -36,7 +36,7 @@ namespace Snake {
         EWay getWay() const {return m_way;}
         void setWay(EWay _way) {m_way = _way;}
 
-        operator int () const {return (int) m_way;}
+        operator unsigned int () const {return (unsigned int) m_way;}
 
         const Point & getPoint() const {
             return Way::POINTS_WAY[m_way];
